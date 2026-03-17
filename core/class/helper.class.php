@@ -369,7 +369,7 @@ class helper
 	 */
 	public static function getOnlineVersion($channel)
 	{
-		return (helper::getUrlContents(common::ZWII_UPDATE_URL . $channel . '/version'));
+		return (helper::getUrlContents(core::ZWII_UPDATE_URL . $channel . '/version'));
 	}
 
 	/**
@@ -381,7 +381,7 @@ class helper
 		$version = helper::getOnlineVersion($channel);
 		$update = false;
 		if (!empty($version)) {
-			$update = version_compare(common::ZWII_VERSION, $version) == -1;
+			$update = version_compare(core::ZWII_VERSION, $version) == -1;
 		}
 		return $update;
 	}

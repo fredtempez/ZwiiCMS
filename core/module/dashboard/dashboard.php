@@ -15,7 +15,7 @@
  * @link http://zwiicms.fr/
  */
 
-class dashboard extends common
+class dashboard extends Core
 {
 
     public static $actions = [

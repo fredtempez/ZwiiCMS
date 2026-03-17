@@ -4,7 +4,7 @@
  * assets - Gestion des thèmes et CSS
  * Responsable de la génération et compilation des fichiers CSS
  */
-class asset extends common
+class asset extends Core
 {
 	/**
 	 * Constructeur du gestionnaire de thèmes
@@ -421,7 +421,7 @@ class asset extends common
 		$fontsAvailable = [
 			'files' => $this->getData(['font', 'files']),
 			'imported' => $this->getData(['font', 'imported']),
-			'websafe' => common::$fontsWebSafe
+			'websafe' => core::$fontsWebSafe
 		];
 
 		$usedFontIds = [];

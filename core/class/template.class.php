@@ -142,8 +142,8 @@ class template
 
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -192,15 +192,15 @@ class template
         $label = helper::translate($label);
         $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
-        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['checked'] = (bool) common::$inputBefore[$attributes['id']];
+        if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['checked'] = (bool) core::$inputBefore[$attributes['id']];
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -267,8 +267,8 @@ class template
                 break;
         }
         // Sauvegarde des données en cas d'erreur
-        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['value'] = core::$inputBefore[$attributes['id']];
         } else {
             $attributes['value'] = ($attributes['value'] ? helper::filter($attributes['value'], $filter) : '');
         }
@@ -291,8 +291,8 @@ class template
         }
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -343,8 +343,8 @@ class template
         $attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
-        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['value'] = core::$inputBefore[$attributes['id']];
         }
         // Gestion du champ obligatoire 
         if (isset($attributes['required']) && $attributes['required']) {
@@ -357,8 +357,8 @@ class template
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -387,7 +387,7 @@ class template
             '&lang=' . $attributes['language'] .
             '&field_id=' . $attributes['id'] .
             '&type=' . $attributes['type'] .
-            '&akey=' . md5_file(common::DATA_DIR . 'core.json') .
+            '&akey=' . md5_file(core::DATA_DIR . 'core.json') .
                 // Ajoute le nom du dossier si la variable est passée
             (empty($attributes['folder']) ? '&fldr=/' : '&fldr=' . $attributes['folder']) .
             ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
@@ -450,9 +450,9 @@ class template
         $attributes['uploadText'] = helper::translate($attributes['uploadText']);
         $attributes['placeholder'] = helper::translate($attributes['placeholder']);
 
-        // Sauvegarde de la valeur si présente dans common::$inputBefore
-        if ($attributes['before'] && array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        // Sauvegarde de la valeur si présente dans core::$inputBefore
+        if ($attributes['before'] && array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['value'] = core::$inputBefore[$attributes['id']];
         }
 
         // Gestion du champ requis
@@ -466,8 +466,8 @@ class template
 
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -593,8 +593,8 @@ class template
             'value' => ''
         ], $attributes);
         // Sauvegarde des données en cas d'erreur
-        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['value'] = core::$inputBefore[$attributes['id']];
         }
         // Texte
         $html = sprintf('<input type="hidden" %s>', helper::sprintAttributes($attributes, ['before']));
@@ -671,7 +671,7 @@ class template
         switch ($langId) {
             case '':
                 break;
-            case array_key_exists($langId, common::$languages):
+            case array_key_exists($langId, core::$languages):
                 $lang = $langId;
                 break;
             case 'selected':
@@ -778,8 +778,8 @@ class template
             unset($attributes['case']);
         }
         // Sauvegarde des données en cas d'erreur
-        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['value'] = core::$inputBefore[$attributes['id']];
         }
         // Gestion du champ obligatoire 
         if (isset($attributes['required']) && $attributes['required']) {
@@ -800,8 +800,8 @@ class template
         }
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -874,8 +874,8 @@ class template
         }
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -924,8 +924,8 @@ class template
             $attributes['font'] = [];
         }
         // Sauvegarde des données en cas d'erreur
-        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['selected'] = common::$inputBefore[$attributes['id']];
+        if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['selected'] = core::$inputBefore[$attributes['id']];
         }
         // Gestion du champ obligatoire 
         if (isset($attributes['required']) && $attributes['required']) {
@@ -946,8 +946,8 @@ class template
         }
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -1148,8 +1148,8 @@ class template
             unset($attributes['case']);
         }
         // Sauvegarde des données en cas d'erreur
-        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['value'] = core::$inputBefore[$attributes['id']];
         }
         // Gestion du champ obligatoire 
         if (isset($attributes['required']) && $attributes['required']) {
@@ -1170,8 +1170,8 @@ class template
         }
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -1253,8 +1253,8 @@ class template
         $attributes['help'] = helper::translate($attributes['help']);
 
         // Sauvegarde des données en cas d'erreur
-        if ($attributes['before'] && array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        if ($attributes['before'] && array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['value'] = core::$inputBefore[$attributes['id']];
         }
 
         // Gestion du champ obligatoire 
@@ -1279,8 +1279,8 @@ class template
 
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
@@ -1325,8 +1325,8 @@ class template
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
-        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
-            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
+            $attributes['value'] = core::$inputBefore[$attributes['id']];
         }
         // Gestion du champ obligatoire 
         if (isset($attributes['required']) && $attributes['required']) {
@@ -1347,8 +1347,8 @@ class template
         }
         // Notice
         $notice = '';
-        if (array_key_exists($attributes['id'], common::$inputNotices)) {
-            $notice = common::$inputNotices[$attributes['id']];
+        if (array_key_exists($attributes['id'], core::$inputNotices)) {
+            $notice = core::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);

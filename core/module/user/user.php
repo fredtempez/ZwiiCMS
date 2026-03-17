@@ -14,7 +14,7 @@
  * @Licensed under the GNU General Public License v3.0 or later.
  * @link http://zwiicms.fr/
  */
-class user extends common
+class user extends Core
 {
 	public static $actions = [
 		'add' => self::ROLE_ADMIN,

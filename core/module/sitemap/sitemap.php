@@ -15,7 +15,7 @@
  * @link http://zwiicms.fr/
  */
 
-class sitemap extends common
+class sitemap extends Core
 {
     public static $actions = [
         'index' => self::ROLE_VISITOR

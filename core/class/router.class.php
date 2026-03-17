@@ -1,6 +1,6 @@
 <?php
 
-class Router extends common
+class Router extends Core
 {
 	/**
 	 * Constructeur du coeur
@@ -14,14 +14,14 @@ class Router extends common
 
 		// 2. Régénère les feuilles de style absentes
 		$assetsToRegenerate = [
-			common::DATA_DIR . 'theme.css' => 'buildThemeCss',
-			common::DATA_DIR . 'admin.css' => 'buildAdminCss'
+			core::DATA_DIR . 'theme.css' => 'buildThemeCss',
+			core::DATA_DIR . 'admin.css' => 'buildAdminCss'
 		];
 		
 		require_once 'core/class/asset.class.php';
 		$asset = new asset();
 		foreach ($assetsToRegenerate as $file => $method) {
-			if ($this->generateAsset(common::DATA_DIR . $file)) {
+			if ($this->generateAsset(core::DATA_DIR . $file)) {
 				$asset->$method($file);
 			}
 		}
@@ -39,13 +39,13 @@ class Router extends common
 		}
 
 		// Fuseau horaire
-		common::$timezone = $this->getData(['config', 'timezone']);
-		date_default_timezone_set(common::$timezone);
+		core::$timezone = $this->getData(['config', 'timezone']);
+		date_default_timezone_set(core::$timezone);
 
 		// Supprime les fichiers temporaires
 		$lastClearTmp = mktime(0, 0, 0);
 		if ($lastClearTmp > $this->getData(['core', 'lastClearTmp']) + 86400) {
-			$iterator = new DirectoryIterator(common::TEMP_DIR);
+			$iterator = new DirectoryIterator(core::TEMP_DIR);
 			foreach ($iterator as $fileInfos) {
 				if (
 					$fileInfos->isFile() &&
@@ -65,11 +65,11 @@ class Router extends common
 			$lastBackup > $this->getData(['core', 'lastBackup']) + 86400 &&
 			$this->getData(['user'])
 		) {
-			if (helper::autoBackup(common::BACKUP_DIR, ['backup', 'tmp', 'file'])) {
+			if (helper::autoBackup(core::BACKUP_DIR, ['backup', 'tmp', 'file'])) {
 				$this->setData(['core', 'lastBackup', $lastBackup]);
 
 				// Nettoyage des anciennes sauvegardes (> 30 jours)
-				$iterator = new DirectoryIterator(common::BACKUP_DIR);
+				$iterator = new DirectoryIterator(core::BACKUP_DIR);
 				$now = time();
 				foreach ($iterator as $file) {
 					if (
@@ -128,7 +128,7 @@ class Router extends common
 		// Force la déconnexion des membres bannis ou d'une seconde session
 		if (
 			$this->isConnected() === true
-			and ($this->getUser('role') === common::ROLE_BANNED
+			and ($this->getUser('role') === core::ROLE_BANNED
 				or ($_SESSION['csrf'] !== $this->getData(['user', $this->getUser('id'), 'accessCsrf'])
 					and $this->getData(['config', 'connect', 'autoDisconnect']) === true)
 			)
@@ -143,7 +143,7 @@ class Router extends common
 			and $this->getUrl(1) !== 'login'
 			and ($this->isConnected() === false
 				or ($this->isConnected() === true
-					and $this->getUser('role') < common::ROLE_ADMIN
+					and $this->getUser('role') < core::ROLE_ADMIN
 				)
 			)
 		) {
@@ -160,7 +160,7 @@ class Router extends common
 		$access = null;
 		if ($this->getData(['page', $this->getUrl(0)]) !== null) {
 			if (
-				$this->getData(['page', $this->getUrl(0), 'role']) === common::ROLE_VISITOR
+				$this->getData(['page', $this->getUrl(0), 'role']) === core::ROLE_VISITOR
 				|| ($this->isConnected() === true
 					// and $this->getUser('role') >= $this->getData(['page', $this->getUrl(0), 'role'])
 					// Modification qui tient compte du profil de la page
@@ -186,7 +186,7 @@ class Router extends common
 					and $this->isConnected() === false
 				) or ($this->getData(['page', $this->getUrl(0), 'disable']) === true
 					and $this->isConnected() === true
-					and $this->getUser('role') < common::ROLE_EDITOR
+					and $this->getUser('role') < core::ROLE_EDITOR
 				)
 			) {
 				$access = false;
@@ -226,8 +226,8 @@ class Router extends common
 				}
 
 				$urlParts = explode('/', $userData['accessUrl']);
-				$isConcurrentAccess = !empty(array_intersect($urlParts, common::$concurrentAccess));
-				$isAccessTimerValid = $currentTime < ($userData['accessTimer'] ?? 0) + common::ACCESS_TIMER;
+				$isConcurrentAccess = !empty(array_intersect($urlParts, core::$concurrentAccess));
+				$isAccessTimerValid = $currentTime < ($userData['accessTimer'] ?? 0) + core::ACCESS_TIMER;
 
 				if ($userData['accessUrl'] === $currentUrl && $isConcurrentAccess && $isAccessTimerValid) {
 					$access = false;
@@ -267,10 +267,10 @@ class Router extends common
 		$inlineScript[] = $this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']);
 
 		// Importe le contenu, le CSS et le script des barres
-		$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), common::$siteContent) : '';
+		$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), core::$siteContent) : '';
 		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
 		$inlineScript[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']);
-		$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), common::$siteContent) : '';
+		$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), core::$siteContent) : '';
 		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
 		$inlineScript[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']);
 
@@ -288,7 +288,7 @@ class Router extends common
 
 			$this->addOutput([
 				'title' => $title,
-				'content' => $this->getPage($this->getUrl(0), common::$siteContent),
+				'content' => $this->getPage($this->getUrl(0), core::$siteContent),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
@@ -313,7 +313,7 @@ class Router extends common
 					: $this->getData(['page', $this->getUrl(0), 'metaDescription']);
 
 				// Importe le CSS de la page principale
-				$pageContent = $this->getPage($this->getUrl(0), common::$siteContent);
+				$pageContent = $this->getPage($this->getUrl(0), core::$siteContent);
 
 				$this->addOutput([
 					'title' => $title,
@@ -358,7 +358,7 @@ class Router extends common
 					$output = $module->output;
 					// Check le rôle de l'utilisateur
 					if (
-						($module::$actions[$action] === common::ROLE_VISITOR
+						($module::$actions[$action] === core::ROLE_VISITOR
 							or ($this->isConnected() === true
 								and $this->getUser('role') >= $module::$actions[$action]
 								and $this->getUser('permission', $moduleId, $action)
@@ -367,14 +367,14 @@ class Router extends common
 						and $output['access'] === true
 					) {
 						// Enregistrement du contenu de la méthode POST lorsqu'une notice est présente
-						if (common::$inputNotices) {
+						if (core::$inputNotices) {
 							foreach ($_POST as $postId => $postValue) {
 								if (is_array($postValue)) {
 									foreach ($postValue as $subPostId => $subPostValue) {
-										common::$inputBefore[$postId . '_' . $subPostId] = $subPostValue;
+										core::$inputBefore[$postId . '_' . $subPostId] = $subPostValue;
 									}
 								} else {
-									common::$inputBefore[$postId] = $postValue;
+									core::$inputBefore[$postId] = $postValue;
 								}
 							}
 						}
@@ -414,9 +414,9 @@ class Router extends common
 						// Contenu par vue
 						elseif ($output['view']) {
 							// Chemin en fonction d'un module du coeur ou d'un module
-							$modulePath = in_array($moduleId, common::$coreModuleIds) ? 'core/' : '';
+							$modulePath = in_array($moduleId, core::$coreModuleIds) ? 'core/' : '';
 							// CSS
-							$stylePath = $modulePath . common::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.css';
+							$stylePath = $modulePath . core::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.css';
 							if (file_exists($stylePath)) {
 								$this->addOutput([
 									'style' => file_get_contents($stylePath)
@@ -429,7 +429,7 @@ class Router extends common
 							}
 
 							// JS
-							$scriptPath = $modulePath . common::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.js.php';
+							$scriptPath = $modulePath . core::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.js.php';
 							if (file_exists($scriptPath)) {
 								ob_start();
 								include $scriptPath;
@@ -438,7 +438,7 @@ class Router extends common
 								]);
 							}
 							// Vue
-							$viewPath = $modulePath . common::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.php';
+							$viewPath = $modulePath . core::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.php';
 							if (file_exists($viewPath)) {
 								ob_start();
 								include $viewPath;
@@ -549,12 +549,12 @@ class Router extends common
 			http_response_code(404);
 			// Pour éviter une 404, bascule dans l'espace correct si la page existe dans cette langue.
 			// Parcourir les espaces
-			foreach (common::$languages as $langId => $value) {
+			foreach (core::$languages as $langId => $value) {
 				;
 				if (
 					// l'espace existe
-					is_dir(common::DATA_DIR . $langId) &&
-					file_exists(common::DATA_DIR . $langId . '/page.json')
+					is_dir(core::DATA_DIR . $langId) &&
+					file_exists(core::DATA_DIR . $langId . '/page.json')
 				) {
 					// Lire les données des pages en respectant la configuration de JsonDb
 					$pagesId = $this->fetchDataFile('page', $langId, 'page');
@@ -601,25 +601,25 @@ class Router extends common
 		}
 		switch ($this->output['display']) {
 			// Layout brut
-			case common::DISPLAY_RAW:
+			case core::DISPLAY_RAW:
 				echo $this->output['content'];
 				break;
 			// Layout vide
-			case common::DISPLAY_LAYOUT_BLANK:
+			case core::DISPLAY_LAYOUT_BLANK:
 				require 'core/layout/blank.php';
 				break;
 			// Affichage en JSON
-			case common::DISPLAY_JSON:
+			case core::DISPLAY_JSON:
 				header('Content-Type: application/json');
 				echo json_encode($this->output['content']);
 				break;
 			// RSS feed
-			case common::DISPLAY_RSS:
+			case core::DISPLAY_RSS:
 				header('Content-type: application/rss+xml; charset=UTF-8');
 				echo $this->output['content'];
 				break;
 			// Layout allégé
-			case common::DISPLAY_LAYOUT_LIGHT:
+			case core::DISPLAY_LAYOUT_LIGHT:
 				ob_start();
 				require 'core/layout/light.php';
 				$content = ob_get_clean();
@@ -630,7 +630,7 @@ class Router extends common
 				echo $content;
 				break;
 			// Layout principal
-			case common::DISPLAY_LAYOUT_MAIN:
+			case core::DISPLAY_LAYOUT_MAIN:
 				ob_start();
 				// Rendre layout disponible pour le template
 				$layout = new layout($this);

@@ -10,10 +10,8 @@ class Autoloader
     
     // Mapping correct des classes essentielles
     private static $coreClasses = [
-        'common' => 'core/core.php',
-        'core' => 'core/class/router.class.php',
+        'core' => 'core/core.php',
         'router' => 'core/class/router.class.php',
-        'Router' => 'core/class/router.class.php',
         'helper' => 'core/class/helper.class.php',
         'template' => 'core/class/template.class.php',
         'layout' => 'core/layout/layout.class.php',
@@ -120,7 +118,15 @@ class Autoloader
 
     public static function preloadEssentialClasses()
     {
-        $essential = ['common', 'core', 'helper', 'template'];
+        // Chargement des traits en premier
+        require_once('core/trait/Data.trait.php');
+        require_once('core/trait/InputOutput.trait.php');
+        require_once('core/trait/PageContent.trait.php');
+        require_once('core/trait/Tools.trait.php');
+        require_once('core/trait/UserPermission.trait.php');
+        require_once('core/trait/Security.trait.php');
+        
+        $essential = ['core', 'router', 'helper', 'template'];
         foreach ($essential as $class) {
             self::load($class);
         }
@@ -129,6 +135,11 @@ class Autoloader
         $namespaceEssential = ['Prowebcraft\\Dot', 'Prowebcraft\\JsonDb', 'PHP81_BC\\strftime'];
         foreach ($namespaceEssential as $class) {
             self::load($class);
+        }
+        
+        // Créer un alias pour la compatibilité ascendante
+        if (class_exists('Core') && !class_exists('common')) {
+            class_alias('Core', 'common');
         }
     }
 }

@@ -785,7 +785,7 @@ interface CommonMenuItemInstanceApi {
     isDisabled: () => boolean;
     setDisabled: (state: boolean) => void;
 }
-interface DialogToggleMenuItemSpec extends CommonMenuItemSpec {
+interface DialogToggleMenuItemSpec extends CoreMenuItemSpec {
     type?: 'togglemenuitem';
     name: string;
 }
@@ -918,7 +918,7 @@ interface CardTextSpec {
     classes?: string[];
 }
 declare type CardItemSpec = CardContainerSpec | CardImageSpec | CardTextSpec;
-interface CardMenuItemInstanceApi extends CommonMenuItemInstanceApi {
+interface CardMenuItemInstanceApi extends CoreMenuItemInstanceApi {
 }
 interface CardMenuItemSpec extends Omit<CommonMenuItemSpec, 'text' | 'shortcut'> {
     type: 'cardmenuitem';
@@ -1028,21 +1028,21 @@ interface ContextToolbarSpec extends ContextBarSpec {
     type?: 'contexttoolbar';
     items: string;
 }
-interface ChoiceMenuItemSpec extends CommonMenuItemSpec {
+interface ChoiceMenuItemSpec extends CoreMenuItemSpec {
     type?: 'choiceitem';
     icon?: string;
 }
-interface ChoiceMenuItemInstanceApi extends CommonMenuItemInstanceApi {
+interface ChoiceMenuItemInstanceApi extends CoreMenuItemInstanceApi {
     isActive: () => boolean;
     setActive: (state: boolean) => void;
 }
-interface ContextMenuItem extends CommonMenuItemSpec {
+interface ContextMenuItem extends CoreMenuItemSpec {
     text: string;
     icon?: string;
     type?: 'item';
     onAction: () => void;
 }
-interface ContextSubMenu extends CommonMenuItemSpec {
+interface ContextSubMenu extends CoreMenuItemSpec {
     type: 'submenu';
     text: string;
     icon?: string;
@@ -1079,31 +1079,31 @@ interface ColorSwatchMenuItemSpec extends BaseFancyMenuItemSpec<'colorswatch'> {
     };
 }
 declare type FancyMenuItemSpec = InsertTableMenuItemSpec | ColorSwatchMenuItemSpec;
-interface MenuItemSpec extends CommonMenuItemSpec {
+interface MenuItemSpec extends CoreMenuItemSpec {
     type?: 'menuitem';
     icon?: string;
     onSetup?: (api: MenuItemInstanceApi) => (api: MenuItemInstanceApi) => void;
     onAction?: (api: MenuItemInstanceApi) => void;
 }
-interface MenuItemInstanceApi extends CommonMenuItemInstanceApi {
+interface MenuItemInstanceApi extends CoreMenuItemInstanceApi {
 }
 declare type NestedMenuItemContents = string | MenuItemSpec | NestedMenuItemSpec | ToggleMenuItemSpec | SeparatorMenuItemSpec | FancyMenuItemSpec;
-interface NestedMenuItemSpec extends CommonMenuItemSpec {
+interface NestedMenuItemSpec extends CoreMenuItemSpec {
     type?: 'nestedmenuitem';
     icon?: string;
     getSubmenuItems: () => string | Array<NestedMenuItemContents>;
     onSetup?: (api: NestedMenuItemInstanceApi) => (api: NestedMenuItemInstanceApi) => void;
 }
-interface NestedMenuItemInstanceApi extends CommonMenuItemInstanceApi {
+interface NestedMenuItemInstanceApi extends CoreMenuItemInstanceApi {
 }
-interface ToggleMenuItemSpec extends CommonMenuItemSpec {
+interface ToggleMenuItemSpec extends CoreMenuItemSpec {
     type?: 'togglemenuitem';
     icon?: string;
     active?: boolean;
     onSetup?: (api: ToggleMenuItemInstanceApi) => void;
     onAction: (api: ToggleMenuItemInstanceApi) => void;
 }
-interface ToggleMenuItemInstanceApi extends CommonMenuItemInstanceApi {
+interface ToggleMenuItemInstanceApi extends CoreMenuItemInstanceApi {
     isActive: () => boolean;
     setActive: (state: boolean) => void;
 }

@@ -15,7 +15,7 @@
  * @link http://zwiicms.fr/
  */
 
-class language extends common
+class language extends Core
 {
 
 	// URL langues de l'UI en ligne

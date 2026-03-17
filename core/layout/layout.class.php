@@ -1,5 +1,5 @@
 <?php
-class layout extends common
+class layout extends Core
 {
 
     private $core;
@@ -340,7 +340,7 @@ class layout extends common
         // Affichage du numéro de version
         $items .= '<span id="footerDisplayVersion"';
         $items .= $this->getData(['theme', 'footer', 'displayVersion']) === false ? ' class="displayNone"' : '';
-        $items .= '><wbr>&nbsp;' . common::ZWII_VERSION;
+        $items .= '><wbr>&nbsp;' . core::ZWII_VERSION;
         $items .= '</span>';
         // Affichage du sitemap
         $items .= '<span id="footerDisplaySiteMap"';
@@ -1039,17 +1039,17 @@ class layout extends common
      */
     public function showNotification()
     {
-        if (common::$importNotices) {
-            $notification = common::$importNotices[0];
+        if (core::$importNotices) {
+            $notification = core::$importNotices[0];
             $notificationClass = 'notificationSuccess';
         }
-        if (common::$inputNotices) {
+        if (core::$inputNotices) {
             $notification = 'Impossible de soumettre le formulaire, car il contient des erreurs';
             $notificationClass = 'notificationError';
         }
-        if (common::$coreNotices) {
+        if (core::$coreNotices) {
             $notification = sprintf('%s <p> | ', helper::translate('Restauration des bases de données absentes'));
-            foreach (common::$coreNotices as $item)
+            foreach (core::$coreNotices as $item)
                 $notification .= $item . ' | ';
             $notificationClass = 'notificationError';
         } elseif (empty($_SESSION['ZWII_NOTIFICATION_SUCCESS']) === false) {
@@ -1278,7 +1278,7 @@ class layout extends common
                         // Dernier auto controle
                         $this->setData(['core', 'lastAutoUpdate', $today], false);
                         if (
-                            helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)
+                            helper::checkNewVersion(core::ZWII_UPDATE_CHANNEL)
                         ) {
                             $this->setData(['core', 'updateAvailable', true], false);
                         }
@@ -1310,7 +1310,7 @@ class layout extends common
                 }
                 // Afficher le bouton : Mise à jour détectée + activée
                 if ($this->getData(['core', 'updateAvailable'])) {
-                    $rightItems .= '<li><a href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii ' . common::ZWII_VERSION . ' vers ' . helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) . '">' . template::ico('update colorRed') . '</a></li>';
+                    $rightItems .= '<li><a href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii ' . core::ZWII_VERSION . ' vers ' . helper::getOnlineVersion(core::ZWII_UPDATE_CHANNEL) . '">' . template::ico('update colorRed') . '</a></li>';
                 }
             }
 

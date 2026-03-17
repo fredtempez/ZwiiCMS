@@ -16,7 +16,7 @@
  * @copyright Copyright (C) 2018-2025, Frédéric Tempez
  */
 
-class theme extends common
+class theme extends Core
 {
 
 	public static $actions = [

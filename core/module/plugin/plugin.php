@@ -16,7 +16,7 @@
  * @link http://zwiicms.fr/
  */
 
-class plugin extends common
+class plugin extends Core
 {
 
 	public static $actions = [

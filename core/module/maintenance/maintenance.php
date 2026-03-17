@@ -15,7 +15,7 @@
  * @link http://zwiicms.fr/
  */
 
-class maintenance extends common
+class maintenance extends Core
 {
 
 	public static $actions = [

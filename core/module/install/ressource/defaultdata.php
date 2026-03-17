@@ -1,5 +1,5 @@
 <?php
-class init extends common
+class init extends Core
 {
 	public static $defaultData = [
 		'config' => [
