@@ -285,8 +285,8 @@ class theme extends Core
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'theme/admin',
+				'notification' => Helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'theme/admin',
 				'state' => true
 			]);
 		}
@@ -296,7 +296,7 @@ class theme extends Core
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Thème de l\'administration'),
+			'title' => Helper::translate('Thème de l\'administration'),
 			'view' => 'admin',
 			'vendor' => [
 				'tinycolorpicker'
@@ -318,14 +318,14 @@ class theme extends Core
 			$this->secure_file_put_contents(self::DATA_DIR . 'custom.css', $this->getInput('themeAdvancedCss', null));
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'theme/advanced',
+				'notification' => Helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'theme/advanced',
 				'state' => true
 			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Éditeur CSS'),
+			'title' => Helper::translate('Éditeur CSS'),
 			'vendor' => [
 				'codemirror'
 			],
@@ -359,14 +359,14 @@ class theme extends Core
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'theme',
+				'notification' => Helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'theme',
 				'state' => true
 			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Arrière plan'),
+			'title' => Helper::translate('Arrière plan'),
 			'vendor' => [
 				'tinycolorpicker'
 			],
@@ -391,8 +391,8 @@ class theme extends Core
 			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => helper::translate('Sélectionnez au moins un contenu à afficher'),
-					'redirect' => helper::baseUrl() . 'theme/footer',
+					'notification' => Helper::translate('Sélectionnez au moins un contenu à afficher'),
+					'redirect' => Helper::baseUrl() . 'theme/footer',
 					'state' => false
 				]);
 			} else {
@@ -404,9 +404,9 @@ class theme extends Core
 						'copyrightAlign' => $this->getInput('themeFooterCopyrightAlign'),
 						'height' => $this->getInput('themeFooterHeight'),
 						'loginLink' => $this->getInput('themeFooterLoginLink'),
-						'margin' => $this->getInput('themeFooterMargin', helper::FILTER_BOOLEAN),
+						'margin' => $this->getInput('themeFooterMargin', Helper::FILTER_BOOLEAN),
 						'position' => $this->getInput('themeFooterPosition'),
-						'fixed' => $this->getInput('themeFooterFixed', helper::FILTER_BOOLEAN),
+						'fixed' => $this->getInput('themeFooterFixed', Helper::FILTER_BOOLEAN),
 						'socialsAlign' => $this->getInput('themeFooterSocialsAlign'),
 						'text' => $this->getInput('themeFooterText', null),
 						'textAlign' => $this->getInput('themeFooterTextAlign'),
@@ -418,13 +418,13 @@ class theme extends Core
 						'font' => $this->getInput('themeFooterFont'),
 						'fontSize' => $this->getInput('themeFooterFontSize'),
 						'fontWeight' => $this->getInput('themeFooterFontWeight'),
-						'displayVersion' => $this->getInput('themefooterDisplayVersion', helper::FILTER_BOOLEAN),
-						'displaySiteMap' => $this->getInput('themefooterDisplaySiteMap', helper::FILTER_BOOLEAN),
-						'displayCopyright' => $this->getInput('themefooterDisplayCopyright', helper::FILTER_BOOLEAN),
-						'displayCookie' => $this->getInput('themefooterDisplayCookie', helper::FILTER_BOOLEAN),
-						'displayLegal' => $this->getInput('themeFooterDisplayLegal', helper::FILTER_BOOLEAN),
-						'displaySearch' => $this->getInput('themeFooterDisplaySearch', helper::FILTER_BOOLEAN),
-						'memberBar' => $this->getInput('themeFooterMemberBar', helper::FILTER_BOOLEAN),
+						'displayVersion' => $this->getInput('themefooterDisplayVersion', Helper::FILTER_BOOLEAN),
+						'displaySiteMap' => $this->getInput('themefooterDisplaySiteMap', Helper::FILTER_BOOLEAN),
+						'displayCopyright' => $this->getInput('themefooterDisplayCopyright', Helper::FILTER_BOOLEAN),
+						'displayCookie' => $this->getInput('themefooterDisplayCookie', Helper::FILTER_BOOLEAN),
+						'displayLegal' => $this->getInput('themeFooterDisplayLegal', Helper::FILTER_BOOLEAN),
+						'displaySearch' => $this->getInput('themeFooterDisplaySearch', Helper::FILTER_BOOLEAN),
+						'memberBar' => $this->getInput('themeFooterMemberBar', Helper::FILTER_BOOLEAN),
 						'template' => $this->getInput('themeFooterTemplate')
 					]
 				]);
@@ -435,8 +435,8 @@ class theme extends Core
 
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => helper::translate('Modifications enregistrées'),
-					'redirect' => helper::baseUrl() . 'theme',
+					'notification' => Helper::translate('Modifications enregistrées'),
+					'redirect' => Helper::baseUrl() . 'theme',
 					'state' => true
 				]);
 			}
@@ -458,7 +458,7 @@ class theme extends Core
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Pied de page'),
+			'title' => Helper::translate('Pied de page'),
 			'vendor' => [
 				'tinycolorpicker',
 				'tinymce'
@@ -505,15 +505,15 @@ class theme extends Core
 					'image' => $this->getInput('themeHeaderImage'),
 					'imagePosition' => $this->getInput('themeHeaderImagePosition'),
 					'imageRepeat' => $this->getInput('themeHeaderImageRepeat'),
-					'margin' => $this->getInput('themeHeaderMargin', helper::FILTER_BOOLEAN),
+					'margin' => $this->getInput('themeHeaderMargin', Helper::FILTER_BOOLEAN),
 					'position' => $this->getInput('themeHeaderPosition'),
 					'textAlign' => $this->getInput('themeHeaderTextAlign'),
 					'textColor' => $this->getInput('themeHeaderTextColor'),
-					'textHide' => $this->getInput('themeHeaderTextHide', helper::FILTER_BOOLEAN),
+					'textHide' => $this->getInput('themeHeaderTextHide', Helper::FILTER_BOOLEAN),
 					'textTransform' => $this->getInput('themeHeaderTextTransform'),
-					'linkHomePage' => $this->getInput('themeHeaderlinkHomePage', helper::FILTER_BOOLEAN),
+					'linkHomePage' => $this->getInput('themeHeaderlinkHomePage', Helper::FILTER_BOOLEAN),
 					'imageContainer' => $this->getInput('themeHeaderImageContainer'),
-					'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN),
+					'tinyHidden' => $this->getInput('themeHeaderTinyHidden', Helper::FILTER_BOOLEAN),
 					'feature' => $this->getInput('themeHeaderFeature'),
 					'featureContent' => $featureContent,
 					'featureFiles' => $files
@@ -537,8 +537,8 @@ class theme extends Core
 			$this->saveDB('theme');
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'theme',
+				'notification' => Helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'theme',
 				'state' => true
 			]);
 		}
@@ -548,7 +548,7 @@ class theme extends Core
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Bannière'),
+			'title' => Helper::translate('Bannière'),
 			'vendor' => [
 				'tinycolorpicker',
 				'tinymce'
@@ -568,7 +568,7 @@ class theme extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Thèmes'),
+			'title' => Helper::translate('Thèmes'),
 			'view' => 'index'
 		]);
 	}
@@ -594,27 +594,27 @@ class theme extends Core
 					'fontWeight' => $this->getInput('themeMenuFontWeight'),
 					'height' => $this->getInput('themeMenuHeight'),
 					'wide' => $this->getInput('themeMenuWide'),
-					'loginLink' => $this->getInput('themeMenuLoginLink', helper::FILTER_BOOLEAN),
-					'margin' => $this->getInput('themeMenuMargin', helper::FILTER_BOOLEAN),
+					'loginLink' => $this->getInput('themeMenuLoginLink', Helper::FILTER_BOOLEAN),
+					'margin' => $this->getInput('themeMenuMargin', Helper::FILTER_BOOLEAN),
 					'position' => $this->getInput('themeMenuPosition'),
 					'textAlign' => $this->getInput('themeMenuTextAlign'),
 					'textColor' => $this->getInput('themeMenuTextColor'),
 					'textTransform' => $this->getInput('themeMenuTextTransform'),
-					'fixed' => $this->getInput('themeMenuFixed', helper::FILTER_BOOLEAN),
-					'activeColorAuto' => $this->getInput('themeMenuActiveColorAuto', helper::FILTER_BOOLEAN),
+					'fixed' => $this->getInput('themeMenuFixed', Helper::FILTER_BOOLEAN),
+					'activeColorAuto' => $this->getInput('themeMenuActiveColorAuto', Helper::FILTER_BOOLEAN),
 					'activeColor' => $this->getInput('themeMenuActiveColor'),
 					'activeTextColor' => $this->getInput('themeMenuActiveTextColor'),
 					'radius' => $this->getInput('themeMenuRadius'),
-					'burgerTitle' => $this->getInput('themeMenuBurgerTitle', helper::FILTER_BOOLEAN),
-					'memberBar' => $this->getInput('themeMenuMemberBar', helper::FILTER_BOOLEAN),
+					'burgerTitle' => $this->getInput('themeMenuBurgerTitle', Helper::FILTER_BOOLEAN),
+					'memberBar' => $this->getInput('themeMenuMemberBar', Helper::FILTER_BOOLEAN),
 					'burgerLogo' => $this->getInput('themeMenuBurgerLogo'),
 					'burgerContent' => $this->getInput('themeMenuBurgerContent')
 				]
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'theme',
+				'notification' => Helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'theme',
 				'state' => true
 			]);
 		}
@@ -624,7 +624,7 @@ class theme extends Core
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Menu'),
+			'title' => Helper::translate('Menu'),
 			'vendor' => [
 				'tinycolorpicker'
 			],
@@ -674,17 +674,17 @@ class theme extends Core
 						$f[$type][$fontId]['font-family'],
 						empty($keyResults) ? '' : '<span class="fontsList">' . implode('<br />', $keyResults) . '</span>',
 						$type,
-						$type !== 'websafe' ? template::button('themeFontEdit' . $fontId, [
+						$type !== 'websafe' ? Template::button('themeFontEdit' . $fontId, [
 							'class' => 'themeFontEdit',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' . $type . '/' . $fontId,
-							'value' => template::ico('pencil'),
+							'href' => Helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' . $type . '/' . $fontId,
+							'value' => Template::ico('pencil'),
 							//'disabled' => !empty($fontUsed[$fontId])
 						])
 						: '',
-						$type !== 'websafe' ? template::button('themeFontDelete' . $fontId, [
+						$type !== 'websafe' ? Template::button('themeFontDelete' . $fontId, [
 							'class' => 'themeFontDelete buttonRed',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId,
-							'value' => template::ico('cancel'),
+							'href' => Helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId,
+							'value' => Template::ico('cancel'),
 							'disabled' => !empty($fontUsed[$fontId])
 						])
 						: ''
@@ -695,7 +695,7 @@ class theme extends Core
 		sort(self::$fontsDetail);
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Fontes'),
+			'title' => Helper::translate('Fontes'),
 			'view' => 'font',
 			'vendor' => [
 				'datatables'
@@ -714,11 +714,11 @@ class theme extends Core
 			$this->isPost()
 		) {
 			// Type d'import en ligne ou local
-			$type = $this->getInput('fontAddUrl', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
+			$type = $this->getInput('fontAddUrl', Helper::FILTER_BOOLEAN) ? 'imported' : 'files';
 			$type === 'files' ? 'imported' : 'files';
 			$resource = $type === 'imported' ? $this->getInput('fontAddUrl', null) : $this->getInput('fontAddFile', null);
 			if (!empty($resource)) {
-				$fontId = $this->getInput('fontAddFontId', helper::FILTER_ID, true);
+				$fontId = $this->getInput('fontAddFontId', Helper::FILTER_ID, true);
 				$fontName = $this->getInput('fontAddFontName', null, true);
 				$fontFamilyName = $this->getInput('fontAddFontFamilyName', null, true);
 
@@ -759,22 +759,22 @@ class theme extends Core
 
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => $success ? helper::translate('Fonte actualisée') : helper::translate('Fonte non créée, ressource absente !'),
-					'redirect' => helper::baseUrl() . 'theme/font',
+					'notification' => $success ? Helper::translate('Fonte actualisée') : Helper::translate('Fonte non créée, ressource absente !'),
+					'redirect' => Helper::baseUrl() . 'theme/font',
 					'state' => $success
 				]);
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => helper::translate('Fonte non créée, ressource absente !'),
-					'redirect' => helper::baseUrl() . 'theme/fontAdd',
+					'notification' => Helper::translate('Fonte non créée, ressource absente !'),
+					'redirect' => Helper::baseUrl() . 'theme/fontAdd',
 					'state' => false
 				]);
 			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Ajouter une fonte'),
+			'title' => Helper::translate('Ajouter une fonte'),
 			'view' => 'fontAdd'
 		]);
 	}
@@ -791,8 +791,8 @@ class theme extends Core
 			$this->isPost()
 		) {
 			// Type d'import en ligne ou local
-			$type = $this->getInput('fontEditUrl', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
-			$fontId = $this->getInput('fontEditFontId', helper::FILTER_ID, true);
+			$type = $this->getInput('fontEditUrl', Helper::FILTER_BOOLEAN) ? 'imported' : 'files';
+			$fontId = $this->getInput('fontEditFontId', Helper::FILTER_ID, true);
 			$resource = $this->getData(['font', $type, $fontId, 'resource']);
 			$fontName = $this->getInput('fontEditFontName', null, true);
 			$fontFamilyName = $this->getInput('fontEditFontFamilyName', null, true);
@@ -820,14 +820,14 @@ class theme extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Fonte actualisée'),
-				'redirect' => helper::baseUrl() . 'theme/font',
+				'notification' => Helper::translate('Fonte actualisée'),
+				'redirect' => Helper::baseUrl() . 'theme/font',
 				'state' => true
 			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Éditer une fonte'),
+			'title' => Helper::translate('Éditer une fonte'),
 			'view' => 'fontEdit'
 		]);
 	}
@@ -864,8 +864,8 @@ class theme extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'theme/font',
-				'notification' => helper::translate('Fonte supprimée'),
+				'redirect' => Helper::baseUrl() . 'theme/font',
+				'notification' => Helper::translate('Fonte supprimée'),
 				'state' => true
 			]);
 		}
@@ -891,23 +891,23 @@ class theme extends Core
 			switch ($this->getUrl(2)) {
 				case 'admin':
 					$this->initData('admin', self::$i18nUI);
-					$redirect = helper::baseUrl() . 'theme/admin';
+					$redirect = Helper::baseUrl() . 'theme/admin';
 					break;
 				case 'manage':
 					$this->initData('theme', self::$i18nUI);
-					$redirect = helper::baseUrl() . 'theme/manage';
+					$redirect = Helper::baseUrl() . 'theme/manage';
 					break;
 				case 'custom':
 					unlink(self::DATA_DIR . 'custom.css');
-					$redirect = helper::baseUrl() . 'theme/advanced';
+					$redirect = Helper::baseUrl() . 'theme/advanced';
 					break;
 				default:
-					$redirect = helper::baseUrl() . 'theme';
+					$redirect = Helper::baseUrl() . 'theme';
 			}
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Thème réinitialisé'),
+				'notification' => Helper::translate('Thème réinitialisé'),
 				'redirect' => $redirect,
 				'state' => true
 			]);
@@ -953,7 +953,7 @@ class theme extends Core
 					'radius' => $this->getInput('themeSiteRadius'),
 					'shadow' => $this->getInput('themeSiteShadow'),
 					'width' => $this->getInput('themeSiteWidth'),
-					'margin' => $this->getInput('themeSiteMargin', helper::FILTER_BOOLEAN)
+					'margin' => $this->getInput('themeSiteMargin', Helper::FILTER_BOOLEAN)
 				]
 			], false);
 			$this->setData([
@@ -975,8 +975,8 @@ class theme extends Core
 			$this->saveDB('theme');
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'theme',
+				'notification' => Helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'theme',
 				'state' => true
 			]);
 		}
@@ -986,7 +986,7 @@ class theme extends Core
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Site'),
+			'title' => Helper::translate('Site'),
 			'vendor' => [
 				'tinycolorpicker',
 				'tinymce'
@@ -1005,14 +1005,14 @@ class theme extends Core
 			$this->isPost()
 		) {
 
-			$zipFilename = $this->getInput('themeManageImport', helper::FILTER_STRING_SHORT, true);
+			$zipFilename = $this->getInput('themeManageImport', Helper::FILTER_STRING_SHORT, true);
 			$data = $this->import(self::FILE_DIR . 'source/' . $zipFilename);
 			if ($data['success']) {
 				header("Refresh:0");
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => helper::translate('Gestion des thèmes'),
+					'title' => Helper::translate('Gestion des thèmes'),
 					'notification' => $data['notification'],
 					'state' => $data['success'],
 					'view' => 'manage'
@@ -1022,7 +1022,7 @@ class theme extends Core
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Gestion des thèmes'),
+			'title' => Helper::translate('Gestion des thèmes'),
 			'view' => 'manage'
 		]);
 	}
@@ -1080,11 +1080,11 @@ class theme extends Core
  
 
 						// traitement d'erreur
-						$notification = $success ? helper::translate('Thème importé') : helper::translate('Erreur lors de l\'extraction, vérifiez les permissions');
+						$notification = $success ? Helper::translate('Thème importé') : Helper::translate('Erreur lors de l\'extraction, vérifiez les permissions');
 					} else {
 						// pas une archive de thème
 						$success = false;
-						$notification = helper::translate('Archive de thème invalide');
+						$notification = Helper::translate('Archive de thème invalide');
 					}
 					// Supprimer le dossier temporaire même si le thème est invalide
 					$this->deleteDir(self::TEMP_DIR . $tempFolder);
@@ -1092,12 +1092,12 @@ class theme extends Core
 				} else {
 					// erreur à l'ouverture
 					$success = false;
-					$notification = helper::translate('Impossible d\'ouvrir l\'archive');
+					$notification = Helper::translate('Impossible d\'ouvrir l\'archive');
 				}
 				return (['success' => $success, 'notification' => $notification]);
 			}
 
-			return (['success' => false, 'notification' => helper::translate('Archive non spécifiée ou introuvable')]);
+			return (['success' => false, 'notification' => Helper::translate('Archive non spécifiée ou introuvable')]);
 		}
 	}
 
@@ -1157,8 +1157,8 @@ class theme extends Core
 			unlink(self::TEMP_DIR . $zipFilename);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => '<b>' . $zipFilename . '</b>' . helper::translate('sauvegardé avec succès'),
-				'redirect' => helper::baseUrl() . 'theme/manage',
+				'notification' => '<b>' . $zipFilename . '</b>' . Helper::translate('sauvegardé avec succès'),
+				'redirect' => Helper::baseUrl() . 'theme/manage',
 				'state' => true
 			]);
 		}
@@ -1326,11 +1326,11 @@ class theme extends Core
 				) {
 					if (file_exists($fontValue['resource'])) {
 						// Extension
-						$path_parts = pathinfo(helper::baseUrl(false) . self::DATA_DIR . 'font/' . $fontValue['resource']);
+						$path_parts = pathinfo(Helper::baseUrl(false) . self::DATA_DIR . 'font/' . $fontValue['resource']);
 						// Chargement de la police
 						$fileContentCss .= '@font-face {';
 						$fileContentCss .= 'font-family:"' . $fontValue['name'] . '";';
-						$fileContentCss .= 'src: url("' . helper::baseUrl(false) . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
+						$fileContentCss .= 'src: url("' . Helper::baseUrl(false) . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
 						$fileContentCss .= '}';
 						// Préchargement
 						//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'font/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;

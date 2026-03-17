@@ -92,28 +92,28 @@ class user extends Core
 			$this->isPost()
 		) {
 			// L'identifiant d'utilisateur est indisponible
-			$userId = $this->getInput('userAddId', helper::FILTER_ID, true);
+			$userId = $this->getInput('userAddId', Helper::FILTER_ID, true);
 			if ($this->getData(['user', $userId])) {
 				self::$inputNotices['userAddId'] = 'Identifiant déjà utilisé';
 			}
 			// Double vérification pour le mot de passe
-			if ($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
+			if ($this->getInput('userAddPassword', Helper::FILTER_STRING_SHORT, true) !== $this->getInput('userAddConfirmPassword', Helper::FILTER_STRING_SHORT, true)) {
 				self::$inputNotices['userAddConfirmPassword'] = 'Les mots de passe ne sont pas indentiques';
 			}
 
 			// Crée l'utilisateur
-			$userFirstname = $this->getInput('userAddFirstname', helper::FILTER_STRING_SHORT, true);
-			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
-			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
-			$pseudo = $this->getInput('userAddPseudo', helper::FILTER_STRING_SHORT, true);
-			$signature = $this->getInput('userAddSignature', helper::FILTER_INT, true);
-			$password = $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true);
+			$userFirstname = $this->getInput('userAddFirstname', Helper::FILTER_STRING_SHORT, true);
+			$userLastname = $this->getInput('userAddLastname', Helper::FILTER_STRING_SHORT, true);
+			$userMail = $this->getInput('userAddMail', Helper::FILTER_MAIL, true);
+			$pseudo = $this->getInput('userAddPseudo', Helper::FILTER_STRING_SHORT, true);
+			$signature = $this->getInput('userAddSignature', Helper::FILTER_INT, true);
+			$password = $this->getInput('userAddPassword', Helper::FILTER_PASSWORD, true);
 
 			// Profil
-			$role = $this->getInput('userAddRole', helper::FILTER_INT, true);
+			$role = $this->getInput('userAddRole', Helper::FILTER_INT, true);
 			$profil = 0;
 			if ($role === 1 || $role === 2) {
-				$profil = $this->getInput('userAddProfil' . $role, helper::FILTER_INT);
+				$profil = $this->getInput('userAddProfil' . $role, Helper::FILTER_INT);
 			}
 
 			// Stockage des données
@@ -135,15 +135,15 @@ class user extends Core
 					'accessUrl' => null,
 					'accessTimer' => null,
 					'accessCsrf' => null,
-					'language' => $this->getInput('userAddLanguage', helper::FILTER_STRING_SHORT),
-					'tags' => $this->getInput('userAddTags', helper::FILTER_STRING_SHORT),
+					'language' => $this->getInput('userAddLanguage', Helper::FILTER_STRING_SHORT),
+					'tags' => $this->getInput('userAddTags', Helper::FILTER_STRING_SHORT),
 				]
 			]);
 
 			// Envoie le mail
 			$sent = true;
 			if (
-				$this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) ||
+				$this->getInput('userAddSendMail', Helper::FILTER_BOOLEAN) ||
 				self::$inputNotices === []
 			) {
 				$sent = $this->sendMail(
@@ -159,8 +159,8 @@ class user extends Core
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user',
-				'notification' => $sent === true ? helper::translate('Utilisateur créé') : $sent,
+				'redirect' => Helper::baseUrl() . 'user',
+				'notification' => $sent === true ? Helper::translate('Utilisateur créé') : $sent,
 				'state' => $sent === true ? true : null
 			]);
 		}
@@ -191,7 +191,7 @@ class user extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Nouvel utilisateur'),
+			'title' => Helper::translate('Nouvel utilisateur'),
 			'view' => 'add'
 		]);
 	}
@@ -218,8 +218,8 @@ class user extends Core
 		elseif ($this->getUser('id') === $this->getUrl(2)) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user',
-				'notification' => helper::translate('Impossible de supprimer votre propre compte')
+				'redirect' => Helper::baseUrl() . 'user',
+				'notification' => Helper::translate('Impossible de supprimer votre propre compte')
 			]);
 		}
 		// Suppression
@@ -227,8 +227,8 @@ class user extends Core
 			$this->deleteData(['user', $this->getUrl(2)]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user',
-				'notification' => helper::translate('Utilisateur supprimé'),
+				'redirect' => Helper::baseUrl() . 'user',
+				'notification' => Helper::translate('Utilisateur supprimé'),
 				'state' => true
 			]);
 		}
@@ -259,7 +259,7 @@ class user extends Core
 			) {
 				$this->addOutput([
 					'access' => false,
-					'notification' => helper::translate('Accès interdit')
+					'notification' => Helper::translate('Accès interdit')
 				]);
 				return;
 			}
@@ -294,17 +294,17 @@ class user extends Core
 							if (password_verify(html_entity_decode($this->getInput('userEditOldPassword')), $this->getData(['user', $this->getUrl(2), 'password']))) {
 								// La confirmation correspond au mot de passe
 								if ($this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')) {
-									$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD, true);
+									$newPassword = $this->getInput('userEditNewPassword', Helper::FILTER_PASSWORD, true);
 									// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
 									if ($this->getUser('id') === $this->getUrl(2)) {
-										helper::deleteCookie('ZWII_USER_ID');
-										helper::deleteCookie('ZWII_USER_PASSWORD');
+										Helper::deleteCookie('ZWII_USER_ID');
+										Helper::deleteCookie('ZWII_USER_PASSWORD');
 									}
 								} else {
-									self::$inputNotices['userEditConfirmPassword'] = helper::translate('Incorrect');
+									self::$inputNotices['userEditConfirmPassword'] = Helper::translate('Incorrect');
 								}
 							} else {
-								self::$inputNotices['userEditOldPassword'] = helper::translate('Incorrect');
+								self::$inputNotices['userEditOldPassword'] = Helper::translate('Incorrect');
 							}
 						}
 					} else {
@@ -312,11 +312,11 @@ class user extends Core
 							!empty($this->getInput('userEditNewPassword')) &&
 							$this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')
 						) {
-							$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD);
+							$newPassword = $this->getInput('userEditNewPassword', Helper::FILTER_PASSWORD);
 							// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
 							if ($this->getUser('id') === $this->getUrl(2)) {
-								helper::deleteCookie('ZWII_USER_ID');
-								helper::deleteCookie('ZWII_USER_PASSWORD');
+								Helper::deleteCookie('ZWII_USER_ID');
+								Helper::deleteCookie('ZWII_USER_PASSWORD');
 							}
 						}
 					}
@@ -326,14 +326,14 @@ class user extends Core
 						$this->getUser('role') === self::ROLE_ADMIN and
 						$this->getUrl(2) !== $this->getUser('id')
 					) {
-						$newGroup = $this->getInput('userEditRole', helper::FILTER_INT, true);
+						$newGroup = $this->getInput('userEditRole', Helper::FILTER_INT, true);
 					} else {
 						$newGroup = $this->getData(['user', $this->getUrl(2), 'role']);
 					}
 					// Modification de nom Prénom
 					if ($this->getUser('role') === self::ROLE_ADMIN) {
-						$newfirstname = $this->getInput('userEditFirstname', helper::FILTER_STRING_SHORT, true);
-						$newlastname = $this->getInput('userEditLastname', helper::FILTER_STRING_SHORT, true);
+						$newfirstname = $this->getInput('userEditFirstname', Helper::FILTER_STRING_SHORT, true);
+						$newlastname = $this->getInput('userEditLastname', Helper::FILTER_STRING_SHORT, true);
 					} else {
 						$newfirstname = $this->getData(['user', $this->getUrl(2), 'firstname']);
 						$newlastname = $this->getData(['user', $this->getUrl(2), 'lastname']);
@@ -341,13 +341,13 @@ class user extends Core
 					// Profil
 					$profil = 0;
 					if ($newGroup === 1 || $newGroup === 2) {
-						$profil = $this->getInput('userEditProfil' . $newGroup, helper::FILTER_INT);
+						$profil = $this->getInput('userEditProfil' . $newGroup, Helper::FILTER_INT);
 					}
 					if ($currentUserRole < self::ROLE_ADMIN) {
 						// Empêcher la modification de l'email par un non-admin
 						$newMail = $this->getData(['user', $targetUserId, 'mail']);
 					} else {
-						$newMail = $this->getInput('userEditMail', helper::FILTER_MAIL, true);
+						$newMail = $this->getInput('userEditMail', Helper::FILTER_MAIL, true);
 					}
 					// Modifie l'utilisateur
 					$this->setData([
@@ -359,37 +359,37 @@ class user extends Core
 							'role' => $newGroup,
 							'profil' => $profil,
 							'lastname' => $newlastname,
-							'pseudo' => $this->getInput('userEditPseudo', helper::FILTER_STRING_SHORT, true),
-							'signature' => $this->getInput('userEditSignature', helper::FILTER_INT, true),
-							'mail' => $this->getInput('userEditMail', helper::FILTER_MAIL, true),
+							'pseudo' => $this->getInput('userEditPseudo', Helper::FILTER_STRING_SHORT, true),
+							'signature' => $this->getInput('userEditSignature', Helper::FILTER_INT, true),
+							'mail' => $this->getInput('userEditMail', Helper::FILTER_MAIL, true),
 							'password' => empty($newPassword) ? $oldPassword : $newPassword,
 							'connectFail' => $this->getData(['user', $this->getUrl(2), 'connectFail']),
 							'connectTimeout' => $this->getData(['user', $this->getUrl(2), 'connectTimeout']),
 							'accessUrl' => $this->getData(['user', $this->getUrl(2), 'accessUrl']),
 							'accessTimer' => $this->getData(['user', $this->getUrl(2), 'accessTimer']),
 							'accessCsrf' => $this->getData(['user', $this->getUrl(2), 'accessCsrf']),
-							'files' => $this->getInput('userEditFiles', helper::FILTER_BOOLEAN),
-							'language' => $this->getInput('userEditLanguage', helper::FILTER_STRING_SHORT),
-							'tags' => $this->getInput('userEditTags', helper::FILTER_STRING_SHORT),
+							'files' => $this->getInput('userEditFiles', Helper::FILTER_BOOLEAN),
+							'language' => $this->getInput('userEditLanguage', Helper::FILTER_STRING_SHORT),
+							'tags' => $this->getInput('userEditTags', Helper::FILTER_STRING_SHORT),
 							'authKey' => $this->getData(['user', $this->getUrl(2), 'authKey']),
 						]
 					]);
 					// Redirection spécifique si l'utilisateur change son mot de passe
 					if ($this->getUser('id') === $this->getUrl(2) and $this->getInput('userEditNewPassword')) {
-						$redirect = helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl());
+						$redirect = Helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl());
 					}
 					// Redirection si retour en arrière possible
 					elseif ($this->getUser('role') === self::ROLE_ADMIN) {
-						$redirect = helper::baseUrl() . 'user';
+						$redirect = Helper::baseUrl() . 'user';
 					}
 					// Redirection normale
 					else {
-						$redirect = helper::baseUrl();
+						$redirect = Helper::baseUrl();
 					}
 					// Valeurs en sortie
 					$this->addOutput([
 						'redirect' => $redirect,
-						'notification' => helper::translate('Modifications enregistrées'),
+						'notification' => Helper::translate('Modifications enregistrées'),
 						'state' => true
 					]);
 				}
@@ -436,7 +436,7 @@ class user extends Core
 		if (
 			$this->isPost()
 		) {
-			$input = $this->getInput('userForgotId', helper::FILTER_STRING_SHORT, true);
+			$input = $this->getInput('userForgotId', Helper::FILTER_STRING_SHORT, true);
 			$sent = false;
 			$userId = null;
 
@@ -466,7 +466,7 @@ class user extends Core
 					'<p>Bonjour <strong>' . $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']) . '</strong>,</p>'
 					. '<p>Vous avez demandé à changer le mot de passe lié à votre compte. Vous trouverez ci-dessous un lien vous permettant de modifier celui-ci.</p>'
 										. '<p>Si vous n\'avez pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</p>'
-					. '<p><a href="' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a></p>',
+					. '<p><a href="' . Helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . Helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a></p>',
 					null,
 					$this->getData(['config', 'smtp', 'from'])
 				);
@@ -474,14 +474,14 @@ class user extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => $sent === true ? helper::translate('Un mail a été envoyé pour confirmer la réinitialisation') : helper::translate("Le mail de réinitialisation ne peut pas être envoyé, contactez l'administrateur"),
+				'notification' => $sent === true ? Helper::translate('Un mail a été envoyé pour confirmer la réinitialisation') : Helper::translate("Le mail de réinitialisation ne peut pas être envoyé, contactez l'administrateur"),
 				'state' => ($sent === true ? true : false),
-				'redirect' => helper::baseUrl()
+				'redirect' => Helper::baseUrl()
 			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Mot de passe oublié'),
+			'title' => Helper::translate('Mot de passe oublié'),
 			'view' => 'forgot',
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
 		]);
@@ -507,7 +507,7 @@ class user extends Core
 				case '2':
 					foreach ($roleValue as $profilId => $profilValue) {
 						if ($profilId) {
-							self::$usersGroups[$roleId . $profilId] = sprintf(helper::translate('Rôle %s - Profil %s'), self::$rolePublics[$roleId], $profilValue['name']);
+							self::$usersGroups[$roleId . $profilId] = sprintf(Helper::translate('Rôle %s - Profil %s'), self::$rolePublics[$roleId], $profilValue['name']);
 							$profils[$roleId . $profilId] = 0;
 						}
 					}
@@ -521,7 +521,7 @@ class user extends Core
 		self::$alphabet = array_merge(['all' => 'Toute'], self::$alphabet);
 
 		// Liste des membres
-		$userIdsLastNames = helper::arrayColumn($this->getData(['user']), 'lastname');
+		$userIdsLastNames = Helper::arrayColumn($this->getData(['user']), 'lastname');
 		ksort($userIdsLastNames);
 		foreach ($userIdsLastNames as $userId => $userLastNames) {
 			if ($this->getData(['user', $userId, 'role'])) {
@@ -538,20 +538,20 @@ class user extends Core
 					$firstName = $this->getData(['user', $userId, 'firstname']);
 					$lastName = $this->getData(['user', $userId, 'lastname']);
 					if (
-						$this->getInput('userFilterRole', helper::FILTER_INT) > 0 &&
-						$this->getInput('userFilterRole', helper::FILTER_STRING_SHORT) !== $role . $profil
+						$this->getInput('userFilterRole', Helper::FILTER_INT) > 0 &&
+						$this->getInput('userFilterRole', Helper::FILTER_STRING_SHORT) !== $role . $profil
 					)
 						continue;
 					// Première lettre du prénom
 					if (
-						$this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== 'all' &&
-						$this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($firstName, 0, 1))
+						$this->getInput('userFilterFirstName', Helper::FILTER_STRING_SHORT) !== 'all' &&
+						$this->getInput('userFilterFirstName', Helper::FILTER_STRING_SHORT) !== strtoupper(substr($firstName, 0, 1))
 					)
 						continue;
 					// Première lettre du nom
 					if (
-						$this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== 'all' &&
-						$this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($lastName, 0, 1))
+						$this->getInput('userFilterLastName', Helper::FILTER_STRING_SHORT) !== 'all' &&
+						$this->getInput('userFilterLastName', Helper::FILTER_STRING_SHORT) !== strtoupper(substr($lastName, 0, 1))
 					)
 						continue;
 				}
@@ -563,10 +563,10 @@ class user extends Core
 					// Email
 					$this->getData(['user', $userId, 'mail']),
 					// Rôle et Profil
-					helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
+					Helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
 					. '/'
 					. (empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-						? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
+						? Helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
 						: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name'])),
 					// Tags
 					$this->getData(['user', $userId, 'tags']),
@@ -575,19 +575,19 @@ class user extends Core
 					? ''
 					: $this->getData(['user', $userId, 'accessTimer']),
 					// Bouton Edit
-					template::ico('pencil', [
+					Template::ico('pencil', [
 						'id' => 'userEdit' . $userId,
-						'href' => helper::baseUrl() . 'user/edit/' . $userId,
-						'value' => template::ico('pencil'),
+						'href' => Helper::baseUrl() . 'user/edit/' . $userId,
+						'value' => Template::ico('pencil'),
 						'margin' => 'right',
 						'help' => 'Éditer',
 						'fontSize' => '18px',
 					])
 					// Bouton supprimée concaténé
-					. template::ico('trash', [
+					. Template::ico('trash', [
 						'id' => 'userDelete' . $userId,
 						'class' => 'userDelete icoTextRed',
-						'href' => helper::baseUrl() . 'user/delete/' . $userId,
+						'href' => Helper::baseUrl() . 'user/delete/' . $userId,
 						'help' => 'Supprimer',
 						'fontSize' => '18px',
 					])
@@ -606,7 +606,7 @@ class user extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Utilisateurs'),
+			'title' => Helper::translate('Utilisateurs'),
 			'view' => 'index',
 			'vendor' => [
 				'datatables'
@@ -629,15 +629,15 @@ class user extends Core
 			) {
 				self::$userGroups[$roleId] = [
 					$roleId,
-					helper::translate($roleData['name']),
-					nl2br(helper::translate($roleData['comment'])),
-					template::button('profilEdit' . $roleId, [
-						'value' => template::ico('pencil'),
+					Helper::translate($roleData['name']),
+					nl2br(Helper::translate($roleData['comment'])),
+					Template::button('profilEdit' . $roleId, [
+						'value' => Template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => $roleData['readonly'],
 					]),
-					template::button('profilDelete' . $roleId, [
-						'value' => template::ico('trash'),
+					Template::button('profilDelete' . $roleId, [
+						'value' => Template::ico('trash'),
 						'help' => 'Supprimer',
 						'disabled' => $roleData['readonly'],
 					])
@@ -653,18 +653,18 @@ class user extends Core
 				foreach ($roleData as $profilId => $profilData) {
 					self::$userGroups[$roleId . '.' . $profilId] = [
 						$roleId . '-' . $profilId,
-						helper::translate(self::$roles[$roleId]) . '<br />Profil : ' . helper::translate($profilData['name']),
-						nl2br(helper::translate($profilData['comment'])),
-						template::button('profilEdit' . $roleId . $profilId, [
-							'href' => helper::baseUrl() . 'user/profilEdit/' . $roleId . '/' . $profilId,
-							'value' => template::ico('pencil'),
+						Helper::translate(self::$roles[$roleId]) . '<br />Profil : ' . Helper::translate($profilData['name']),
+						nl2br(Helper::translate($profilData['comment'])),
+						Template::button('profilEdit' . $roleId . $profilId, [
+							'href' => Helper::baseUrl() . 'user/profilEdit/' . $roleId . '/' . $profilId,
+							'value' => Template::ico('pencil'),
 							'help' => 'Éditer',
 							'disabled' => $profilData['readonly'],
 						]),
-						template::button('profilDelete' . $roleId . $profilId, [
+						Template::button('profilDelete' . $roleId . $profilId, [
 							'class' => 'profilDelete buttonRed',
-							'href' => helper::baseUrl() . 'user/profilDelete/' . $roleId . '/' . $profilId,
-							'value' => template::ico('trash'),
+							'href' => Helper::baseUrl() . 'user/profilDelete/' . $roleId . '/' . $profilId,
+							'value' => Template::ico('trash'),
 							'help' => 'Supprimer',
 							'disabled' => $profilData['permanent'] || array_search($profilId, $profilInUse),
 						])
@@ -674,7 +674,7 @@ class user extends Core
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Profils des rôles'),
+			'title' => Helper::translate('Profils des rôles'),
 			'view' => 'profil'
 		]);
 	}
@@ -690,12 +690,12 @@ class user extends Core
 			$this->isPost()
 		) {
 			// Effacer les données du numéro de profil ancien
-			$role = $this->getInput('profilEditRole', helper::FILTER_STRING_SHORT, true);
+			$role = $this->getInput('profilEditRole', Helper::FILTER_STRING_SHORT, true);
 			// Les profils 1 sont désactivés dans le formulaire
 			$profil = empty($this->getInput('profilEditProfil')) ? '1' : $this->getInput('profilEditProfil');
-			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);
+			$oldProfil = $this->getInput('profilEditOldProfil', Helper::FILTER_STRING_SHORT);
 			// Gère le chemin
-			$fileManager = $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN);
+			$fileManager = $this->getInput('profilEditFileManager', Helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilEditPath');
 
 			// Empêche les roles 1 d'avoir accès au gestionnaire de fichiers
@@ -719,48 +719,48 @@ class user extends Core
 
 			// Données du formulaire
 			$data = [
-				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
+				'name' => $this->getInput('profilEditName', Helper::FILTER_STRING_SHORT, true),
 				'readonly' => false,
 				'permanent' => $profil === '1' ? true : false,
-				'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
+				'comment' => $this->getInput('profilEditComment', Helper::FILTER_STRING_SHORT, true),
 				'filemanager' => $fileManager,
 				'file' => [
-					'download' => $this->getInput('profilEditDownload', helper::FILTER_BOOLEAN),
-					'edit' => $this->getInput('profilEditEdit', helper::FILTER_BOOLEAN),
-					'create' => $this->getInput('profilEditCreate', helper::FILTER_BOOLEAN),
-					'rename' => $this->getInput('profilEditRename', helper::FILTER_BOOLEAN),
-					'upload' => $this->getInput('profilEditUpload', helper::FILTER_BOOLEAN),
-					'delete' => $this->getInput('profilEditDelete', helper::FILTER_BOOLEAN),
-					'preview' => $this->getInput('profilEditPreview', helper::FILTER_BOOLEAN),
-					'duplicate' => $this->getInput('profilEditDuplicate', helper::FILTER_BOOLEAN),
-					'extract' => $this->getInput('profilEditExtract', helper::FILTER_BOOLEAN),
-					'copycut' => $this->getInput('profilEditCopycut', helper::FILTER_BOOLEAN),
-					'chmod' => $this->getInput('profilEditChmod', helper::FILTER_BOOLEAN),
+					'download' => $this->getInput('profilEditDownload', Helper::FILTER_BOOLEAN),
+					'edit' => $this->getInput('profilEditEdit', Helper::FILTER_BOOLEAN),
+					'create' => $this->getInput('profilEditCreate', Helper::FILTER_BOOLEAN),
+					'rename' => $this->getInput('profilEditRename', Helper::FILTER_BOOLEAN),
+					'upload' => $this->getInput('profilEditUpload', Helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('profilEditDelete', Helper::FILTER_BOOLEAN),
+					'preview' => $this->getInput('profilEditPreview', Helper::FILTER_BOOLEAN),
+					'duplicate' => $this->getInput('profilEditDuplicate', Helper::FILTER_BOOLEAN),
+					'extract' => $this->getInput('profilEditExtract', Helper::FILTER_BOOLEAN),
+					'copycut' => $this->getInput('profilEditCopycut', Helper::FILTER_BOOLEAN),
+					'chmod' => $this->getInput('profilEditChmod', Helper::FILTER_BOOLEAN),
 				],
 				'folder' => [
-					'create' => $this->getInput('profilEditFolderCreate', helper::FILTER_BOOLEAN),
-					'delete' => $this->getInput('profilEditFolderDelete', helper::FILTER_BOOLEAN),
-					'rename' => $this->getInput('profilEditFolderRename', helper::FILTER_BOOLEAN),
-					'copycut' => $this->getInput('profilEditFolderCopycut', helper::FILTER_BOOLEAN),
-					'chmod' => $this->getInput('profilEditFolderChmod', helper::FILTER_BOOLEAN),
+					'create' => $this->getInput('profilEditFolderCreate', Helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('profilEditFolderDelete', Helper::FILTER_BOOLEAN),
+					'rename' => $this->getInput('profilEditFolderRename', Helper::FILTER_BOOLEAN),
+					'copycut' => $this->getInput('profilEditFolderCopycut', Helper::FILTER_BOOLEAN),
+					'chmod' => $this->getInput('profilEditFolderChmod', Helper::FILTER_BOOLEAN),
 					'path' => preg_replace('/^\./', '', $path),  // Supprime le point pour préserver le chemin
 				],
 				'page' => [
-					'add' => $this->getInput('profilEditPageAdd', helper::FILTER_BOOLEAN),
-					'edit' => $this->getInput('profilEditPageEdit', helper::FILTER_BOOLEAN),
-					'delete' => $this->getInput('profilEditPageDelete', helper::FILTER_BOOLEAN),
-					'duplicate' => $this->getInput('profilEditPageDuplicate', helper::FILTER_BOOLEAN),
-					'module' => $this->getInput('profilEditPageModule', helper::FILTER_BOOLEAN),
-					'cssEditor' => $this->getInput('profilEditPagecssEditor', helper::FILTER_BOOLEAN),
-					'jsEditor' => $this->getInput('profilEditPagejsEditor', helper::FILTER_BOOLEAN),
+					'add' => $this->getInput('profilEditPageAdd', Helper::FILTER_BOOLEAN),
+					'edit' => $this->getInput('profilEditPageEdit', Helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('profilEditPageDelete', Helper::FILTER_BOOLEAN),
+					'duplicate' => $this->getInput('profilEditPageDuplicate', Helper::FILTER_BOOLEAN),
+					'module' => $this->getInput('profilEditPageModule', Helper::FILTER_BOOLEAN),
+					'cssEditor' => $this->getInput('profilEditPagecssEditor', Helper::FILTER_BOOLEAN),
+					'jsEditor' => $this->getInput('profilEditPagejsEditor', Helper::FILTER_BOOLEAN),
 				],
 				'user' => [
-					'edit' => $this->getInput('profilEditUserEdit', helper::FILTER_BOOLEAN),
+					'edit' => $this->getInput('profilEditUserEdit', Helper::FILTER_BOOLEAN),
 				]
 			];
 
 			// Données des modules
-			$dataModules = helper::getModules();
+			$dataModules = Helper::getModules();
 			if (is_array($dataModules)) {
 				foreach ($dataModules as $moduleId => $moduleValue) {
 					if (file_exists('module/' . $moduleId . '/profil/main/edit.inc.php')) {
@@ -782,8 +782,8 @@ class user extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user/profil',
-				'notification' => helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'user/profil',
+				'notification' => Helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
@@ -794,7 +794,7 @@ class user extends Core
 		self::$sharePath = array_merge(['site/file/source/' => 'Tous les dossiers'], self::$sharePath);
 
 		// Liste des modules installés
-		self::$listModules = helper::getModules();
+		self::$listModules = Helper::getModules();
 		self::$listModules = array_keys(self::$listModules);
 
 		// Charge les dialogues du module pour afficher les traductions
@@ -833,7 +833,7 @@ class user extends Core
 
 		// Valeurs en sortie;
 		$this->addOutput([
-			'title' => sprintf(helper::translate('Édition du profil %s'), $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])),
+			'title' => sprintf(Helper::translate('Édition du profil %s'), $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])),
 			'view' => 'profilEdit'
 		]);
 	}
@@ -849,10 +849,10 @@ class user extends Core
 			$this->isPost()
 		) {
 			// Nombre de profils de ce rôle
-			$role = $this->getInput('profilAddRole', helper::FILTER_STRING_SHORT);
+			$role = $this->getInput('profilAddRole', Helper::FILTER_STRING_SHORT);
 			$profil = count($this->getData(['profil', $role]));
 			// Gère le chemin
-			$fileManager = $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN);
+			$fileManager = $this->getInput('profilAddFileManager', Helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilAddPath');
 
 			// Sécurité supplémentaire pour interdire les fichiers
@@ -870,48 +870,48 @@ class user extends Core
 				$profil = (string) ($profil + 1);
 				// Données du formulaire
 				$data = [
-					'name' => $this->getInput('profilAddName', helper::FILTER_STRING_SHORT, true),
+					'name' => $this->getInput('profilAddName', Helper::FILTER_STRING_SHORT, true),
 					'readonly' => false,
 					'permanent' => false,
-					'comment' => $this->getInput('profilAddComment', helper::FILTER_STRING_SHORT, true),
+					'comment' => $this->getInput('profilAddComment', Helper::FILTER_STRING_SHORT, true),
 					'filemanager' => $fileManager,
 					'file' => [
-						'download' => $this->getInput('profilAddDownload', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilAddEdit', helper::FILTER_BOOLEAN),
-						'create' => $this->getInput('profilAddCreate', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('profilAddRename', helper::FILTER_BOOLEAN),
-						'upload' => $this->getInput('profilAddUpload', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddDelete', helper::FILTER_BOOLEAN),
-						'preview' => $this->getInput('profilAddPreview', helper::FILTER_BOOLEAN),
-						'duplicate' => $this->getInput('profilAddDuplicate', helper::FILTER_BOOLEAN),
-						'extract' => $this->getInput('profilAddExtract', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('profilAddCopycut', helper::FILTER_BOOLEAN),
-						'chmod' => $this->getInput('profilAddChmod', helper::FILTER_BOOLEAN),
+						'download' => $this->getInput('profilAddDownload', Helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddEdit', Helper::FILTER_BOOLEAN),
+						'create' => $this->getInput('profilAddCreate', Helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('profilAddRename', Helper::FILTER_BOOLEAN),
+						'upload' => $this->getInput('profilAddUpload', Helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddDelete', Helper::FILTER_BOOLEAN),
+						'preview' => $this->getInput('profilAddPreview', Helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('profilAddDuplicate', Helper::FILTER_BOOLEAN),
+						'extract' => $this->getInput('profilAddExtract', Helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('profilAddCopycut', Helper::FILTER_BOOLEAN),
+						'chmod' => $this->getInput('profilAddChmod', Helper::FILTER_BOOLEAN),
 					],
 					'folder' => [
-						'create' => $this->getInput('profilAddFolderCreate', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddFolderDelete', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('profilAddFolderRename', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
-						'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
+						'create' => $this->getInput('profilAddFolderCreate', Helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddFolderDelete', Helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('profilAddFolderRename', Helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('profilAddFolderCopycut', Helper::FILTER_BOOLEAN),
+						'chmod' => $this->getInput('profilAddFolderChmod', Helper::FILTER_BOOLEAN),
 						'path' => preg_replace('/^\./', '', $path),  // Supprime le point pour préserver le chemin
 					],
 					'page' => [
-						'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilAddPageEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddPageDelete', helper::FILTER_BOOLEAN),
-						'duplicate' => $this->getInput('profilAddPageDuplicate', helper::FILTER_BOOLEAN),
-						'module' => $this->getInput('profilAddPageModule', helper::FILTER_BOOLEAN),
-						'cssEditor' => $this->getInput('profilAddPagecssEditor', helper::FILTER_BOOLEAN),
-						'jsEditor' => $this->getInput('profilAddPagejsEditor', helper::FILTER_BOOLEAN),
+						'add' => $this->getInput('profilAddPageAdd', Helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddPageEdit', Helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddPageDelete', Helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('profilAddPageDuplicate', Helper::FILTER_BOOLEAN),
+						'module' => $this->getInput('profilAddPageModule', Helper::FILTER_BOOLEAN),
+						'cssEditor' => $this->getInput('profilAddPagecssEditor', Helper::FILTER_BOOLEAN),
+						'jsEditor' => $this->getInput('profilAddPagejsEditor', Helper::FILTER_BOOLEAN),
 					],
 					'user' => [
-						'edit' => $this->getInput('profilAddUserEdit', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddUserEdit', Helper::FILTER_BOOLEAN),
 					]
 				];
 
 				// Données des modules
-				$dataModules = helper::getModules();
+				$dataModules = Helper::getModules();
 				if (is_array($dataModules)) {
 					foreach ($dataModules as $moduleId => $moduleValue) {
 						if (file_exists('module/' . $moduleId . '/profil/main/add.inc.php')) {
@@ -932,15 +932,15 @@ class user extends Core
 				]);
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'user/profil',
-					'notification' => helper::translate('Modifications enregistrées'),
+					'redirect' => Helper::baseUrl() . 'user/profil',
+					'notification' => Helper::translate('Modifications enregistrées'),
 					'state' => true
 				]);
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'user/profil',
-					'notification' => helper::translate('Nombre de profils maximum : ') . self::MAX_PROFILS,
+					'redirect' => Helper::baseUrl() . 'user/profil',
+					'notification' => Helper::translate('Nombre de profils maximum : ') . self::MAX_PROFILS,
 					'state' => false
 				]);
 			}
@@ -952,7 +952,7 @@ class user extends Core
 		self::$sharePath = array_merge(['site/file/source/' => 'Tous les dossiers'], self::$sharePath);
 
 		// Liste des modules installés
-		self::$listModules = helper::getModules();
+		self::$listModules = Helper::getModules();
 		self::$listModules = array_keys(self::$listModules);
 
 		// Charge les dialogues du module pour afficher les traductions
@@ -982,7 +982,7 @@ class user extends Core
 	{
 		// Ne pas supprimer un profil utililsé
 		// recherche les membres du rôle
-		$roles = helper::arrayColumn($this->getData(['user']), 'role');
+		$roles = Helper::arrayColumn($this->getData(['user']), 'role');
 		$roles = array_keys($roles, $this->getUrl(2));
 		$flag = true;
 		// Stoppe si le profil est affecté
@@ -1008,8 +1008,8 @@ class user extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/profil',
-				'notification' => $flag ? helper::translate('Profil supprimé') : helper::translate('Action interdite'),
+				'redirect' => Helper::baseUrl() . $this->getUrl(0) . '/profil',
+				'notification' => $flag ? Helper::translate('Profil supprimé') : Helper::translate('Action interdite'),
 				'state' => $flag
 			]);
 		}
@@ -1026,12 +1026,12 @@ class user extends Core
 			$this->isPost()
 		) {
 			// Lire Id du compte
-			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
+			$userId = $this->getInput('userLoginId', Helper::FILTER_ID, true);
 			$notification = '';
 			// Check le captcha
 			if (
 				$this->getData(['config', 'connect', 'captcha']) and
-				password_verify($this->getInput('userLoginCaptcha', helper::FILTER_INT), $this->getInput('userLoginCaptchaResult')) === false
+				password_verify($this->getInput('userLoginCaptcha', Helper::FILTER_INT), $this->getInput('userLoginCaptchaResult')) === false
 			) {
 				$captcha = false;
 			} else {
@@ -1047,11 +1047,11 @@ class user extends Core
 					[
 						'connectFail' => $this->getData(['blacklist', $userId, 'connectFail']) + 1,
 						'lastFail' => time(),
-						'ip' => helper::getIp()
+						'ip' => Helper::getIp()
 					]
 				]);
 				// Verrouillage des IP
-				$ipBlackList = helper::arrayColumn($this->getData(['blacklist']), 'ip');
+				$ipBlackList = Helper::arrayColumn($this->getData(['blacklist']), 'ip');
 				if (
 					$this->getData(['blacklist', $userId, 'connectFail']) >= $this->getData(['config', 'connect', 'attempt']) and
 					in_array($this->getData(['blacklist', $userId, 'ip']), $ipBlackList)
@@ -1059,14 +1059,14 @@ class user extends Core
 					$logStatus = 'Compte inconnu verrouillé';
 					// Valeurs en sortie
 					$this->addOutput([
-						'notification' => helper::translate('Compte verrouillé'),
-						'redirect' => helper::baseUrl(),
+						'notification' => Helper::translate('Compte verrouillé'),
+						'redirect' => Helper::baseUrl(),
 						'state' => false
 					]);
 				} else {
 					// Valeurs en sortie
 					$this->addOutput([
-						'notification' => helper::translate('Captcha, identifiant ou mot de passe incorrects')
+						'notification' => Helper::translate('Captcha, identifiant ou mot de passe incorrects')
 					]);
 				}
 
@@ -1087,7 +1087,7 @@ class user extends Core
 				if (
 					($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])) < time() and
 					$this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt']) and
-					password_verify(html_entity_decode($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true)), $this->getData(['user', $userId, 'password'])) and
+					password_verify(html_entity_decode($this->getInput('userLoginPassword', Helper::FILTER_STRING_SHORT, true)), $this->getData(['user', $userId, 'password'])) and
 					$this->getData(['user', $userId, 'role']) >= self::ROLE_MEMBER and
 					$captcha === true
 				) {
@@ -1104,8 +1104,8 @@ class user extends Core
 						$this->getData(['user', $userId, 'role']) < self::ROLE_ADMIN
 					) {
 						$this->addOutput([
-							'notification' => helper::translate("Seul un administrateur peut se connecter lors d'une maintenance"),
-							'redirect' => helper::baseUrl(),
+							'notification' => Helper::translate("Seul un administrateur peut se connecter lors d'une maintenance"),
+							'redirect' => Helper::baseUrl(),
 							'state' => false
 						]);
 					} else {
@@ -1139,7 +1139,7 @@ class user extends Core
 							// L'email a été envoyé avec succès, redirection vers la page de double authentification
 							if ($sent === true) {
 								// Journalisation
-								$logStatus = helper::translate("Envoi du message d'authentification");
+								$logStatus = Helper::translate("Envoi du message d'authentification");
 								// Redirection vers la page d'authentification
 								$authRedirect = 'user/auth/';
 								// Stocker la clé envoyée par email
@@ -1152,34 +1152,34 @@ class user extends Core
 								$this->setData(['user', $userId, 'authKey', $authKey]);
 								// Journalisation
 								$this->saveLog($sent);
-								$notification = sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname']));
+								$notification = sprintf(Helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname']));
 							}
 						} else {
-							$logStatus = helper::translate('Connexion réussie');
-							$notification = sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname']));
+							$logStatus = Helper::translate('Connexion réussie');
+							$notification = sprintf(Helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname']));
 							$this->setData(['user', $userId, 'authKey', $authKey]);
 						}
 
 						// Validité du cookie
-						$expire = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? strtotime('+1 year') : 0;
-						switch ($this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN)) {
+						$expire = $this->getInput('userLoginLongTime', Helper::FILTER_BOOLEAN) === true ? strtotime('+1 year') : 0;
+						switch ($this->getInput('userLoginLongTime', Helper::FILTER_BOOLEAN)) {
 							case false:
 								 // Session classique : stocke l'ID utilisateur en session PHP
 								$_SESSION['ZWII_USER_ID'] = $userId;
 								// Cookie de session pour le filemanager
-								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+								setcookie('ZWII_USER_ID', $userId, $expire, Helper::baseUrl(false, false), '', Helper::isHttps(), true);
 
 								// Cookie d'authentification pour la reconnexion automatique
-								setcookie('ZWII_AUTH_KEY', $authKey, 0, helper::baseUrl(false, false), '', helper::isHttps(), true);
+								setcookie('ZWII_AUTH_KEY', $authKey, 0, Helper::baseUrl(false, false), '', Helper::isHttps(), true);
 								break;
 							default:
 								 // Session classique : stocke l'ID utilisateur en session PHP
 								$_SESSION['ZWII_USER_ID'] = $userId;
 								// Cookie persistant pour le filemanager
-								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
+								setcookie('ZWII_USER_ID', $userId, $expire, Helper::baseUrl(false, false));
 
 								/// Cookie d'authentification persistant pour la reconnexion automatique
-								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+								setcookie('ZWII_AUTH_KEY', $authKey, $expire, Helper::baseUrl(false, false), '', Helper::isHttps(), true);
 								break;
 						}
 
@@ -1190,7 +1190,7 @@ class user extends Core
 						) {
 							$pageId = '';
 						}
-						$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl() . $authRedirect;
+						$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? Helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : Helper::baseUrl() . $authRedirect;
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => $notification,
@@ -1200,8 +1200,8 @@ class user extends Core
 					}
 					// Sinon notification d'échec
 				} else {
-					$notification = helper::translate('Captcha, identifiant ou mot de passe incorrects');
-					$logStatus = $captcha === true ? helper::translate('Erreur de mot de passe') : helper::translate('Erreur de captcha');
+					$notification = Helper::translate('Captcha, identifiant ou mot de passe incorrects');
+					$logStatus = $captcha === true ? Helper::translate('Erreur de mot de passe') : Helper::translate('Erreur de captcha');
 					// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
 					if ($this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
 						$this->setData(['user', $userId, 'connectFail', $this->getdata(['user', $userId, 'connectFail']) + 1]);
@@ -1212,7 +1212,7 @@ class user extends Core
 					}
 					// Cas 3 le délai de bloquage court
 					if ($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) > time()) {
-						$notification = sprintf(helper::translate('Accès bloqué %d minutes'), ($this->getData(['config', 'connect', 'timeout']) / 60));
+						$notification = sprintf(Helper::translate('Accès bloqué %d minutes'), ($this->getData(['config', 'connect', 'timeout']) / 60));
 					}
 
 					// Valeurs en sortie
@@ -1233,7 +1233,7 @@ class user extends Core
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Connexion'),
+			'title' => Helper::translate('Connexion'),
 			'view' => 'login',
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
 		]);
@@ -1251,10 +1251,10 @@ class user extends Core
 		) {
 			// Vérifier la clé saisie
 			$targetKey = $this->getData(['user', $this->getUser('id'), 'authKey']);
-			$inputKey = $this->getInput('userAuthKey', helper::FILTER_INT);
+			$inputKey = $this->getInput('userAuthKey', Helper::FILTER_INT);
 			// Redirection
 			$pageId = $this->getUrl(2);
-			$redirect = $pageId ? helper::baseUrl() . $pageId : helper::baseUrl();
+			$redirect = $pageId ? Helper::baseUrl() . $pageId : Helper::baseUrl();
 			if (
 				// La clé est valide ou le message n'ayant pas été expédié, la double authentification est désactivée
 				$targetKey === $inputKey || $this->getData(['config', 'connect', 'mailAuth', 0]) === 0
@@ -1268,7 +1268,7 @@ class user extends Core
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => $redirect,
-					'notification' => sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname'])),
+					'notification' => sprintf(Helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname'])),
 					'state' => true
 				]);
 			} else {
@@ -1278,8 +1278,8 @@ class user extends Core
 				$this->setData(['user', $this->getUser('id'), 'connectTimeout', 0]);
 
 				// Détruit les cookies d'authenfication
-				helper::deleteCookie('ZWII_USER_ID');
-				helper::deleteCookie('ZWII_AUTH_KEY');
+				Helper::deleteCookie('ZWII_USER_ID');
+				Helper::deleteCookie('ZWII_AUTH_KEY');
 
 				// Détruit la session
 				session_destroy();
@@ -1289,14 +1289,14 @@ class user extends Core
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => $redirect,
-					'notification' => helper::translate('La clé est incorrecte'),
+					'notification' => Helper::translate('La clé est incorrecte'),
 					'state' => false
 				]);
 			}
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Double authentification'),
+				'title' => Helper::translate('Double authentification'),
 				'view' => 'auth',
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
 			]);
@@ -1309,15 +1309,15 @@ class user extends Core
 	public function logout()
 	{
 		// Détruit les cookies d'authenfication
-		helper::deleteCookie('ZWII_USER_ID');
-		helper::deleteCookie('ZWII_AUTH_KEY');
+		Helper::deleteCookie('ZWII_USER_ID');
+		Helper::deleteCookie('ZWII_AUTH_KEY');
 		// Détruit la session
 		session_destroy();
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => helper::translate('Déconnexion !'),
-			'redirect' => helper::baseUrl(false),
+			'notification' => Helper::translate('Déconnexion !'),
+			'redirect' => Helper::baseUrl(false),
 			'state' => true
 		]);
 	}
@@ -1339,8 +1339,8 @@ class user extends Core
 		if ($userData === null) {
 			$this->saveLog('Reset - Erreur : Utilisateur inconnu [' . $userId . ']', true);
 			$this->addOutput([
-				'redirect' => helper::baseUrl(),
-				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Utilisateur inconnu',
+				'redirect' => Helper::baseUrl(),
+				'notification' => Helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Utilisateur inconnu',
 				'state' => false
 			]);
 			return;
@@ -1350,8 +1350,8 @@ class user extends Core
 		if (!is_string($forgotData) || strpos($forgotData, '_') === false) {
 			$this->saveLog('Reset - Erreur : Format invalide pour [' . $userId . '] - Data: ' . var_export($forgotData, true), true);
 			$this->addOutput([
-				'redirect' => helper::baseUrl(),
-				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Clé manquante ou invalide',
+				'redirect' => Helper::baseUrl(),
+				'notification' => Helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Clé manquante ou invalide',
 				'state' => false
 			]);
 			return;
@@ -1367,8 +1367,8 @@ class user extends Core
 		if ($isExpired) {
 			$this->saveLog('Reset - Erreur : Lien expiré pour [' . $userId . '] - Timestamp: ' . $timestamp . ' - Age: ' . (time() - $timestamp) . 's', true);
 			$this->addOutput([
-				'redirect' => helper::baseUrl(),
-				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Lien expiré (24h maximum)',
+				'redirect' => Helper::baseUrl(),
+				'notification' => Helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Lien expiré (24h maximum)',
 				'state' => false
 			]);
 			return;
@@ -1378,8 +1378,8 @@ class user extends Core
 		if ($urlKey !== $storedKey) {
 			$this->saveLog('Reset - Erreur : Clé invalide pour [' . $userId . '] - Attendu: [' . $storedKey . '] - Reçu: [' . $urlKey . '] - Longueurs: ' . strlen($storedKey) . '/' . strlen($urlKey), true);
 			$this->addOutput([
-				'redirect' => helper::baseUrl(),
-				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Clé invalide',
+				'redirect' => Helper::baseUrl(),
+				'notification' => Helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Clé invalide',
 				'state' => false
 			]);
 			return;
@@ -1390,8 +1390,8 @@ class user extends Core
 		
 		// Soumission du formulaire
 		if ($this->isPost()) {
-			$newPasswordInput = $this->getInput('userResetNewPassword', helper::FILTER_STRING_SHORT, true);
-			$confirmPasswordInput = $this->getInput('userResetConfirmPassword', helper::FILTER_STRING_SHORT, true);
+			$newPasswordInput = $this->getInput('userResetNewPassword', Helper::FILTER_STRING_SHORT, true);
+			$confirmPasswordInput = $this->getInput('userResetConfirmPassword', Helper::FILTER_STRING_SHORT, true);
 			
 			if ($newPasswordInput) {
 				// Vérifier que les deux mots de passe correspondent
@@ -1399,7 +1399,7 @@ class user extends Core
 					self::$inputNotices['userResetConfirmPassword'] = 'Incorrect';
 				} else {
 					// Hasher et enregistrer le nouveau mot de passe
-					$newPassword = $this->getInput('userResetNewPassword', helper::FILTER_PASSWORD, true);
+					$newPassword = $this->getInput('userResetNewPassword', Helper::FILTER_PASSWORD, true);
 					$this->setData(['user', $userId, 'password', $newPassword], false);
 					// Réinitialiser la demande de reset
 					$this->setData(['user', $userId, 'forgot', 0], false);
@@ -1413,8 +1413,8 @@ class user extends Core
 					
 					// Rediriger vers la page de login
 					$this->addOutput([
-						'notification' => helper::translate('Nouveau mot de passe enregistré'),
-						'redirect' => helper::baseUrl() . 'user/login',
+						'notification' => Helper::translate('Nouveau mot de passe enregistré'),
+						'redirect' => Helper::baseUrl() . 'user/login',
 						'state' => true
 					]);
 					return;
@@ -1424,7 +1424,7 @@ class user extends Core
 		
 		// Afficher le formulaire
 		$this->addOutput([
-			'title' => helper::translate('Réinitialisation du mot de passe'),
+			'title' => Helper::translate('Réinitialisation du mot de passe'),
 			'view' => 'reset',
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
 		]);
@@ -1443,7 +1443,7 @@ class user extends Core
 			$this->isPost()
 		) {
 			// Lecture du CSV et construction du tableau
-			$file = $this->getInput('userImportCSVFile', helper::FILTER_STRING_SHORT, true);
+			$file = $this->getInput('userImportCSVFile', Helper::FILTER_STRING_SHORT, true);
 			$filePath = self::FILE_DIR . 'source/' . $file;
 			if ($file and file_exists($filePath)) {
 				// Analyse et extraction du CSV
@@ -1483,10 +1483,10 @@ class user extends Core
 							? $item['role']
 							: 1;
 						// L'utilisateur existe
-						$userId = helper::filter($item['id'], helper::FILTER_ID);
+						$userId = Helper::filter($item['id'], Helper::FILTER_ID);
 						if ($this->getData(['user', $userId])) {
 							// Notification du doublon
-							$item['notification'] = template::ico('cancel');
+							$item['notification'] = Template::ico('cancel');
 							// Création du tableau de confirmation
 							self::$users[] = [
 								$userId,
@@ -1494,10 +1494,10 @@ class user extends Core
 								$item['prenom'],
 								self::$roles[$item['role']],
 								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-								? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
+								? Helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
 								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
-								helper::filter($item['email'], helper::FILTER_MAIL),
+								Helper::filter($item['email'], Helper::FILTER_MAIL),
 								$item['tags'],
 								$item['notification']
 							];
@@ -1518,7 +1518,7 @@ class user extends Core
 									'pseudo' => $item['prenom'],
 									'signature' => 1,
 									// Pseudo
-									'password' => helper::filter($item['passe'], helper::FILTER_PASSWORD),
+									'password' => Helper::filter($item['passe'], Helper::FILTER_PASSWORD),
 									// A modifier à la première connexion
 									'connectFail' => null,
 									'connectTimeout' => null,
@@ -1529,11 +1529,11 @@ class user extends Core
 								]
 							], false);
 							// Icône de notification
-							$item['notification'] = $create ? template::ico('check') : template::ico('cancel');
+							$item['notification'] = $create ? Template::ico('check') : Template::ico('cancel');
 							// Envoi du mail
 							if (
 								$create and
-								$this->getInput('userImportNotification', helper::FILTER_BOOLEAN) === true
+								$this->getInput('userImportNotification', Helper::FILTER_BOOLEAN) === true
 							) {
 								$sent = $this->sendMail(
 									$item['email'],
@@ -1547,7 +1547,7 @@ class user extends Core
 								);
 								if ($sent === true) {
 									// Mail envoyé changement de l'icône
-									$item['notification'] = template::ico('mail');
+									$item['notification'] = Template::ico('mail');
 								}
 							}
 							// Création du tableau de confirmation
@@ -1557,7 +1557,7 @@ class user extends Core
 								$item['prenom'],
 								self::$roles[$item['role']],
 								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-								? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
+								? Helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
 								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
 								$item['email'],
@@ -1570,14 +1570,14 @@ class user extends Core
 				// Force la sauvegarde
 				$this->saveDB('user');
 				if (empty(self::$users)) {
-					$notification = helper::translate('Rien à importer, erreur de format ou fichier incorrect');
+					$notification = Helper::translate('Rien à importer, erreur de format ou fichier incorrect');
 					$success = false;
 				} else {
-					$notification = helper::translate('Importation effectuée');
+					$notification = Helper::translate('Importation effectuée');
 					$success = true;
 				}
 			} else {
-				$notification = helper::translate('Erreur de lecture, vérifiez les permissions');
+				$notification = Helper::translate('Erreur de lecture, vérifiez les permissions');
 				$success = false;
 			}
 		}

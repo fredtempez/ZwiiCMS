@@ -247,8 +247,8 @@ class config extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
-				'notification' => $successSitemap ? helper::translate('La carte du site a été mise à jour') : helper::translate("Echec de l'écriture, vérifiez les permissions"),
+				'redirect' => Helper::baseUrl() . 'config',
+				'notification' => $successSitemap ? Helper::translate('La carte du site a été mise à jour') : Helper::translate("Echec de l'écriture, vérifiez les permissions"),
 				'state' => $successSitemap
 			]);
 		}
@@ -268,8 +268,8 @@ class config extends Core
 			$this->saveTabState('setup');
 
 			// Creation du ZIP
-			$filter = $this->getInput('configBackupOption', helper::FILTER_BOOLEAN) === true ? ['backup', 'tmp'] : ['backup', 'tmp', 'file'];
-			$fileName = helper::autoBackup(self::TEMP_DIR, $filter);
+			$filter = $this->getInput('configBackupOption', Helper::FILTER_BOOLEAN) === true ? ['backup', 'tmp'] : ['backup', 'tmp', 'file'];
+			$fileName = Helper::autoBackup(self::TEMP_DIR, $filter);
 			// Créer le répertoire manquant
 			if (!is_dir(self::FILE_DIR . 'source/backup')) {
 				mkdir(self::FILE_DIR . 'source/backup', 0755);
@@ -286,7 +286,7 @@ class config extends Core
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Sauvegarder'),
+				'title' => Helper::translate('Sauvegarder'),
 				'view' => 'backup'
 			]);
 		}
@@ -301,10 +301,10 @@ class config extends Core
 		$this->saveTabState('social');
 
 		// fonction désactivée pour un site local
-		if (strpos(helper::baseUrl(false), 'localhost') > 0 or strpos(helper::baseUrl(false), '127.0.0.1') > 0) {
+		if (strpos(Helper::baseUrl(false), 'localhost') > 0 or strpos(Helper::baseUrl(false), '127.0.0.1') > 0) {
 			$site = 'https://zwiicms.fr/';
 		} else {
-			$site = helper::baseUrl(false);
+			$site = Helper::baseUrl(false);
 		}
 
 		// Clé de l'API
@@ -318,7 +318,7 @@ class config extends Core
 		if (!empty($token)) {
 			// Tente de connecter 5 fois l'API
 			for ($i = 0; $i < 5; $i++) {
-				$data = helper::getUrlContents('https://shot.screenshotapi.net/screenshot?token=' . $token . '&url=' . $site . '&width=1200&height=627&output=json&file_type=jpeg&no_cookie_banners=true&wait_for_event=load');
+				$data = Helper::getUrlContents('https://shot.screenshotapi.net/screenshot?token=' . $token . '&url=' . $site . '&width=1200&height=627&output=json&file_type=jpeg&no_cookie_banners=true&wait_for_event=load');
 				if ($data !== false) {
 					break;
 				}
@@ -345,8 +345,8 @@ class config extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' => helper::baseUrl() . 'config',
-			'notification' => helper::translate($notification),
+			'redirect' => Helper::baseUrl() . 'config',
+			'notification' => Helper::translate($notification),
 			'state' => ($success === false or empty($token)) ? false : true
 		]);
 	}
@@ -373,9 +373,9 @@ class config extends Core
 				if ($file_parts['extension'] !== 'zip') {
 					// Valeurs en sortie erreur
 					$this->addOutput([
-						'title' => helper::translate('Restaurer'),
+						'title' => Helper::translate('Restaurer'),
 						'view' => 'restore',
-						'notification' => helper::translate('Archive invalide'),
+						'notification' => Helper::translate('Archive invalide'),
 						'state' => false
 					]);
 				}
@@ -384,9 +384,9 @@ class config extends Core
 				if ($zip->open(self::FILE_DIR . 'source/' . $fileZip) === FALSE) {
 					// Valeurs en sortie erreur
 					$this->addOutput([
-						'title' => helper::translate('Restaurer'),
+						'title' => Helper::translate('Restaurer'),
 						'view' => 'restore',
-						'notification' => helper::translate('Archive invalide'),
+						'notification' => Helper::translate('Archive invalide'),
 						'state' => false
 					]);
 				}
@@ -401,9 +401,9 @@ class config extends Core
 				if (intval(substr($dataVersion, 0, 1)) <= 9 or !$success) {
 					// Valeurs en sortie erreur
 					$this->addOutput([
-						'title' => helper::translate('Restaurer'),
+						'title' => Helper::translate('Restaurer'),
 						'view' => 'restore',
-						'notification' => helper::translate('Archive invalide'),
+						'notification' => Helper::translate('Archive invalide'),
 						'state' => false
 					]);
 				}
@@ -412,7 +412,7 @@ class config extends Core
 				$zip->close();
 
 				// Option active, préservation des utilisateurs
-				if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
+				if ($this->getInput('configRestoreImportUser', Helper::FILTER_BOOLEAN) === true) {
 					$users = $this->getData(['user']);
 				}
 
@@ -422,7 +422,7 @@ class config extends Core
 
 				// Restaurer les users originaux d'une v10 si option cochée
 				if (
-					$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true
+					$this->getInput('configRestoreImportUser', Helper::FILTER_BOOLEAN) === true
 				) {
 					$this->setData(['user', $users]);
 				}
@@ -430,18 +430,18 @@ class config extends Core
 
 			// Message de notification
 			$notification = $success === true ? 'Restauration effectuée avec succès' : 'Erreur inconnue';
-			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ? helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
+			$redirect = $this->getInput('configRestoreImportUser', Helper::FILTER_BOOLEAN) === true ? Helper::baseUrl() . 'config/restore' : Helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([
 				'redirect' => $redirect,
-				'notification' => helper::translate($notification),
+				'notification' => Helper::translate($notification),
 				'state' => $success
 			]);
 		}
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Restaurer'),
+			'title' => Helper::translate('Restaurer'),
 			'view' => 'restore'
 		]);
 	}
@@ -457,7 +457,7 @@ class config extends Core
 			$this->isPost()
 		) {
 			// Traitement des changements liés à la mise à jour automatique
-			$isAutoUpdateEnabled = $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN);
+			$isAutoUpdateEnabled = $this->getInput('configAutoUpdate', Helper::FILTER_BOOLEAN);
 
 			if ($isAutoUpdateEnabled) {
 				// Si la mise à jour auto vient d'être activée, on réinitialise le compteur
@@ -476,8 +476,8 @@ class config extends Core
 			$newDatabaseConfig = [];
 			
 			foreach (array_keys($this->dataFiles) as $dbName) {
-				$encryption = $this->getInput('database' . ucfirst($dbName) . 'Encryption', helper::FILTER_BOOLEAN);
-				$encryptionKey = $this->getInput('database' . ucfirst($dbName) . 'EncryptionKey', helper::FILTER_STRING_SHORT);
+				$encryption = $this->getInput('database' . ucfirst($dbName) . 'Encryption', Helper::FILTER_BOOLEAN);
+				$encryptionKey = $this->getInput('database' . ucfirst($dbName) . 'EncryptionKey', Helper::FILTER_STRING_SHORT);
 				
 				// Si le chiffrement est activé mais aucune clé n'est fournie, générer une clé aléatoire
 				if ($encryption && empty($encryptionKey)) {
@@ -485,10 +485,10 @@ class config extends Core
 				}
 				
 				$newDatabaseConfig[$dbName] = [
-					'compression' => $this->getInput('database' . ucfirst($dbName) . 'Compression', helper::FILTER_BOOLEAN),
+					'compression' => $this->getInput('database' . ucfirst($dbName) . 'Compression', Helper::FILTER_BOOLEAN),
 					'encryption' => $encryption,
 					'encryptionKey' => $encryptionKey,
-					'minify' => $this->getInput('database' . ucfirst($dbName) . 'Minify', helper::FILTER_BOOLEAN)
+					'minify' => $this->getInput('database' . ucfirst($dbName) . 'Minify', Helper::FILTER_BOOLEAN)
 				];
 			}
 			
@@ -498,17 +498,17 @@ class config extends Core
 				[
 					'favicon' => $this->getInput('configFavicon'),
 					'faviconDark' => $this->getInput('configFaviconDark'),
-					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
+					'timezone' => $this->getInput('configTimezone', Helper::FILTER_STRING_SHORT, true),
 					'autoUpdate' => $isAutoUpdateEnabled,
-					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
-					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
-					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
-					'timerBar' => $this->getInput('configTimerBar', helper::FILTER_STRING_SHORT),
-					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
+					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', Helper::FILTER_BOOLEAN),
+					'autoBackup' => $this->getInput('configAutoBackup', Helper::FILTER_BOOLEAN),
+					'maintenance' => $this->getInput('configMaintenance', Helper::FILTER_BOOLEAN),
+					'timerBar' => $this->getInput('configTimerBar', Helper::FILTER_STRING_SHORT),
+					'cookieConsent' => $this->getInput('configCookieConsent', Helper::FILTER_BOOLEAN),
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
-					'proxyPort' => $this->getInput('configProxyPort', helper::FILTER_INT),
-					'autoUpdateDelay' => $this->getInput('configAutoUpdateDelay', helper::FILTER_INT),
+					'proxyPort' => $this->getInput('configProxyPort', Helper::FILTER_INT),
+					'autoUpdateDelay' => $this->getInput('configAutoUpdateDelay', Helper::FILTER_INT),
 					'social' => [
 						'facebookId' => $this->getInput('socialFacebookId'),
 						'linkedinId' => $this->getInput('socialLinkedinId'),
@@ -524,31 +524,31 @@ class config extends Core
 						'steamId' => $this->getInput('socialSteamId'),
 					],
 					'smtp' => [
-						'enable' => $this->getInput('smtpEnable', helper::FILTER_BOOLEAN),
-						'host' => $this->getInput('smtpHost', helper::FILTER_STRING_SHORT),
-						'port' => $this->getInput('smtpPort', helper::FILTER_INT),
-						'auth' => $this->getInput('smtpAuth', helper::FILTER_BOOLEAN),
-						'secure' => $this->getInput('smtpSecure', helper::FILTER_STRING_SHORT),
-						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT),
-						'password' => helper::encrypt($this->getInput('smtpPassword', helper::FILTER_STRING_SHORT), $this->getInput('smtpHost', helper::FILTER_STRING_SHORT)),
-						'from' =>$this->getInput('smtpFrom', helper::FILTER_MAIL, true),
+						'enable' => $this->getInput('smtpEnable', Helper::FILTER_BOOLEAN),
+						'host' => $this->getInput('smtpHost', Helper::FILTER_STRING_SHORT),
+						'port' => $this->getInput('smtpPort', Helper::FILTER_INT),
+						'auth' => $this->getInput('smtpAuth', Helper::FILTER_BOOLEAN),
+						'secure' => $this->getInput('smtpSecure', Helper::FILTER_STRING_SHORT),
+						'username' => $this->getInput('smtpUsername', Helper::FILTER_STRING_SHORT),
+						'password' => Helper::encrypt($this->getInput('smtpPassword', Helper::FILTER_STRING_SHORT), $this->getInput('smtpHost', Helper::FILTER_STRING_SHORT)),
+						'from' =>$this->getInput('smtpFrom', Helper::FILTER_MAIL, true),
 					],
 					'seo' => [
-						'robots' => $this->getInput('seoRobots', helper::FILTER_BOOLEAN),
-						'openGraphImage' => $this->getInput('seoOpenGraphImage', helper::FILTER_STRING_SHORT),
+						'robots' => $this->getInput('seoRobots', Helper::FILTER_BOOLEAN),
+						'openGraphImage' => $this->getInput('seoOpenGraphImage', Helper::FILTER_STRING_SHORT),
 					],
 					'connect' => [
-						'attempt' => $this->getInput('connectAttempt', helper::FILTER_INT),
-						'timeout' => $this->getInput('connectTimeout', helper::FILTER_INT),
-						'log' => $this->getInput('connectLog', helper::FILTER_BOOLEAN),
-						'anonymousIp' => $this->getInput('connectAnonymousIp', helper::FILTER_INT),
-						'captcha' => $this->getInput('connectCaptcha', helper::FILTER_BOOLEAN),
-						'captchaStrong' => $this->getInput('connectCaptchaStrong', helper::FILTER_BOOLEAN),
-						'autoDisconnect' => $this->getInput('connectAutoDisconnect', helper::FILTER_BOOLEAN),
+						'attempt' => $this->getInput('connectAttempt', Helper::FILTER_INT),
+						'timeout' => $this->getInput('connectTimeout', Helper::FILTER_INT),
+						'log' => $this->getInput('connectLog', Helper::FILTER_BOOLEAN),
+						'anonymousIp' => $this->getInput('connectAnonymousIp', Helper::FILTER_INT),
+						'captcha' => $this->getInput('connectCaptcha', Helper::FILTER_BOOLEAN),
+						'captchaStrong' => $this->getInput('connectCaptchaStrong', Helper::FILTER_BOOLEAN),
+						'autoDisconnect' => $this->getInput('connectAutoDisconnect', Helper::FILTER_BOOLEAN),
 						'captchaType' => $this->getInput('connectCaptchaType'),
-						'showPassword' => $this->getInput('connectShowPassword', helper::FILTER_BOOLEAN),
-						'redirectLogin' => $this->getInput('connectRedirectLogin', helper::FILTER_BOOLEAN),
-						'mailAuth' => $this->getInput('connectAuthMail', helper::FILTER_INT),
+						'showPassword' => $this->getInput('connectShowPassword', Helper::FILTER_BOOLEAN),
+						'redirectLogin' => $this->getInput('connectRedirectLogin', Helper::FILTER_BOOLEAN),
+						'mailAuth' => $this->getInput('connectAuthMail', Helper::FILTER_INT),
 					],
 					'database' => $newDatabaseConfig,
 					'defaultLanguageUI' => $this->getData(['config', 'defaultLanguageUI']),
@@ -556,10 +556,10 @@ class config extends Core
 			]);
 
 			// Sauvegarde la position des onglets de la vue de l'utilisateur courant
-			$this->saveTabState($this->getInput('containerSelected', helper::FILTER_STRING_SHORT));
+			$this->saveTabState($this->getInput('containerSelected', Helper::FILTER_STRING_SHORT));
 			
 			// Efface les fichiers de backup lorsque l'option est désactivée
-			if ($this->getInput('configFileBackup', helper::FILTER_BOOLEAN) === false) {
+			if ($this->getInput('configFileBackup', Helper::FILTER_BOOLEAN) === false) {
 				$path = realpath('site/data');
 				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
 					if (strpos($filename, 'backup.json')) {
@@ -574,10 +574,10 @@ class config extends Core
 			// Notice
 			if (self::$inputNotices === []) {
 				// Active la réécriture d'URL
-				$rewrite = $this->getInput('configRewrite', helper::FILTER_BOOLEAN);
+				$rewrite = $this->getInput('configRewrite', Helper::FILTER_BOOLEAN);
 				if (
 					$rewrite and
-					helper::checkRewrite() === false
+					Helper::checkRewrite() === false
 				) {
 					// Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
@@ -585,7 +585,7 @@ class config extends Core
 						'# URL rewriting' . PHP_EOL
 						. '<IfModule mod_rewrite.c>' . PHP_EOL
 						. "\tRewriteEngine on" . PHP_EOL
-						. "\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL
+						. "\tRewriteBase " . Helper::baseUrl(false, false) . PHP_EOL
 						. "\t" . PHP_EOL
 						. "\t# Ne pas rediriger les requêtes vers des ressources statiques inexistantes" . PHP_EOL
 						. "\t# Retourne directement une 404 Apache pour éviter de passer par PHP" . PHP_EOL
@@ -603,13 +603,13 @@ class config extends Core
 						'.htaccess',
 						$fileContent
 					);
-					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
-					helper::$rewriteStatus = true;
+					// Change le statut de la réécriture d'URL (pour le Helper::baseUrl() de la redirection)
+					Helper::$rewriteStatus = true;
 				}
 				// Désactive la réécriture d'URL
 				elseif (
 					$rewrite === false and
-					helper::checkRewrite()
+					Helper::checkRewrite()
 				) {
 					// Suppression des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
@@ -619,8 +619,8 @@ class config extends Core
 						'.htaccess',
 						$fileContent
 					);
-					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
-					helper::$rewriteStatus = false;
+					// Change le statut de la réécriture d'URL (pour le Helper::baseUrl() de la redirection)
+					Helper::$rewriteStatus = false;
 				}
 			}
 		
@@ -660,34 +660,34 @@ class config extends Core
 			$this->siteMap();
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Configuration'),
+				'title' => Helper::translate('Configuration'),
 				'view' => 'index',
-				'notification' => helper::translate('Modifications enregistrées'),
+				'notification' => Helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
 
 		// Activation du bouton de mise à jour
 		if (
-			helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL) &&
+			Helper::checkNewVersion(Core::ZWII_UPDATE_CHANNEL) &&
 			$this->getData(['core', 'updateAvailable']) === false &&
 			$this->getData(['config', 'autoUpdate'])
 		) {
 			$this->setData(['core', 'updateAvailable', true]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'redirect' => Helper::baseUrl() . 'config',
 			]);
 		}
 
 		// Variable de version
-		if (helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
-			self::$updateButtonText = helper::translate('Mise à jour');
+		if (Helper::checkNewVersion(Core::ZWII_UPDATE_CHANNEL)) {
+			self::$updateButtonText = Helper::translate('Mise à jour');
 		}
 
 		// Sélecteur de délais, compléter avec la traduction en jours
 		foreach (self::$updateDelay as $key => $value) {
-			self::$updateDelay[$key] = $key === 86400 ? $value . ' ' . helper::translate('jour') : $value . ' ' . helper::translate('jours');
+			self::$updateDelay[$key] = $key === 86400 ? $value . ' ' . Helper::translate('jour') : $value . ' ' . Helper::translate('jours');
 		}
 
 		// Générer les éléments du formulaire pour les bases de données
@@ -699,25 +699,25 @@ class config extends Core
 			$isCritical = in_array($dbName, $criticalDatabases);
 				
 			self::$databaseInputs[$dbName] = [
-				'compression' => template::checkbox('database' . $dbNameCapitalized . 'Compression', 1, 'Compression', [
+				'compression' => Template::checkbox('database' . $dbNameCapitalized . 'Compression', 1, 'Compression', [
 					'label' => 'Compression',
 					'help' => 'Compresser les données de cette base',
 					'checked' => $config['compression'] ?? false,
 					'disabled' => $isCritical
 				]),
-				'minify' => template::checkbox('database' . $dbNameCapitalized . 'Minify', 1, 'Minification', [
+				'minify' => Template::checkbox('database' . $dbNameCapitalized . 'Minify', 1, 'Minification', [
 					'label' => 'Minification',
 					'help' => 'Supprimer les espaces inutiles dans le JSON',
 					'checked' => $config['minify'] ?? false
 					// La minification reste active même pour les bases critiques
 				]),
-				'encryption' => template::checkbox('database' . $dbNameCapitalized . 'Encryption', 1, 'Chiffrement', [
+				'encryption' => Template::checkbox('database' . $dbNameCapitalized . 'Encryption', 1, 'Chiffrement', [
 					'label' => 'Chiffrement',
 					'help' => 'Chiffrer les données de cette base',
 					'checked' => $config['encryption'] ?? false,
 					'disabled' => $isCritical
 				]),
-				'encryptionKey' => template::text('database' . $dbNameCapitalized . 'EncryptionKey', [
+				'encryptionKey' => Template::text('database' . $dbNameCapitalized . 'EncryptionKey', [
 					'value' => $config['encryptionKey'] ?? '',
 					'label' => 'Clé de chiffrement',
 					'help' => 'Clé pour le chiffrement des données',
@@ -771,7 +771,7 @@ class config extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Configuration'),
+			'title' => Helper::translate('Configuration'),
 			'view' => 'index'
 		]);
 	}
@@ -795,7 +795,7 @@ class config extends Core
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Éditeur de script dans ' . ucfirst($this->geturl(2))),
+				'title' => Helper::translate('Éditeur de script dans ' . ucfirst($this->geturl(2))),
 				'vendor' => [
 					'codemirror'
 				],
@@ -805,7 +805,7 @@ class config extends Core
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => sprintf(helper::translate('Éditeur de script %s'), ucfirst($this->geturl(2))),
+			'title' => sprintf(Helper::translate('Éditeur de script %s'), ucfirst($this->geturl(2))),
 			'vendor' => [
 				'codemirror'
 			],
@@ -837,17 +837,17 @@ class config extends Core
 				$this->secure_file_put_contents(self::DATA_DIR . 'journal.log', $d);
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => helper::translate('Configuration'),
+					'title' => Helper::translate('Configuration'),
 					'view' => 'index',
-					'notification' => helper::translate('Journal réinitialisé avec succès'),
+					'notification' => Helper::translate('Journal réinitialisé avec succès'),
 					'state' => true
 				]);
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => helper::translate('Configuration'),
+					'title' => Helper::translate('Configuration'),
 					'view' => 'index',
-					'notification' => helper::translate('Aucun journal à effacer'),
+					'notification' => Helper::translate('Aucun journal à effacer'),
 					'state' => false
 				]);
 			}
@@ -885,9 +885,9 @@ class config extends Core
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => helper::translate('Configuration'),
+					'title' => Helper::translate('Configuration'),
 					'view' => 'index',
-					'notification' => helper::translate('Aucun fichier journal à télécharger'),
+					'notification' => Helper::translate('Aucun fichier journal à télécharger'),
 					'state' => false
 				]);
 			}
@@ -919,7 +919,7 @@ class config extends Core
 				$d = $this->getData(['blacklist']);
 				$data = '';
 				foreach ($d as $key => $item) {
-					$data .= helper::dateUTF8('%Y %m %d', $item['lastFail'], self::$i18nUI) . ' - ' . helper::dateUTF8('%H:%M', time(), self::$i18nUI);
+					$data .= Helper::dateUTF8('%Y %m %d', $item['lastFail'], self::$i18nUI) . ' - ' . Helper::dateUTF8('%H:%M', time(), self::$i18nUI);
 					$data .= $key . ';' . $item['ip'] . ';' . $item['connectFail'] . PHP_EOL;
 				}
 				$this->secure_file_put_contents($fileName, $data, FILE_APPEND);
@@ -936,9 +936,9 @@ class config extends Core
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => helper::translate('Configuration'),
+					'title' => Helper::translate('Configuration'),
 					'view' => 'index',
-					'notification' => helper::translate('Aucune liste noire à télécharger'),
+					'notification' => Helper::translate('Aucune liste noire à télécharger'),
 					'state' => false
 				]);
 			}
@@ -966,17 +966,17 @@ class config extends Core
 				$this->setData(['blacklist', []]);
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => helper::translate('Configuration'),
+					'title' => Helper::translate('Configuration'),
 					'view' => 'index',
-					'notification' => helper::translate('Liste noire réinitialisée avec succès'),
+					'notification' => Helper::translate('Liste noire réinitialisée avec succès'),
 					'state' => true
 				]);
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => helper::translate('Configuration'),
+					'title' => Helper::translate('Configuration'),
 					'view' => 'index',
-					'notification' => helper::translate('Aucune liste noire à effacer'),
+					'notification' => Helper::translate('Aucune liste noire à effacer'),
 					'state' => false
 				]);
 			}
@@ -1004,9 +1004,9 @@ class config extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Configuration'),
+				'title' => Helper::translate('Configuration'),
 				'view' => 'index',
-				'notification' => $success ? helper::translate('Copie terminée avec succès') : helper::translate('Copie terminée avec des erreurs'),
+				'notification' => $success ? Helper::translate('Copie terminée avec succès') : Helper::translate('Copie terminée avec des erreurs'),
 				'state' => $success
 			]);
 		}
@@ -1040,9 +1040,9 @@ class config extends Core
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Configuration'),
+				'title' => Helper::translate('Configuration'),
 				'view' => 'index',
-				'notification' => $success . helper::translate('Fichiers effacés') . ' - ' . helper::translate('Échecs') . ': ' . $fail,
+				'notification' => $success . Helper::translate('Fichiers effacés') . ' - ' . Helper::translate('Échecs') . ': ' . $fail,
 				'state' => true
 			]);
 		}
@@ -1072,9 +1072,9 @@ class config extends Core
 	{
 		$sent = $this->sendMail(
 			$this->getUser('mail'),
-			helper::translate('Test de la messagerie du site'),
+			Helper::translate('Test de la messagerie du site'),
 			'<strong>' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</strong>,<br><br>'
-				. '<h4>' . helper::translate('Il semblerait que votre messagerie fonctionne correctement !') . '</h4>',
+				. '<h4>' . Helper::translate('Il semblerait que votre messagerie fonctionne correctement !') . '</h4>',
 			null,
 			$this->getData(['config', 'smtp', 'from'])
 		);
@@ -1086,9 +1086,9 @@ class config extends Core
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' => helper::baseUrl() . 'config/' . $this->getUrl(2),
+			'redirect' => Helper::baseUrl() . 'config/' . $this->getUrl(2),
 			'state' => $sent === true ? true : false,
-			'notification' => $sent === true ? helper::translate('Message de test envoyé avec succès') : helper::translate('Message non envoyé')
+			'notification' => $sent === true ? Helper::translate('Message de test envoyé avec succès') : Helper::translate('Message non envoyé')
 		]);
 	}
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace Zwii\Cms;
+
 /**
  * This file is part of Zwii.
  * For full copyright and license information, please see the LICENSE
@@ -17,12 +19,12 @@
 class Core
 {
 	// Utilisation des traits
-	use Data;
-	use InputOutput;
-	use PageContent;
-	use Tools;
-	use UserPermission;
-	use Security;
+	use \Data;
+	use \InputOutput;
+	use \PageContent;
+	use \Tools;
+	use \UserPermission;
+	use \Security;
 	
 	const DISPLAY_RAW = 0;
 	const DISPLAY_JSON = 1;
@@ -472,7 +474,7 @@ class Core
 		// Stocker le cookie de langue pour l'éditeur de texte
 		setcookie('ZWII_UI', self::$i18nUI, [
 			'expires' => time() + 3600,
-			'path' => helper::baseUrl(false, false),
+			'path' => Helper::baseUrl(false, false),
 			'domain' => '',
 			'secure' => false,
 			'httponly' => false,

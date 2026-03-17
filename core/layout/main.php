@@ -15,7 +15,7 @@
 	<?php 
 	// Préchargement des polices si elles existent
 	if (file_exists(self::DATA_DIR . 'font/font.css')): 
-		$fontCssPath = helper::baseUrl(false) . self::DATA_DIR . 'font/font.css?' . md5_file(self::DATA_DIR . 'font/font.css');
+		$fontCssPath = Helper::baseUrl(false) . self::DATA_DIR . 'font/font.css?' . md5_file(self::DATA_DIR . 'font/font.css');
 	?>
 		<link rel="preload" href="<?php echo $fontCssPath; ?>" as="style" onload="this.rel='stylesheet'">
 		<noscript><link rel="stylesheet" href="<?php echo $fontCssPath; ?>"></noscript>
@@ -23,13 +23,13 @@
 	
 	<?php 
 	// Préchargement des CSS principaux
-	$commonCssPath = helper::baseUrl(false) . 'core/layout/common.css?' . md5_file('core/layout/common.css');
-	$themeCssPath = helper::baseUrl(false) . self::DATA_DIR . 'theme.css?' . md5_file(self::DATA_DIR . 'theme.css');
+	$commonCssPath = Helper::baseUrl(false) . 'core/layout/common.css?' . md5_file('core/layout/common.css');
+	$themeCssPath = Helper::baseUrl(false) . self::DATA_DIR . 'theme.css?' . md5_file(self::DATA_DIR . 'theme.css');
 	
 	// Gestion de custom.css qui peut ne pas exister
 	$customCssFile = self::DATA_DIR . 'custom.css';
 	if (file_exists($customCssFile)) {
-		$customCssPath = helper::baseUrl(false) . $customCssFile . '?' . md5_file($customCssFile);
+		$customCssPath = Helper::baseUrl(false) . $customCssFile . '?' . md5_file($customCssFile);
 	} else {
 		$customCssPath = ''; // Pas de custom.css
 	}
@@ -60,7 +60,7 @@
 		and $this->getData(['module', $this->getUrl(0), 'config', 'feeds']) === TRUE
 	): ?>
 		<link rel="alternate" type="application/rss+xml"
-			href="'<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" title="fLUX rss">
+			href="'<?php echo Helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" title="fLUX rss">
 	<?php endif; ?>
 	<?php $layout->showStyle(); ?>
 	<?php $layout->showInlineStyle(); ?>
@@ -95,8 +95,8 @@
 		<!-- Menu Burger -->
 		<div id="toggle">
 			<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title' ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
-			<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
-			<?php echo template::ico('menu', ['fontSize' => '2em']); ?>
+			<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
+			<?php echo Template::ico('menu', ['fontSize' => '2em']); ?>
 		</div>
 		<!-- fin du menu burger -->
 		<?php
@@ -110,7 +110,7 @@
 	<?php endif; ?>
 	<!-- Bannière dans le fond du site -->
 	<?php if ($this->getData(['theme', 'header', 'position']) === 'body'): ?>
-		<?php echo ($this->getData(['theme', 'header', 'linkHomePage']) && $this->getData(['theme', 'header', 'feature']) === 'wallpaper') ? '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
+		<?php echo ($this->getData(['theme', 'header', 'linkHomePage']) && $this->getData(['theme', 'header', 'feature']) === 'wallpaper') ? '<a href="' . Helper::baseUrl(false) . '">' : ''; ?>
 		<?php
 		$headerClass = $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : '';
 		$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : '';
@@ -143,8 +143,8 @@
 			<!-- Menu burger -->
 			<div id="toggle">
 				<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title' ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
-				<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
-				<?php echo template::ico('menu', ['fontSize' => '2em']); ?>
+				<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
+				<?php echo Template::ico('menu', ['fontSize' => '2em']); ?>
 			</div>
 			<!-- fin du menu burger -->
 			<?php
@@ -162,8 +162,8 @@
 			<nav>
 				<div id="toggle">
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title' ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
-					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
-					<?php echo template::ico('menu', ['fontSize' => '2em']); ?>
+					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
+					<?php echo Template::ico('menu', ['fontSize' => '2em']); ?>
 				</div>
 				<div id="menu" class="container">
 					<?php $layout->showMenu(); ?>
@@ -178,7 +178,7 @@
 			)
 		): ?>
 			<!-- Bannière dans le site -->
-			<?php echo ($this->getData(['theme', 'header', 'linkHomePage']) && $this->getData(['theme', 'header', 'feature']) === 'wallpaper') ? '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
+			<?php echo ($this->getData(['theme', 'header', 'linkHomePage']) && $this->getData(['theme', 'header', 'feature']) === 'wallpaper') ? '<a href="' . Helper::baseUrl(false) . '">' : ''; ?>
 			<?php
 			$headerClass = $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : '';
 			$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : '';
@@ -216,8 +216,8 @@
 			<nav <?php if ($this->getData(['theme', 'menu', 'position']) === 'hide'): ?>class="displayNone" <?php endif; ?>>
 				<div id="toggle">
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title' ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
-					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
-					<?php echo template::ico('menu', ['fontSize' => '2em']); ?>
+					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
+					<?php echo Template::ico('menu', ['fontSize' => '2em']); ?>
 				</div>
 				<div id="menu" class="container">
 					<?php $layout->showMenu(); ?>
@@ -232,7 +232,7 @@
 		<?php echo $this->getData(['theme', 'footer', 'position']) === 'site' ? '</div>' : ''; ?>
 		<!-- Lien remonter en haut -->
 		<div id="backToTop">
-			<?php echo template::ico('up'); ?>
+			<?php echo Template::ico('up'); ?>
 		</div>
 		<!-- Affichage du consentement aux cookies-->
 		<?php $layout->showCookies(); ?>

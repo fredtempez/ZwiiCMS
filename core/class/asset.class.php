@@ -1,10 +1,12 @@
 <?php
 
+namespace Zwii\Cms;
+
 /**
- * assets - Gestion des thèmes et CSS
+ * Asset - Gestion des thèmes et CSS
  * Responsable de la génération et compilation des fichiers CSS
  */
-class asset extends Core
+class Asset extends Core
 {
 	/**
 	 * Constructeur du gestionnaire de thèmes
@@ -62,32 +64,32 @@ class asset extends Core
 		}
 
 		// Variantes de couleurs (Générées via helper)
-		$btnColors = helper::colorVariants($this->getData(['theme', 'button', 'backgroundColor']));
+		$btnColors = Helper::colorVariants($this->getData(['theme', 'button', 'backgroundColor']));
 		$css .= '--btn-bg: ' . $btnColors['normal'] . ';';
 		$css .= '--btn-hover: ' . $btnColors['darken'] . ';';
 		$css .= '--btn-active: ' . $btnColors['veryDarken'] . ';';
 		$css .= '--btn-text: ' . $btnColors['text'] . ';';
 
-		$linkColors = helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
+		$linkColors = Helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
 		$css .= '--link-normal: ' . $linkColors['normal'] . ';';
 		$css .= '--link-hover: ' . $linkColors['darken'] . ';';
 
-		$titleColors = helper::colorVariants($this->getData(['theme', 'title', 'textColor']));
+		$titleColors = Helper::colorVariants($this->getData(['theme', 'title', 'textColor']));
 		$css .= '--title-normal: ' . $titleColors['normal'] . ';';
 		$css .= '--title-hover: ' . $titleColors['darken'] . ';';
 
-		$menuColors = helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColor']));
+		$menuColors = Helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColor']));
 		$css .= '--menu-normal: ' . $menuColors['normal'] . ';';
 		$css .= '--menu-hover: ' . $menuColors['darken'] . ';';
 		$css .= '--menu-very-dark: ' . $menuColors['veryDarken'] . ';';
 
-		$subColors = helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColorSub']));
+		$subColors = Helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColorSub']));
 		$css .= '--submenu-bg: ' . $subColors['normal'] . ';';
 
-		$bodyColors = helper::colorVariants($this->getData(['theme', 'body', 'backgroundColor']));
+		$bodyColors = Helper::colorVariants($this->getData(['theme', 'body', 'backgroundColor']));
 		$css .= '--body-normal: ' . $bodyColors['normal'] . ';';
 
-		$blockColors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
+		$blockColors = Helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
 		$css .= '--block-header-bg: ' . $blockColors['normal'] . ';';
 		$css .= '--block-header-text: ' . $blockColors['text'] . ';';
 
@@ -200,7 +202,7 @@ class asset extends Core
 		$css .= '#menu { text-align: ' . $this->getData(['theme', 'menu', 'textAlign']) . '; }';
 
 
-		$levelColors = helper::colorLevels($this->getData(['theme', 'menu', 'backgroundColorSub']), 4, 15);
+		$levelColors = Helper::colorLevels($this->getData(['theme', 'menu', 'backgroundColorSub']), 4, 15);
 		foreach ($levelColors as $level => $colors) {
 			$zIndex = 999 + ($level * 10);
 			if ($level === 1) {
@@ -289,44 +291,44 @@ class asset extends Core
 		}
 
 		// Variantes de couleurs
-		$adminColors = helper::colorVariants($this->getData(['admin', 'backgroundColor']));
+		$adminColors = Helper::colorVariants($this->getData(['admin', 'backgroundColor']));
 		$css .= '--admin-color: ' . $adminColors['normal'] . ';';
 
-		$textColors = helper::colorVariants($this->getData(['admin', 'colorText']));
+		$textColors = Helper::colorVariants($this->getData(['admin', 'colorText']));
 		$css .= '--admin-text-color: ' . $textColors['normal'] . ';';
 		$css .= '--admin-text-color-text: ' . $textColors['text'] . ';';
 
-		$buttonColors = helper::colorVariants($this->getData(['admin', 'backgroundColorButton']));
+		$buttonColors = Helper::colorVariants($this->getData(['admin', 'backgroundColorButton']));
 		$css .= '--admin-button-color: ' . $buttonColors['normal'] . ';';
 		$css .= '--admin-button-color-darken: ' . $buttonColors['darken'] . ';';
 		$css .= '--admin-button-color-very-darken: ' . $buttonColors['veryDarken'] . ';';
 		$css .= '--admin-button-color-text: ' . $buttonColors['text'] . ';';
 
-		$buttonGreyColors = helper::colorVariants($this->getData(['admin', 'backgroundColorButtonGrey']));
+		$buttonGreyColors = Helper::colorVariants($this->getData(['admin', 'backgroundColorButtonGrey']));
 		$css .= '--admin-button-grey-color: ' . $buttonGreyColors['normal'] . ';';
 		$css .= '--admin-button-grey-color-darken: ' . $buttonGreyColors['darken'] . ';';
 		$css .= '--admin-button-grey-color-very-darken: ' . $buttonGreyColors['veryDarken'] . ';';
 		$css .= '--admin-button-grey-color-text: ' . $buttonGreyColors['text'] . ';';
 
-		$buttonRedColors = helper::colorVariants($this->getData(['admin', 'backgroundColorButtonRed']));
+		$buttonRedColors = Helper::colorVariants($this->getData(['admin', 'backgroundColorButtonRed']));
 		$css .= '--admin-button-red-color: ' . $buttonRedColors['normal'] . ';';
 		$css .= '--admin-button-red-color-darken: ' . $buttonRedColors['darken'] . ';';
 		$css .= '--admin-button-red-color-very-darken: ' . $buttonRedColors['veryDarken'] . ';';
 		$css .= '--admin-button-red-color-text: ' . $buttonRedColors['text'] . ';';
 
-		$buttonHelpColors = helper::colorVariants($this->getData(['admin', 'backgroundColorButtonHelp']));
+		$buttonHelpColors = Helper::colorVariants($this->getData(['admin', 'backgroundColorButtonHelp']));
 		$css .= '--admin-button-help-color: ' . $buttonHelpColors['normal'] . ';';
 		$css .= '--admin-button-help-color-darken: ' . $buttonHelpColors['darken'] . ';';
 		$css .= '--admin-button-help-color-very-darken: ' . $buttonHelpColors['veryDarken'] . ';';
 		$css .= '--admin-button-help-color-text: ' . $buttonHelpColors['text'] . ';';
 
-		$buttonGreenColors = helper::colorVariants($this->getData(['admin', 'backgroundColorButtonGreen']));
+		$buttonGreenColors = Helper::colorVariants($this->getData(['admin', 'backgroundColorButtonGreen']));
 		$css .= '--admin-button-green-color: ' . $buttonGreenColors['normal'] . ';';
 		$css .= '--admin-button-green-color-darken: ' . $buttonGreenColors['darken'] . ';';
 		$css .= '--admin-button-green-color-very-darken: ' . $buttonGreenColors['veryDarken'] . ';';
 		$css .= '--admin-button-green-color-text: ' . $buttonGreenColors['text'] . ';';
 
-		$blockColors = helper::colorVariants($this->getData(['admin', 'backgroundBlockColor']));
+		$blockColors = Helper::colorVariants($this->getData(['admin', 'backgroundBlockColor']));
 		$css .= '--admin-block-color: ' . $blockColors['normal'] . ';';
 		$css .= '--admin-block-color-text: ' . $blockColors['text'] . ';';
 

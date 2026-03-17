@@ -1,29 +1,29 @@
-<?php echo template::formOpen('userImportForm'); ?>
+<?php echo Template::formOpen('userImportForm'); ?>
 <div class="row">
     <div class="col1">
-        <?php echo template::button('userImportBack', [
+        <?php echo Template::button('userImportBack', [
             'class' => 'buttonGrey',
-            'href' => helper::baseUrl() . 'user',
-            'value' => template::ico('left')
+            'href' => Helper::baseUrl() . 'user',
+            'value' => Template::ico('left')
         ]); ?>
     </div>
 
-    <?php /**echo template::button('userHelp', [
+    <?php /**echo Template::button('userHelp', [
        'href' => 'https://doc.zwiicms.fr/importation-d-une-liste-d-utilisateurs',
        'target' => '_blank',
-       'value' => template::ico('help'),
+       'value' => Template::ico('help'),
        'class' => 'buttonHelp',
        'help' => 'Consulter l\'aide en ligne'
    ]);*/?>
     <div class="col1 offset8">
-        <?php echo template::button('userImporTemplate', [
-            'href' => helper::baseUrl() . 'user/template',
-            'value' => template::ico('table'),
+        <?php echo Template::button('userImporTemplate', [
+            'href' => Helper::baseUrl() . 'user/template',
+            'value' => Template::ico('table'),
             'help' => 'Télécharger un modèle'
         ]); ?>
     </div>
     <div class="col2">
-        <?php echo template::submit('userImportSubmit', [
+        <?php echo Template::submit('userImportSubmit', [
             'value' => 'Importer'
         ]); ?>
     </div>
@@ -32,24 +32,24 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Importation de fichier plat CSV'); ?>
+                <?php echo Helper::translate('Importation de fichier plat CSV'); ?>
             </h4>
             <div class="row">
                 <div class="col10">
-                    <?php echo template::file('userImportCSVFile', [
+                    <?php echo Template::file('userImportCSVFile', [
                         'language' => $this->getData(['user', $this->getUser('id'), 'language']),
                         'label' => 'Liste d\'utilisateurs :'
                     ]); ?>
                 </div>
                 <div class="col2">
-                    <?php echo template::select('userImportSeparator', user::$separators, [
+                    <?php echo Template::select('userImportSeparator', user::$separators, [
                         'label' => 'Séparateur'
                     ]); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col12">
-                    <?php echo template::checkbox('userImportNotification', true, 'Envoyer un message de confirmation', [
+                    <?php echo Template::checkbox('userImportNotification', true, 'Envoyer un message de confirmation', [
                         'checked' => false
                     ]); ?>
                 </div>
@@ -57,14 +57,14 @@
         </div>
     </div>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>
 <?php if (user::$users): ?>
     <div class="row">
         <div class="col12 textAlignCenter">
-            <?php echo template::table([1, 2, 2, 1, 1, 1, 2, 1, 1], user::$users, ['Id', 'Nom', 'Prénom', 'Rôle', 'Profil', 'Pseudo', 'eMail', 'Étiquettes', '']); ?>
-            <?php echo template::ico('check'); ?> Compte créé |
-            <?php echo template::ico('mail'); ?> Compte créé et notifié |
-            <?php echo template::ico('cancel'); ?> Erreur dans le fichier ou le compte existe.
+            <?php echo Template::table([1, 2, 2, 1, 1, 1, 2, 1, 1], user::$users, ['Id', 'Nom', 'Prénom', 'Rôle', 'Profil', 'Pseudo', 'eMail', 'Étiquettes', '']); ?>
+            <?php echo Template::ico('check'); ?> Compte créé |
+            <?php echo Template::ico('mail'); ?> Compte créé et notifié |
+            <?php echo Template::ico('cancel'); ?> Erreur dans le fichier ou le compte existe.
         </div>
     </div>
 <?php endif; ?>

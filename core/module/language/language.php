@@ -86,15 +86,15 @@ class language extends Core
 			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'language',
+					'redirect' => Helper::baseUrl() . 'language',
 					'state' => false,
-					'notification' => helper::translate('Action interdite')
+					'notification' => Helper::translate('Action interdite')
 				]);
 			}
 
 			// Télécharger le descripteur en ligne
-			$languageData = helper::getUrlContents(self::ZWII_UI_URL . $lang . '.json');
-			$descripteur = json_decode(helper::getUrlContents(self::ZWII_UI_URL . 'language.json'), true);
+			$languageData = Helper::getUrlContents(self::ZWII_UI_URL . $lang . '.json');
+			$descripteur = json_decode(Helper::getUrlContents(self::ZWII_UI_URL . 'language.json'), true);
 			$success = false;
 			if (
 				$languageData &&
@@ -107,8 +107,8 @@ class language extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'language',
-				'notification' => $success ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
+				'redirect' => Helper::baseUrl() . 'language',
+				'notification' => $success ? Helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
 				'state' => $success
 			]);
 		}
@@ -143,13 +143,13 @@ class language extends Core
 				$success = ($this->copyDir(self::DATA_DIR . $copyFrom . '/content', self::DATA_DIR . $toCreate . '/content') === true && $success === true) ? true : false;
 				// Enregistrer la langue
 				if ($success) {
-					$notification = sprintf(helper::translate('Données %s copiées vers %s'), self::$languages[$copyFrom], self::$languages[$toCreate]);
+					$notification = sprintf(Helper::translate('Données %s copiées vers %s'), self::$languages[$copyFrom], self::$languages[$toCreate]);
 				} else {
-					$notification = helper::translate('Erreur de copie, vérifiez les permissions');
+					$notification = Helper::translate('Erreur de copie, vérifiez les permissions');
 				}
 			} else {
 				$success = false;
-				$notification = helper::translate('Les langues sélectionnées sont identiques');
+				$notification = Helper::translate('Les langues sélectionnées sont identiques');
 			}
 			// Valeurs en sortie
 			$this->addOutput([
@@ -173,7 +173,7 @@ class language extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Copie de contenus localisés'),
+			'title' => Helper::translate('Copie de contenus localisés'),
 			'view' => 'copy'
 		]);
 	}
@@ -197,25 +197,25 @@ class language extends Core
 					file_exists(self::DATA_DIR . $key . '/locale.json')
 				) {
 					if (file_exists(self::DATA_DIR . $key . '/.default')) {
-						$messageLocale = helper::translate('Langue par défaut');
+						$messageLocale = Helper::translate('Langue par défaut');
 					} elseif (isset($_SESSION['ZWII_SITE_CONTENT']) && $_SESSION['ZWII_SITE_CONTENT'] === $key) {
-						$messageLocale = helper::translate('Langue du site sélectionnée');
+						$messageLocale = Helper::translate('Langue du site sélectionnée');
 					} else {
 						$messageLocale = '';
 					}
 					self::$languagesInstalled[] = [
-						template::flag($key, '20 %') . '&nbsp;' . $value . ' (' . $key . ')',
+						Template::flag($key, '20 %') . '&nbsp;' . $value . ' (' . $key . ')',
 						$messageLocale,
-						template::button('translateContentLanguageLocaleEdit' . $key, [
+						Template::button('translateContentLanguageLocaleEdit' . $key, [
 							'class' => file_exists(self::DATA_DIR . $key . '/locale.json') ? '' : ' disabled',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
-							'value' => template::ico('pencil'),
+							'href' => Helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
+							'value' => Template::ico('pencil'),
 							'help' => 'Éditer'
 						]),
-						template::button('translateContentLanguageLocaleDelete' . $key, [
+						Template::button('translateContentLanguageLocaleDelete' . $key, [
 							'class' => 'translateDelete buttonRed' . ($messageLocale ? ' disabled' : ''),
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key,
-							'value' => template::ico('trash'),
+							'href' => Helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key,
+							'value' => Template::ico('trash'),
 							'help' => 'Supprimer',
 						])
 					];
@@ -245,7 +245,7 @@ class language extends Core
 		}
 
 		// Langues disponibles en ligne
-		$storeUI = json_decode(helper::getUrlContents(self::ZWII_UI_URL . 'language.json'), true);
+		$storeUI = json_decode(Helper::getUrlContents(self::ZWII_UI_URL . 'language.json'), true);
 		$storeUI = $storeUI ? $storeUI['language'] : null;
 
 		// Construction du tableau à partir des langues disponibles dans le store
@@ -254,29 +254,29 @@ class language extends Core
 			if (array_key_exists(basename($file, '.json'), $installedUI)) {
 				// La langue est déjà installée
 				self::$languagesUiInstalled[$file] = [
-					template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
+					Template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
 					$value['version'],
-					helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nUI),
-					//self::$i18nUI === $file ? helper::translate('Interface') : '',
+					Helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nUI),
+					//self::$i18nUI === $file ? Helper::translate('Interface') : '',
 					'',
 					/*
-					template::button('translateContentLanguageUIEdit' . $file, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
-						'value' => template::ico('pencil'),
+					Template::button('translateContentLanguageUIEdit' . $file, [
+						'href' => Helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
+						'value' => Template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => 'fr_FR' === $file
 					]),*/
 					'',
-					template::button('translateContentLanguageUIDownload' . $file, [
+					Template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => isset($storeUI[$file]['version']) && version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
-						'value' => template::ico('update'),
+						'href' => Helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
+						'value' => Template::ico('update'),
 						'help' => 'Mise à jour',
 					]),
-					template::button('translateContentLanguageUIDelete' . $file, [
+					Template::button('translateContentLanguageUIDelete' . $file, [
 						'class' => 'translateDelete buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file,
-						'value' => template::ico('trash'),
+						'href' => Helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file,
+						'value' => Template::ico('trash'),
 						'help' => 'Supprimer',
 					]),
 				];
@@ -289,14 +289,14 @@ class language extends Core
 				// La langue est-elle installée ?
 				if (array_key_exists($file, $installedUI) === false) {
 					self::$languagesStore[$file] = [
-						template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
+						Template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
 						$value['version'],
-						helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nUI),
+						Helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nUI),
 						'',
-						template::button('translateContentLanguageUIDownload' . $file, [
+						Template::button('translateContentLanguageUIDownload' . $file, [
 							'class' => 'buttonGreen',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
-							'value' => template::ico('shopping-basket'),
+							'href' => Helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
+							'value' => Template::ico('shopping-basket'),
 							'help' => 'Installer',
 						])
 					];
@@ -318,7 +318,7 @@ class language extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Langues'),
+			'title' => Helper::translate('Langues'),
 			'view' => 'index'
 		]);
 	}
@@ -350,8 +350,8 @@ class language extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'language',
-				'notification' => helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'language',
+				'notification' => Helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
@@ -368,7 +368,7 @@ class language extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Nouveau contenu localisé'),
+			'title' => Helper::translate('Nouveau contenu localisé'),
 			'view' => 'add'
 		]);
 	}
@@ -386,9 +386,9 @@ class language extends Core
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'language',
+				'redirect' => Helper::baseUrl() . 'language',
 				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'notification' => Helper::translate('Action interdite')
 			]);
 		}
 
@@ -401,25 +401,25 @@ class language extends Core
 			// Sauvegarder les locales
 			$data = [
 				'locale' => [
-					'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
+					'homePageId' => $this->getInput('localeHomePageId', Helper::FILTER_ID, true),
 					'page404' => $this->getInput('localePage404'),
 					'page403' => $this->getInput('localePage403'),
 					'page302' => $this->getInput('localePage302'),
 					'legalPageId' => $this->getInput('localeLegalPageId'),
 					'searchPageId' => $this->getInput('localeSearchPageId'),
-					'poweredPageLabel' => empty($this->getInput('localePoweredPageLabel', helper::FILTER_STRING_SHORT)) ? 'Motorisé par' : $this->getInput('localePoweredPageLabel', helper::FILTER_STRING_SHORT),
-					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT)) ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
-					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
-					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT)) ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
-					'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
-					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
+					'poweredPageLabel' => empty($this->getInput('localePoweredPageLabel', Helper::FILTER_STRING_SHORT)) ? 'Motorisé par' : $this->getInput('localePoweredPageLabel', Helper::FILTER_STRING_SHORT),
+					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', Helper::FILTER_STRING_SHORT)) ? 'Rechercher' : $this->getInput('localeSearchPageLabel', Helper::FILTER_STRING_SHORT),
+					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', Helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', Helper::FILTER_STRING_SHORT),
+					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', Helper::FILTER_STRING_SHORT)) ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', Helper::FILTER_STRING_SHORT),
+					'metaDescription' => $this->getInput('localeMetaDescription', Helper::FILTER_STRING_LONG, true),
+					'title' => $this->getInput('localeTitle', Helper::FILTER_STRING_SHORT, true),
 					'cookies' => [
 						// Les champs sont obligatoires si l'option consentement des cookies est active
-						'mainLabel' => $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'titleLabel' => $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'linkLegalLabel' => $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'cookiesFooterText' => $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'buttonValidLabel' => $this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
+						'mainLabel' => $this->getInput('localeCookiesZwiiText', Helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', Helper::FILTER_BOOLEAN)),
+						'titleLabel' => $this->getInput('localeCookiesTitleText', Helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', Helper::FILTER_BOOLEAN)),
+						'linkLegalLabel' => $this->getInput('localeCookiesLinkMlText', Helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', Helper::FILTER_BOOLEAN)),
+						'cookiesFooterText' => $this->getInput('localeCookiesFooterText', Helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', Helper::FILTER_BOOLEAN)),
+						'buttonValidLabel' => $this->getInput('localeCookiesButtonText', Helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', Helper::FILTER_BOOLEAN))
 					]
 				]
 			];
@@ -435,8 +435,8 @@ class language extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . $this->getUrl(),
+				'notification' => Helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
@@ -477,7 +477,7 @@ class language extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Paramètres de la localisation') . '&nbsp;' . template::flag($lang, '20 %'),
+			'title' => Helper::translate('Paramètres de la localisation') . '&nbsp;' . Template::flag($lang, '20 %'),
 			'view' => 'locale'
 		]);
 	}
@@ -494,9 +494,9 @@ class language extends Core
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'language',
+				'redirect' => Helper::baseUrl() . 'language',
 				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'notification' => Helper::translate('Action interdite')
 			]);
 		}
 		// Soumission du formulaire
@@ -521,14 +521,14 @@ class language extends Core
 				$lang,
 				[
 					'version' => $this->getInput('translateEditVersion'),
-					'date' => $this->getInput('translateEditDate', helper::FILTER_DATETIME),
+					'date' => $this->getInput('translateEditDate', Helper::FILTER_DATETIME),
 				]
 			]);
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'language',
+				'notification' => Helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'language',
 				'state' => true,
 			]);
 		}
@@ -560,7 +560,7 @@ class language extends Core
 		}
 
 		// Pagination
-		$pagination = helper::pagination($dialogues, $this->getUrl(), self::PAGINATION);
+		$pagination = Helper::pagination($dialogues, $this->getUrl(), self::PAGINATION);
 
 		// Liste des pages
 		self::$pages = $pagination['pages'];
@@ -572,7 +572,7 @@ class language extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Éditer les dialogues') . '&nbsp;' . template::flag($lang, '20 %'),
+			'title' => Helper::translate('Éditer les dialogues') . '&nbsp;' . Template::flag($lang, '20 %'),
 			'view' => 'edit',
 			'vendor' => [
 				'tablednd'
@@ -601,9 +601,9 @@ class language extends Core
 			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'language',
+					'redirect' => Helper::baseUrl() . 'language',
 					'state' => false,
-					'notification' => helper::translate('Action interdite')
+					'notification' => Helper::translate('Action interdite')
 				]);
 			}
 			switch ($target) {
@@ -615,8 +615,8 @@ class language extends Core
 					}
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl() . 'language',
-						'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
+						'redirect' => Helper::baseUrl() . 'language',
+						'notification' => $success ? Helper::translate('Traduction supprimée') : Helper::translate('Erreur inconnue'),
 						'state' => $success
 					]);
 					break;
@@ -630,8 +630,8 @@ class language extends Core
 					}
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl() . 'language',
-						'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
+						'redirect' => Helper::baseUrl() . 'language',
+						'notification' => $success ? Helper::translate('Traduction supprimée') : Helper::translate('Erreur inconnue'),
 						'state' => $success
 					]);
 					break;
@@ -663,9 +663,9 @@ class language extends Core
 			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'language',
+					'redirect' => Helper::baseUrl() . 'language',
 					'state' => false,
-					'notification' => helper::translate('Action interdite')
+					'notification' => Helper::translate('Action interdite')
 				]);
 			}
 
@@ -678,8 +678,8 @@ class language extends Core
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'language',
+				'notification' => Helper::translate('Modifications enregistrées'),
+				'redirect' => Helper::baseUrl() . 'language',
 				'state' => true,
 			]);
 		}
@@ -711,7 +711,7 @@ class language extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' => helper::baseUrl()
+			'redirect' => Helper::baseUrl()
 		]);
 	}
 

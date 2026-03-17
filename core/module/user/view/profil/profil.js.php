@@ -19,7 +19,7 @@ $(document).ready(function () {
      */
     $(".profilDelete").on("click", function () {
         var _this = $(this);
-        var message = "<?php echo helper::translate('Supprimer ce profil ?'); ?>";
+        var message = "<?php echo Helper::translate('Supprimer ce profil ?'); ?>";
         return core.confirm(message, function () {
             $(location).attr("href", _this.attr("href"));
         });

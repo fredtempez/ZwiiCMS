@@ -1,17 +1,17 @@
-<?php echo template::formOpen('translateForm'); ?>
+<?php echo Template::formOpen('translateForm'); ?>
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('translateFormBack', [
+		<?php echo Template::button('translateFormBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl(),
-			'value' => template::ico('home')
+			'href' => Helper::baseUrl(),
+			'value' => Template::ico('home')
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php /**echo template::button('translateHelp', [
+		<?php /**echo Template::button('translateHelp', [
 		 'href' => 'https://doc.zwiicms.fr/prise-en-charge-des-langues-etrangeres',
 		 'target' => '_blank',
-		 'value' => template::ico('help'),
+		 'value' => Template::ico('help'),
 		 'class' => 'buttonHelp',
 		 'help' => 'Consulter l\'aide en ligne'
 		 ]);*/?>
@@ -19,11 +19,11 @@
 </div>
 
 <div class="tab">
-	<?php echo template::button('translateUiButton', [
+	<?php echo Template::button('translateUiButton', [
 		'value' => 'Interface',
 		'class' => 'buttonTab'
 	]); ?>
-	<?php echo template::button('translateContentButton', [
+	<?php echo Template::button('translateContentButton', [
 		'value' => 'Site',
 		'class' => 'buttonTab'
 	]); ?>
@@ -34,10 +34,10 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo helper::translate('Langues installées'); ?>
+					<?php echo Helper::translate('Langues installées'); ?>
 				</h4>
 				<?php if (language::$languagesUiInstalled): ?>
-					<?php echo template::table([2, 1, 1, 4, 1, 1, 1], language::$languagesUiInstalled, ['Langues', 'Version', 'Date', '', '', '', '']); ?>
+					<?php echo Template::table([2, 1, 1, 4, 1, 1, 1], language::$languagesUiInstalled, ['Langues', 'Version', 'Date', '', '', '', '']); ?>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -46,10 +46,10 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo helper::translate('Catalogue'); ?>
+					<?php echo Helper::translate('Catalogue'); ?>
 				</h4>
 				<?php if (language::$languagesStore): ?>
-					<?php echo template::table([2, 1, 2, 6, 1], language::$languagesStore, ['Langues', 'Version', 'Date', '', '']); ?>
+					<?php echo Template::table([2, 1, 2, 6, 1], language::$languagesStore, ['Langues', 'Version', 'Date', '', '']); ?>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -60,19 +60,19 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo helper::translate('Paramètres'); ?>
+					<?php echo Helper::translate('Paramètres'); ?>
 				</h4>
 				<div class="col4 offset2">
-					<?php echo template::button('translateButtonCopyContent', [
-						'href' => helper::baseUrl() . 'language/copy',
+					<?php echo Template::button('translateButtonCopyContent', [
+						'href' => Helper::baseUrl() . 'language/copy',
 						'ico' => 'docs',
 						'disabled' => language::$siteCopy,
 						'value' => 'Copie de contenus localisés'
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::button('translateButtonAddContent', [
-						'href' => helper::baseUrl() . 'language/add',
+					<?php echo Template::button('translateButtonAddContent', [
+						'href' => Helper::baseUrl() . 'language/add',
 						'ico' => 'plus',
 						'class' => 'buttonGreen',
 						'value' => 'Nouveau contenu localisé'
@@ -85,14 +85,14 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo helper::translate('Langues installées'); ?>
+					<?php echo Helper::translate('Langues installées'); ?>
 				</h4>
 				<?php if (language::$languagesInstalled): ?>
-					<?php echo template::table([2, 6, 1, 1], language::$languagesInstalled, ['Langues', '', '', '']); ?>
+					<?php echo Template::table([2, 6, 1, 1], language::$languagesInstalled, ['Langues', '', '', '']); ?>
 				<?php endif; ?>
 			</div>
 		</div>
 	</div>
 </div>
 
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

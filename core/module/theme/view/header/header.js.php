@@ -62,7 +62,7 @@ $("input, select").on("change", function() {
 
 			//Modifier la dropdown liste si une image n'est pas sélectionnée
 			if ($("#themeHeaderImage").val() !== "" ) {
-				var message = "<?php echo helper::translate('Hauteur de l\'image sélectionnée');?>";
+				var message = "<?php echo Helper::translate('Hauteur de l\'image sélectionnée');?>";
 				// Une image est ajoutée ou changée
 				if ($("#themeHeaderHeight option").length === 5) {
 					// Pas d'image précédemment on ajoute l'option
@@ -83,7 +83,7 @@ $("input, select").on("change", function() {
 			$("#themeHeaderHeight option:eq(0)").remove();
 		}
 
-		tmpImg.src= "<?php echo helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
+		tmpImg.src= "<?php echo Helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
 
 		// Import des polices de caractères
 		var headerFont = $("#themeHeaderFont :selected").val();
@@ -93,7 +93,7 @@ $("input, select").on("change", function() {
 			css += "header{text-align:" + $("#themeHeaderTextAlign").val() + ";";
 			if ($("#themeHeaderImage").val()) {
 				// Une image est sélectionnée
-				css += "background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
+				css += "background-image:url('<?php echo Helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
 				css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
 			// Pas d'image sélectionnée
 			} else {

@@ -1,5 +1,7 @@
 <?php
 
+namespace Zwii\Cms;
+
 class Router extends Core
 {
 	/**
@@ -19,7 +21,7 @@ class Router extends Core
 		];
 		
 		require_once 'core/class/asset.class.php';
-		$asset = new asset();
+		$asset = new Asset();
 		foreach ($assetsToRegenerate as $file => $method) {
 			if ($this->generateAsset(core::DATA_DIR . $file)) {
 				$asset->$method($file);
@@ -45,7 +47,7 @@ class Router extends Core
 		// Supprime les fichiers temporaires
 		$lastClearTmp = mktime(0, 0, 0);
 		if ($lastClearTmp > $this->getData(['core', 'lastClearTmp']) + 86400) {
-			$iterator = new DirectoryIterator(core::TEMP_DIR);
+			$iterator = new \DirectoryIterator(core::TEMP_DIR);
 			foreach ($iterator as $fileInfos) {
 				if (
 					$fileInfos->isFile() &&
@@ -65,11 +67,11 @@ class Router extends Core
 			$lastBackup > $this->getData(['core', 'lastBackup']) + 86400 &&
 			$this->getData(['user'])
 		) {
-			if (helper::autoBackup(core::BACKUP_DIR, ['backup', 'tmp', 'file'])) {
+			if (Helper::autoBackup(core::BACKUP_DIR, ['backup', 'tmp', 'file'])) {
 				$this->setData(['core', 'lastBackup', $lastBackup]);
 
 				// Nettoyage des anciennes sauvegardes (> 30 jours)
-				$iterator = new DirectoryIterator(core::BACKUP_DIR);
+				$iterator = new \DirectoryIterator(core::BACKUP_DIR);
 				$now = time();
 				foreach ($iterator as $file) {
 					if (
@@ -110,7 +112,7 @@ class Router extends Core
 	public function router()
 	{
 
-		$layout = new layout($this);
+		$layout = new Layout($this);
 
 		// Installation
 		if (
@@ -118,7 +120,7 @@ class Router extends Core
 			and $this->getUrl(0) !== 'install'
 		) {
 			http_response_code(302);
-			header('Location:' . helper::baseUrl() . 'install');
+			header('Location:' . Helper::baseUrl() . 'install');
 			exit();
 		}
 
@@ -133,7 +135,7 @@ class Router extends Core
 					and $this->getData(['config', 'connect', 'autoDisconnect']) === true)
 			)
 		) {
-			$user = new user;
+			$user = new \user;
 			$user->logout();
 		}
 		// Mode maintenance
@@ -148,11 +150,11 @@ class Router extends Core
 			)
 		) {
 			// Déconnexion
-			$user = new user;
+			$user = new \user;
 			$user->logout();
 			// Redirection
 			http_response_code(302);
-			header('Location:' . helper::baseUrl() . 'maintenance');
+			header('Location:' . Helper::baseUrl() . 'maintenance');
 			exit();
 		}
 
@@ -252,7 +254,7 @@ class Router extends Core
 			!empty($this->getData(['page', $this->getUrl(0), 'parentPageId'])) &&
 			$this->getData(['page', $this->getUrl(0), 'breadCrumb'])
 		) {
-			$title = '<a href="' . helper::baseUrl() .
+			$title = '<a href="' . Helper::baseUrl() .
 				$this->getData(['page', $this->getUrl(0), 'parentPageId']) .
 				'">' .
 				ucfirst($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'parentPageId']), 'title'])) .
@@ -336,7 +338,7 @@ class Router extends Core
 
 			// Check l'existence du module
 			if (class_exists($moduleId)) {
-				/** @var common $module */
+				/** @var \common $module */
 				$module = new $moduleId;
 
 				// Check l'existence de l'action
@@ -497,7 +499,7 @@ class Router extends Core
 		// Erreurs
 		if ($access === 'login') {
 			http_response_code(302);
-			header('Location:' . helper::baseUrl() . 'user/login/');
+			header('Location:' . Helper::baseUrl() . 'user/login/');
 			exit();
 		}
 		// Redirection vers la page de connexion si la page nécessite une authentification et que l'utilisateur n'est pas connecté
@@ -516,7 +518,7 @@ class Router extends Core
 				&& in_array($this->getUrl(0), parent::$concurrentAccess)
 			) {
 				http_response_code(302);
-				header('Location:' . helper::baseUrl() . 'user/login/');
+				header('Location:' . Helper::baseUrl() . 'user/login/');
 				exit();
 			}
 		}
@@ -527,7 +529,7 @@ class Router extends Core
 				http_response_code(403);
 				$this->addOutput([
 					'title' => 'Accès verrouillé',
-					'content' => template::speech('<p>' . sprintf(helper::translate('La page %s est ouverte par l\'utilisateur %s</p><p><a style="color:inherit" href="javascript:history.back()">%s</a></p>'), $accessInfo['pageId'], $accessInfo['userName'], helper::translate('Retour')))
+					'content' => Template::speech('<p>' . sprintf(Helper::translate('La page %s est ouverte par l\'utilisateur %s</p><p><a style="color:inherit" href="javascript:history.back()">%s</a></p>'), $accessInfo['pageId'], $accessInfo['userName'], Helper::translate('Retour')))
 
 				]);
 			} else {
@@ -536,12 +538,12 @@ class Router extends Core
 					and $this->getData(['page', $this->getData(['locale', 'page403'])])
 				) {
 					http_response_code(302);
-					header('Location:' . helper::baseUrl() . $this->getData(['locale', 'page403']));
+					header('Location:' . Helper::baseUrl() . $this->getData(['locale', 'page403']));
 				} else {
 					http_response_code(403);
 					$this->addOutput([
 						'title' => 'Accès interdit',
-						'content' => template::speech('<p>' . helper::translate('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)') . '</p><p><a style="color:inherit" href="javascript:history.back()">' . helper::translate('Retour') . '</a></p>')
+						'content' => Template::speech('<p>' . Helper::translate('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)') . '</p><p><a style="color:inherit" href="javascript:history.back()">' . Helper::translate('Retour') . '</a></p>')
 					]);
 				}
 			}
@@ -565,7 +567,7 @@ class Router extends Core
 					) {
 						// Basculer
 						$_SESSION['ZWII_SITE_CONTENT'] = $langId;
-						header('Refresh:0; url=' . helper::baseUrl() . $this->getUrl());
+						header('Refresh:0; url=' . Helper::baseUrl() . $this->getUrl());
 						exit();
 					}
 				}
@@ -574,11 +576,11 @@ class Router extends Core
 				$this->getData(['locale', 'page404']) !== 'none'
 				and $this->getData(['page', $this->getData(['locale', 'page404'])])
 			) {
-				header('Location:' . helper::baseUrl() . $this->getData(['locale', 'page404']));
+				header('Location:' . Helper::baseUrl() . $this->getData(['locale', 'page404']));
 			} else {
 				$this->addOutput([
 					'title' => 'Page indisponible',
-					'content' => template::speech('<p>' . helper::translate('La page demandée n\'existe pas ou est introuvable (erreur 404)') . '</p><p><a style="color:inherit" href="javascript:history.back()">' . helper::translate('Retour') . '</a></p>')
+					'content' => Template::speech('<p>' . Helper::translate('La page demandée n\'existe pas ou est introuvable (erreur 404)') . '</p><p><a style="color:inherit" href="javascript:history.back()">' . Helper::translate('Retour') . '</a></p>')
 				]);
 			}
 		}
@@ -633,7 +635,7 @@ class Router extends Core
 			case core::DISPLAY_LAYOUT_MAIN:
 				ob_start();
 				// Rendre layout disponible pour le template
-				$layout = new layout($this);
+				$layout = new Layout($this);
 				require 'core/layout/main.php';
 				$content = ob_get_clean();
 				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués

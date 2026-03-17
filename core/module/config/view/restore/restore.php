@@ -1,14 +1,14 @@
-<?php echo template::formOpen('configRestoreForm'); ?>
+<?php echo Template::formOpen('configRestoreForm'); ?>
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('configRestoreBack', [
+		<?php echo Template::button('configRestoreBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . 'config',
-			'value' => template::ico('left')
+			'href' => Helper::baseUrl() . 'config',
+			'value' => Template::ico('left')
 		]); ?>
 	</div>
 	<div class="col2 offset9">
-		<?php echo template::submit('configRestoreSubmit', [
+		<?php echo Template::submit('configRestoreSubmit', [
 			'value' => 'Restaurer',
 			'uniqueSubmission' => true,
 		]); ?>
@@ -18,12 +18,12 @@
 	<div class="col12">
 		<div class="block">
 			<h4>
-				<?php echo helper::translate('Archive à restaurer'); ?>
+				<?php echo Helper::translate('Archive à restaurer'); ?>
 			</h4>
 			<div class="row">
 				<div class="col10 offset1">
 					<div class="row">
-						<?php echo template::file('configRestoreImportFile', [
+						<?php echo Template::file('configRestoreImportFile', [
 							'label' => 'Sélectionnez une archive au format ZIP',
 							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 							'type' => 2,
@@ -31,7 +31,7 @@
 						]); ?>
 					</div>
 					<div class="row">
-						<?php echo template::checkbox('configRestoreImportUser', true, 'Préserver les comptes des utilisateurs déjà installés', [
+						<?php echo Template::checkbox('configRestoreImportUser', true, 'Préserver les comptes des utilisateurs déjà installés', [
 							'checked' => true
 						]); ?>
 					</div>
@@ -40,4 +40,4 @@
 		</div>
 	</div>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

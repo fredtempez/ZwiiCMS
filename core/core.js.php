@@ -73,7 +73,7 @@ core.confirm = function (text, yesCallback, noCallback) {
                 .append(
                     $("<a>")
                     .addClass("button grey")
-                    .text("<?php echo helper::translate('Non');?>")
+                    .text("<?php echo Helper::translate('Non');?>")
                     .on("click", function () {
                         lightbox.options('button', true);
                         lightbox.close();
@@ -83,7 +83,7 @@ core.confirm = function (text, yesCallback, noCallback) {
                     }),
                     $("<a>")
                     .addClass("button")
-                    .text("<?php echo helper::translate('Oui');?>")
+                    .text("<?php echo Helper::translate('Oui');?>")
                     .on("click", function () {
                         lightbox.options('button', true);
                         lightbox.close();
@@ -455,7 +455,7 @@ core.start = function () {
         var fileName = inputFileHiddenDOM.val();
         if (fileName === "") {
             //fileName = "Sélectionner un fichier";
-            fileName = "<?php echo helper::translate('Sélectionner un fichier');?>";
+            fileName = "<?php echo Helper::translate('Sélectionner un fichier');?>";
             $(inputFileHiddenDOM).addClass("disabled");
         } else {
             $(inputFileHiddenDOM).removeClass("disabled");
@@ -472,14 +472,14 @@ core.start = function () {
     });
     // Confirmation de mise à jour
     $("#barUpdate").on("click", function () {
-        message = "<?php echo helper::translate('Mise à jour') . ' ?';?>";
+        message = "<?php echo Helper::translate('Mise à jour') . ' ?';?>";
         return core.confirm(message, function () {
             $(location).attr("href", $("#barUpdate").attr("href"));
         });
     });
     // Confirmation de déconnexion
     $("#barLogout").on("click", function () {
-        message = "<?php echo helper::translate('Se déconnecter') . ' ?';?>";
+        message = "<?php echo Helper::translate('Se déconnecter') . ' ?';?>";
         return core.confirm(message, function () {
             $(location).attr("href", $("#barLogout").attr("href"));
         });
@@ -505,7 +505,7 @@ core.start = function () {
         if (pattern.test(_this.val())) {
             core.noticeRemove(_this.attr("id"));
         } else {
-            message = "<?php echo helper::translate('Format incorrect');?>";
+            message = "<?php echo Helper::translate('Format incorrect');?>";
             core.noticeAdd(_this.attr("id"), message);
         }
     });
@@ -571,7 +571,7 @@ core.start();
  */
 $("#pageDelete").on("click", function () {
     var _this = $(this);
-    message = "<?php echo helper::translate('Confirmez-vous la suppression de cette page ?');?>";
+    message = "<?php echo Helper::translate('Confirmez-vous la suppression de cette page ?');?>";
     return core.confirm(message, function () {
         $(location).attr("href", _this.attr("href"));
     });

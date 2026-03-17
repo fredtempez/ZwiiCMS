@@ -44,7 +44,7 @@ class dashboard extends Core
 
         // Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Tableau de bord'),
+			'title' => Helper::translate('Tableau de bord'),
 			'view' => 'index'
 		]);
     }

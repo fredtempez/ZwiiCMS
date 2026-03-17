@@ -87,7 +87,7 @@ trait PageContent {
 	 */
 	private function buildHierarchy()
 	{
-		$pages = helper::arrayColumn($this->getData(['page']), 'position', 'SORT_ASC');
+		$pages = Helper::arrayColumn($this->getData(['page']), 'position', 'SORT_ASC');
 		// Parents
 		foreach ($pages as $pageId => $pagePosition) {
 			if (
@@ -143,7 +143,7 @@ trait PageContent {
 	{
 		// Sauve la liste des pages pour TinyMCE
 		$parents = [];
-		$rewrite = (helper::checkRewrite()) ? '' : '?';
+		$rewrite = (Helper::checkRewrite()) ? '' : '?';
 
 		// Boucle de recherche des pages actives avec hiérarchie
 		foreach ($this->getHierarchy() as $parentId => $childIds) {
@@ -214,7 +214,7 @@ trait PageContent {
 
 		$timezone = $this->getData(['config', 'timezone']);
 		$outputDir = getcwd();
-		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(helper::baseurl(false), $outputDir);
+		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(Helper::baseurl(false), $outputDir);
 
 		// will create also compressed (gzipped) sitemap : option buguée
 		// $sitemap->enableCompression();

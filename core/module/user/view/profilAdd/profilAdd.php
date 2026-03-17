@@ -1,33 +1,33 @@
-<?php echo template::formOpen('profilAddForm'); ?>
+<?php echo Template::formOpen('profilAddForm'); ?>
 <div class="row">
     <div class="col1">
-        <?php echo template::button('profilAddBack', [
+        <?php echo Template::button('profilAddBack', [
             'class' => 'buttonGrey',
-            'href' => helper::baseUrl() . 'user/profil',
-            'value' => template::ico('left')
+            'href' => Helper::baseUrl() . 'user/profil',
+            'value' => Template::ico('left')
         ]); ?>
     </div>
     <div class="col2 offset9">
-        <?php echo template::submit('profilAddSubmit'); ?>
+        <?php echo Template::submit('profilAddSubmit'); ?>
     </div>
 </div>
 <div class="row">
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Paramètres du profil'); ?>
+                <?php echo Helper::translate('Paramètres du profil'); ?>
             </h4>
             <div class="row">
                 <div class="col6">
                     <div class="row">
                         <div class="col12">
-                            <?php echo template::text('profilAddName', [
+                            <?php echo Template::text('profilAddName', [
                                 'label' => 'Nom du profil',
                                 'value' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])
                             ]); ?>
                         </div>
                         <div class="col12">
-                            <?php echo template::select('profilAddRole', user::$roleProfils, [
+                            <?php echo Template::select('profilAddRole', user::$roleProfils, [
                                 'label' => 'Rôle associé',
                                 'selected' => $this->getUrl(2)
                             ]); ?>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col6">
-                    <?php echo template::textarea('profilAddComment', [
+                    <?php echo Template::textarea('profilAddComment', [
                         'label' => 'Commentaire',
                         'value' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'comment'])
                     ]); ?>
@@ -48,11 +48,11 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Compte de l\'utilisateur'); ?>
+                <?php echo Helper::translate('Compte de l\'utilisateur'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddUserEdit', true, 'Éditer'); ?>
+                    <?php echo Template::checkbox('profilAddUserEdit', true, 'Éditer'); ?>
                 </div>
             </div>
         </div>
@@ -62,14 +62,14 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Gestionnaire de fichiers'); ?>
+                <?php echo Helper::translate('Gestionnaire de fichiers'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddFileManager', true, 'Autorisé'); ?>
+                    <?php echo Template::checkbox('profilAddFileManager', true, 'Autorisé'); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('profilAddPath', user::$sharePath, [
+                    <?php echo Template::select('profilAddPath', user::$sharePath, [
                         'label' => 'Dossier',
                         'class' => 'filemanager',
                     ]); ?>
@@ -79,23 +79,23 @@
                 <div class="col12">
                     <div class="block">
                         <h4>
-                            <?php echo helper::translate('Permissions sur les dossiers'); ?>
+                            <?php echo Helper::translate('Permissions sur les dossiers'); ?>
                         </h4>
                         <div class="row">
                             <div class="col2">
-                                <?php echo template::checkbox('profilAddFolderCreate', true, 'Ajouter', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddFolderCreate', true, 'Ajouter', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilAddFolderDelete', true, 'Effacer', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddFolderDelete', true, 'Effacer', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilAddFolderRename', true, 'Renommer', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddFolderRename', true, 'Renommer', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilAddFolderCopycut', true, 'Presse Papier', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddFolderCopycut', true, 'Presse Papier', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddFolderChmod', true, 'Droits sur les dossiers', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddFolderChmod', true, 'Droits sur les dossiers', ['class' => 'filemanager']); ?>
                             </div>
                         </div>
                     </div>
@@ -105,46 +105,46 @@
                 <div class="col12">
                     <div class="block">
                         <h4>
-                            <?php echo helper::translate('Permissions sur les fichiers'); ?>
+                            <?php echo Helper::translate('Permissions sur les fichiers'); ?>
                         </h4>
                         <div class="row">
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddDownload', true, 'Télécharger', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddDownload', true, 'Télécharger', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddEdit', true, 'Éditer', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddEdit', true, 'Éditer', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddCreate', true, 'Ajouter', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddCreate', true, 'Ajouter', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddRename', true, 'Renommer', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddRename', true, 'Renommer', ['class' => 'filemanager']); ?>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddUpload', true, 'Téléverser', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddUpload', true, 'Téléverser', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddDelete', true, 'Effacer', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddDelete', true, 'Effacer', ['class' => 'filemanager']); ?>
                             </div>
 
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddPreview', true, 'Prévisualiser', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddPreview', true, 'Prévisualiser', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddDuplicate', true, 'Dupliquer', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddDuplicate', true, 'Dupliquer', ['class' => 'filemanager']); ?>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddExtract', true, 'Extraire', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddExtract', true, 'Extraire', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddCopycut', true, 'Presse papier', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddCopycut', true, 'Presse papier', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddChmod', true, 'Droits sur les fichiers', ['class' => 'filemanager']); ?>
+                                <?php echo Template::checkbox('profilAddChmod', true, 'Droits sur les fichiers', ['class' => 'filemanager']); ?>
                             </div>
                         </div>
                     </div>
@@ -157,31 +157,31 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Permissions sur les pages'); ?>
+                <?php echo Helper::translate('Permissions sur les pages'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageAdd', true, 'Ajouter'); ?>
+                    <?php echo Template::checkbox('profilAddPageAdd', true, 'Ajouter'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageEdit', true, 'Éditer'); ?>
+                    <?php echo Template::checkbox('profilAddPageEdit', true, 'Éditer'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageDelete', true, 'Effacer'); ?>
+                    <?php echo Template::checkbox('profilAddPageDelete', true, 'Effacer'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageDuplicate', true, 'Dupliquer'); ?>
+                    <?php echo Template::checkbox('profilAddPageDuplicate', true, 'Dupliquer'); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageModule', true, 'Module'); ?>
+                    <?php echo Template::checkbox('profilAddPageModule', true, 'Module'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPagecssEditor', true, 'Éditeur CSS'); ?>
+                    <?php echo Template::checkbox('profilAddPagecssEditor', true, 'Éditeur CSS'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPagejsEditor', true, 'Éditeur JS'); ?>
+                    <?php echo Template::checkbox('profilAddPagejsEditor', true, 'Éditeur JS'); ?>
                 </div>
             </div>
         </div>
@@ -194,4 +194,4 @@
         } ?>
     <?php endforeach; ?>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

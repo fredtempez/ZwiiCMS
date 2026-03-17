@@ -1,6 +1,8 @@
 <?php
 
-class helper
+namespace Zwii\Cms;
+
+class Helper
 {
 
 	/**
@@ -179,7 +181,7 @@ class helper
 	 */
 	public static function arrayCollumn($array, $column, $sort = null)
 	{
-		return (helper::arrayColumn($array, $column, $sort));
+		return (Helper::arrayColumn($array, $column, $sort));
 	}
 
 	/**
@@ -191,24 +193,24 @@ class helper
 	public static function autoBackup($folder, $filter = ['backup', 'tmp'])
 	{
 		// Création du nom de fichier ZIP
-		$baseName = str_replace('/', '', helper::baseUrl(false, false));
+		$baseName = str_replace('/', '', Helper::baseUrl(false, false));
 		$baseName = empty($baseName) ? 'ZwiiCMS' : $baseName;
 		$fileName = $baseName . '-backup-' . date('Y-m-d-H-i-s') . '.zip';
 
 		// Initialisation de l'archive ZIP
-		$zip = new ZipArchive();
-		if ($zip->open($folder . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+		$zip = new \ZipArchive();
+		if ($zip->open($folder . $fileName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
 			return false;  // Retourne false si l'ouverture échoue
 		}
 
 		$directory = 'site/';
 
 		// Récupération des fichiers et des dossiers
-		$files = new RecursiveIteratorIterator(
-			new RecursiveCallbackFilterIterator(
-				new RecursiveDirectoryIterator(
+		$files = new \RecursiveIteratorIterator(
+			new \RecursiveCallbackFilterIterator(
+				new \RecursiveDirectoryIterator(
 					$directory,
-					RecursiveDirectoryIterator::SKIP_DOTS
+					\RecursiveDirectoryIterator::SKIP_DOTS
 				),
 				function ($fileInfo, $key, $iterator) use ($filter) {
 					// Inclure les fichiers ou les répertoires non filtrés
@@ -287,7 +289,7 @@ class helper
 						'delete' => $delete,
 						'dataDirectory' => $dataDirectory
 					];
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					//  on ne fait rien
 				}
 			}
@@ -320,7 +322,7 @@ class helper
 	public static function baseUrl($queryString = true, $host = true)
 	{
 		// Protocole
-		$protocol = helper::isHttps() === true ? 'https://' : 'http://';
+		$protocol = Helper::isHttps() === true ? 'https://' : 'http://';
 		// Host
 		if ($host) {
 			$host = $protocol . $_SERVER['HTTP_HOST'];
@@ -328,7 +330,7 @@ class helper
 		// Pathinfo
 		$pathInfo = pathinfo($_SERVER['PHP_SELF']);
 		// Querystring
-		if ($queryString and helper::checkRewrite() === false) {
+		if ($queryString and Helper::checkRewrite() === false) {
 			$queryString = '?';
 		} else {
 			$queryString = '';
@@ -343,7 +345,7 @@ class helper
 	public static function checkRewrite()
 	{
 		// N'interroge que le serveur Apache
-		if ((helper::checkServerSoftware() === false)) {
+		if ((Helper::checkServerSoftware() === false)) {
 			self::$rewriteStatus = false;
 		} else {
 			// Ouvre et scinde le fichier .htaccess
@@ -369,7 +371,7 @@ class helper
 	 */
 	public static function getOnlineVersion($channel)
 	{
-		return (helper::getUrlContents(core::ZWII_UPDATE_URL . $channel . '/version'));
+		return (Helper::getUrlContents(core::ZWII_UPDATE_URL . $channel . '/version'));
 	}
 
 	/**
@@ -378,7 +380,7 @@ class helper
 	 */
 	public static function checkNewVersion($channel)
 	{
-		$version = helper::getOnlineVersion($channel);
+		$version = Helper::getOnlineVersion($channel);
 		$update = false;
 		if (!empty($version)) {
 			$update = version_compare(core::ZWII_VERSION, $version) == -1;
@@ -447,7 +449,7 @@ class helper
 	 */
 	public static function deleteCookie($cookieKey)
 	{
-		setcookie($cookieKey, '', time() - 3600, helper::baseUrl(false, false), '', false, true);
+		setcookie($cookieKey, '', time() - 3600, Helper::baseUrl(false, false), '', false, true);
 		unset($_COOKIE[$cookieKey]);
 	}
 
@@ -465,7 +467,7 @@ class helper
 				$text = (bool) $text;
 				break;
 			case self::FILTER_DATETIME:
-				$timezone = new DateTimeZone(Router::$timezone);
+				$timezone = new \DateTimeZone(Router::$timezone);
 				if ($text) {
 					// Validation et nettoyage du format de date
 					// Détecte et corrige les années avec plus de 4 chiffres (ex: 20026 -> 2026)
@@ -477,10 +479,10 @@ class helper
 						$text = null;
 					} else {
 						try {
-							$date = new DateTime($text);
+							$date = new \DateTime($text);
 							$date->setTimezone($timezone);
 							$text = (int) $date->format('U');
-						} catch (Exception $e) {
+						} catch (\Exception $e) {
 							// En cas d'erreur de parsing (date invalide), retourne null
 							$text = null;
 						}
@@ -649,7 +651,7 @@ class helper
 		if ($nbPage > 1) {
 			for ($i = 1; $i <= $nbPage; $i++) {
 				$disabled = ($i === $currentPage) ? ' class="disabled"' : false;
-				$pages .= '<a href="' . helper::baseUrl() . $urlCurrent . '/' . $i . $suffix . '"' . $disabled . '>' . $i . '</a>';
+				$pages .= '<a href="' . Helper::baseUrl() . $urlCurrent . '/' . $i . $suffix . '"' . $disabled . '>' . $i . '</a>';
 			}
 			$pages = '<div class="pagination">' . $pages . '</div>';
 		}
@@ -871,7 +873,7 @@ class helper
 	 */
 	public static function scanDir($dir)
 	{
-		return array_values(helper::getSubdirectories($dir));
+		return array_values(Helper::getSubdirectories($dir));
 	}
 
 	/**
@@ -896,9 +898,9 @@ class helper
 		$subdirs = array();
 
 		// Get all directories first
-		$iterator = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
-			RecursiveIteratorIterator::SELF_FIRST
+		$iterator = new \RecursiveIteratorIterator(
+			new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS),
+			\RecursiveIteratorIterator::SELF_FIRST
 		);
 
 		// Add the base directory

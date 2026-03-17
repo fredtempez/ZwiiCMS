@@ -1,14 +1,14 @@
-<?php echo template::formOpen('translateFormCopy'); ?>
+<?php echo Template::formOpen('translateFormCopy'); ?>
 <div class="row">
     <div class="col1">
-        <?php echo template::button('translateFormCopyBack', [
+        <?php echo Template::button('translateFormCopyBack', [
             'class' => 'buttonGrey',
-            'href' => helper::baseUrl() . 'language',
-            'value' => template::ico('left')
+            'href' => Helper::baseUrl() . 'language',
+            'value' => Template::ico('left')
         ]); ?>
     </div>
     <div class="col2 offset9">
-        <?php echo template::submit('translateFormCopySubmit', [
+        <?php echo Template::submit('translateFormCopySubmit', [
             'value' => 'Copier'
         ]); ?>
     </div>
@@ -16,16 +16,16 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Sélectionnez la langue à copier vers une langue cible'); ?>
+            <h4><?php echo Helper::translate('Sélectionnez la langue à copier vers une langue cible'); ?>
             </h4>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('translateFormCopySource', language::$languagesInstalled, [
+                    <?php echo Template::select('translateFormCopySource', language::$languagesInstalled, [
                         'label' => 'Source'
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('translateFormCopyTarget', language::$languagesTarget, [
+                    <?php echo Template::select('translateFormCopyTarget', language::$languagesTarget, [
                         'label' => 'Cible'
                     ]); ?>
                 </div>
@@ -33,4 +33,4 @@
         </div>
     </div>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

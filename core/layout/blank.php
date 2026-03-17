@@ -15,7 +15,7 @@
 	<?php 
 	// Préchargement des polices si elles existent
 	if (file_exists(self::DATA_DIR . 'font/font.css')): 
-		$fontCssPath = helper::baseUrl(false) . self::DATA_DIR . 'font/font.css?' . md5_file(self::DATA_DIR . 'font/font.css');
+		$fontCssPath = Helper::baseUrl(false) . self::DATA_DIR . 'font/font.css?' . md5_file(self::DATA_DIR . 'font/font.css');
 	?>
 		<link rel="preload" href="<?php echo $fontCssPath; ?>" as="style" onload="this.rel='stylesheet'">
 		<noscript><link rel="stylesheet" href="<?php echo $fontCssPath; ?>"></noscript>
@@ -23,14 +23,14 @@
 	
 	<?php 
 	// Préchargement des CSS principaux
-	$commonCssPath = helper::baseUrl(false) . 'core/layout/common.css';
-	$blankCssPath = helper::baseUrl(false) . 'core/layout/blank.css';
-	$themeCssPath = helper::baseUrl(false) . self::DATA_DIR . 'theme.css?' . md5_file(self::DATA_DIR . 'theme.css');
+	$commonCssPath = Helper::baseUrl(false) . 'core/layout/common.css';
+	$blankCssPath = Helper::baseUrl(false) . 'core/layout/blank.css';
+	$themeCssPath = Helper::baseUrl(false) . self::DATA_DIR . 'theme.css?' . md5_file(self::DATA_DIR . 'theme.css');
 	
 	// Gestion de custom.css qui peut ne pas exister
 	$customCssFile = self::DATA_DIR . 'custom.css';
 	if (file_exists($customCssFile)) {
-		$customCssPath = helper::baseUrl(false) . $customCssFile . '?' . md5_file($customCssFile);
+		$customCssPath = Helper::baseUrl(false) . $customCssFile . '?' . md5_file($customCssFile);
 	} else {
 		$customCssPath = ''; // Pas de custom.css
 	}

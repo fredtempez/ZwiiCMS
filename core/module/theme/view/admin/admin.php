@@ -1,29 +1,29 @@
-<?php echo template::formOpen('configAdminForm'); ?>
+<?php echo Template::formOpen('configAdminForm'); ?>
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('configAdminBack', [
+		<?php echo Template::button('configAdminBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . 'theme',
-			'value' => template::ico('left')
+			'href' => Helper::baseUrl() . 'theme',
+			'value' => Template::ico('left')
 		]); ?>
 	</div>
 	<!--
 		<div class="col2 offset5">
-			<?php echo template::button('configAdminTest', [
+			<?php echo Template::button('configAdminTest', [
 				'value' => 'Bouton Standard'
 			]); ?>
 		</div>
 		-->
 	<div class="col1 offset8">
-		<?php echo template::button('configAdminReset', [
+		<?php echo Template::button('configAdminReset', [
 			'class' => 'buttonRed',
-			'href' => helper::baseUrl() . 'theme/reset/admin',
-			'value' => template::ico('cancel'),
+			'href' => Helper::baseUrl() . 'theme/reset/admin',
+			'value' => Template::ico('cancel'),
 			'help' => 'Réinitialiser avec le thème par défaut'
 		]); ?>
 	</div>
 	<div class="col2">
-		<?php echo template::submit('configAdminSubmit', [
+		<?php echo Template::submit('configAdminSubmit', [
 			'value' => 'Valider',
 			'ico' => 'check'
 		]); ?>
@@ -32,17 +32,17 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4><?php echo helper::translate('Paramètres'); ?>
+			<h4><?php echo Helper::translate('Paramètres'); ?>
 			</h4>
 			<div class="row">
 			<div class="col3">
-					<?php echo template::select('adminSiteWidth', theme::$siteWidths, [
+					<?php echo Template::select('adminSiteWidth', theme::$siteWidths, [
 						'label' => 'Largeur',
 						'selected' => $this->getData(['admin', 'width'])
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::text('adminBackgroundColor', [
+					<?php echo Template::text('adminBackgroundColor', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Arrière plan',
@@ -50,7 +50,7 @@
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::text('adminColorTitle', [
+					<?php echo Template::text('adminColorTitle', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Titres',
@@ -58,7 +58,7 @@
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::text('adminColorText', [
+					<?php echo Template::text('adminColorText', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Texte',
@@ -68,7 +68,7 @@
 			</div>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::text('adminBackGroundBlockColor', [
+					<?php echo Template::text('adminBackGroundBlockColor', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence. La couleur du texte est automatique.',
 						'label' => 'Arrière plan des champs',
@@ -76,7 +76,7 @@
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::text('adminBorderBlockColor', [
+					<?php echo Template::text('adminBorderBlockColor', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Bordure des champs',
@@ -84,7 +84,7 @@
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::text('adminColorHelp', [
+					<?php echo Template::text('adminColorHelp', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Bouton Aide',
@@ -94,7 +94,7 @@
 			</div>
 			<div class="row">
 				<div class="col3">
-					<?php echo template::text('adminColorGrey', [
+					<?php echo Template::text('adminColorGrey', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Bouton retour',
@@ -102,7 +102,7 @@
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::text('adminColorButton', [
+					<?php echo Template::text('adminColorButton', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Bouton standard',
@@ -110,7 +110,7 @@
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::text('adminColorRed', [
+					<?php echo Template::text('adminColorRed', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Bouton effacement',
@@ -118,7 +118,7 @@
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::text('adminColorGreen', [
+					<?php echo Template::text('adminColorGreen', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Bouton validation',
@@ -132,24 +132,24 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4><?php echo helper::translate('Mise en forme du texte'); ?>
+			<h4><?php echo Helper::translate('Mise en forme du texte'); ?>
 			</h4>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::select('adminFontText', theme::$fonts['name'], [
+					<?php echo Template::select('adminFontText', theme::$fonts['name'], [
 						'label' => 'Police du texte',
 						'selected' => $this->getData(['admin', 'fontText']),
 						'font' => theme::$fonts['family']
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('adminFontTextSize', theme::$siteFontSizes, [
+					<?php echo Template::select('adminFontTextSize', theme::$siteFontSizes, [
 						'label' => 'Taille',
 						'selected' => $this->getData(['admin', 'fontSize'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('adminFontTitle', theme::$fonts['name'], [
+					<?php echo Template::select('adminFontTitle', theme::$fonts['name'], [
 						'label' => 'Police des titres',
 						'selected' => $this->getData(['admin', 'fontTitle']),
 						'font' => theme::$fonts['family']
@@ -160,4 +160,4 @@
 	</div>
 </div>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

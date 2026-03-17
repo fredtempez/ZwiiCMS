@@ -1,31 +1,31 @@
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('configModulesBack', [
+		<?php echo Template::button('configModulesBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl(),
-			'value' => template::ico('home')
+			'href' => Helper::baseUrl(),
+			'value' => Template::ico('home')
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php /**echo template::button('pluginHelp', [
+		<?php /**echo Template::button('pluginHelp', [
 			 'href' => 'https://doc.zwiicms.fr/gestion-des-modules',
 			 'target' => '_blank',
-			 'value' => template::ico('help'),
+			 'value' => Template::ico('help'),
 			 'class' => 'buttonHelp',
 			 'help' => 'Consulter l\'aide en ligne'
 		 ]);*/?>
 	</div>
 	<div class="col1 offset8">
-		<?php echo template::button('pluginModulesStore', [
-			'href' => helper::baseUrl() . 'plugin/store',
-			'value' => template::ico('shopping-basket'),
+		<?php echo Template::button('pluginModulesStore', [
+			'href' => Helper::baseUrl() . 'plugin/store',
+			'value' => Template::ico('shopping-basket'),
 			'help' => 'Installer depuis le catalogue en ligne'
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php echo template::button('pluginStoreUpload', [
-			'href' => helper::baseUrl() . 'plugin/upload',
-			'value' => template::ico('file-archive'),
+		<?php echo Template::button('pluginStoreUpload', [
+			'href' => Helper::baseUrl() . 'plugin/upload',
+			'value' => Template::ico('file-archive'),
 			'help' => 'Installer depuis une archive'
 		]); ?>
 	</div>
@@ -35,26 +35,26 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo helper::translate('Sauvegarde'); ?>
+					<?php echo Helper::translate('Sauvegarde'); ?>
 				</h4>
-				<?php echo template::table([2, 2, 1, 5, 1, 1], plugin::$modulesInstalled, ['Module', 'Identifiant', 'Version', '', '', '']); ?>
+				<?php echo Template::table([2, 2, 1, 5, 1, 1], plugin::$modulesInstalled, ['Module', 'Identifiant', 'Version', '', '', '']); ?>
 			</div>
 		</div>
 	</div>
 <?php else: ?>
-	<?php echo template::speech('Aucun module installé.'); ?>
+	<?php echo Template::speech('Aucun module installé.'); ?>
 <?php endif; ?>
 <?php if (plugin::$modulesOrphan): ?>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo helper::translate('Modules orphelins'); ?>
+					<?php echo Helper::translate('Modules orphelins'); ?>
 				</h4>
-				<?php echo template::table([2, 2, 1, 6, 1], plugin::$modulesOrphan, ['Module', 'Identifiant', 'Version', '', '']); ?>
+				<?php echo Template::table([2, 2, 1, 6, 1], plugin::$modulesOrphan, ['Module', 'Identifiant', 'Version', '', '']); ?>
 			</div>
 		</div>
 	</div>
 <?php else: ?>
-	<?php echo template::speech('Aucun module orphelin.'); ?>
+	<?php echo Template::speech('Aucun module orphelin.'); ?>
 <?php endif; ?>

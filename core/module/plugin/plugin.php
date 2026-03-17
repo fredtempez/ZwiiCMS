@@ -66,7 +66,7 @@ class plugin extends Core
 			]);
 		} else {
 			// Suppression des dossiers
-			$infoModules = helper::getModules();
+			$infoModules = Helper::getModules();
 			$module = $this->getUrl(2);
 			//Liste des dossiers associés au module non effacés
 			if (
@@ -80,17 +80,17 @@ class plugin extends Core
 						is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])
 					) {
 						$s = $this->deleteDir($infoModules[$this->getUrl(2)]['dataDirectory']);
-						$notification = $s === false ? sprintf(helper::translate('Le module %s est désinstallé, il reste peut-être des données dans %s'), $module, $infoModules[$this->getUrl(2)]['dataDirectory']) : $notification;
+						$notification = $s === false ? sprintf(Helper::translate('Le module %s est désinstallé, il reste peut-être des données dans %s'), $module, $infoModules[$this->getUrl(2)]['dataDirectory']) : $notification;
 					}
 				}
 			} else {
 				$success = false;
-				$notification = helper::translate('La suppression a échoué');
+				$notification = Helper::translate('La suppression a échoué');
 			}
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'plugin',
+				'redirect' => Helper::baseUrl() . 'plugin',
 				'notification' => $notification,
 				'state' => $success
 			]);
@@ -114,7 +114,7 @@ class plugin extends Core
 		if (!file_exists($moduleFileName) || filesize($moduleFileName) === 0) {
 			return ([
 				'success' => false,
-				'notification' => helper::translate('Le fichier ZIP est vide ou inexistant')
+				'notification' => Helper::translate('Le fichier ZIP est vide ou inexistant')
 			]);
 		}
 		
@@ -160,7 +160,7 @@ class plugin extends Core
 				$zip->close();
 				return ([
 					'success' => false,
-					'notification' => helper::translate('Archive invalide, le descripteur est absent')
+					'notification' => Helper::translate('Archive invalide, le descripteur est absent')
 				]);
 			}
 			// Déterminer la racine effective du module (archive plate ou sous-dossier déjà détecté via enum.json)
@@ -182,7 +182,7 @@ class plugin extends Core
 						$zip->close();
 						return ([
 							'success' => false,
-							'notification' => helper::translate('Archive invalide, les dossiers ne correspondent pas au descripteur')
+							'notification' => Helper::translate('Archive invalide, les dossiers ne correspondent pas au descripteur')
 						]);
 					}
 					// Interdire l'écriture dans le dossier core
@@ -192,7 +192,7 @@ class plugin extends Core
 						$zip->close();
 						return ([
 							'success' => false,
-							'notification' => helper::translate('Archive invalide, l\'écriture dans le dossier core est interdite')
+							'notification' => Helper::translate('Archive invalide, l\'écriture dans le dossier core est interdite')
 						]);
 					}
 				}
@@ -207,7 +207,7 @@ class plugin extends Core
 				$zip->close();
 				return ([
 					'success' => false,
-					'notification' => helper::translate('Archive invalide, le fichier de classe est absent')
+					'notification' => Helper::translate('Archive invalide, le fichier de classe est absent')
 				]);
 			}
 
@@ -217,7 +217,7 @@ class plugin extends Core
 			 * Si oui lire le numéro de version et le stocker dans $versionInstalled
 			 */
 			if (is_file(self::MODULE_DIR . $module['name'] . '/' . $module['name'] . '.php')) {
-				$c = helper::getModules();
+				$c = Helper::getModules();
 				if (array_key_exists($module['name'], $c)) {
 					$versionInstalled = $c[$module['name']]['version'];
 				}
@@ -232,7 +232,7 @@ class plugin extends Core
 			} else {
 				if (version_compare($module['version'], $versionInstalled) === -1) {
 					// Contrôle du forçage
-					if ($this->getInput('configModulesCheck', helper::FILTER_BOOLEAN) === true) {
+					if ($this->getInput('configModulesCheck', Helper::FILTER_BOOLEAN) === true) {
 						$installOk = true;
 					} else {
 						// Message de retour
@@ -240,7 +240,7 @@ class plugin extends Core
 						$zip->close();
 						return ([
 							'success' => false,
-							'notification' => helper::translate('La version installée est plus récente')
+							'notification' => Helper::translate('La version installée est plus récente')
 						]);
 					}
 				}
@@ -260,14 +260,14 @@ class plugin extends Core
 					}
 				}
 				// Message de retour
-				$t = isset($versionInstalled) ? helper::translate('actualisé') : helper::translate('installé');
+				$t = isset($versionInstalled) ? Helper::translate('actualisé') : Helper::translate('installé');
 				$this->deleteDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
 				return ([
 					'success' => $success,
 					'notification' => $success
-					? sprintf(helper::translate('Le module %s a été %s'), $module['name'], $t)
-					: helper::translate('Erreur inconnue, le module n\'est pas installé')
+					? sprintf(Helper::translate('Le module %s a été %s'), $module['name'], $t)
+					: Helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
 			} else {
 				// Supprimer le dossier temporaire
@@ -275,7 +275,7 @@ class plugin extends Core
 				$zip->close();
 				return ([
 					'success' => false,
-					'notification' => helper::translate('Erreur inconnue, le module n\'est pas installé')
+					'notification' => Helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
 
 			}
@@ -297,7 +297,7 @@ class plugin extends Core
 			
 			return ([
 				'success' => false,
-				'notification' => sprintf(helper::translate('Impossible d\'ouvrir l\'archive : %s. Fichier : %s. Taille : %s octets.'), 
+				'notification' => sprintf(Helper::translate('Impossible d\'ouvrir l\'archive : %s. Fichier : %s. Taille : %s octets.'), 
 					$errorMessage, 
 					basename($moduleFileName), 
 					file_exists($moduleFileName) ? filesize($moduleFileName) : 'fichier inexistant')
@@ -317,29 +317,29 @@ class plugin extends Core
 			$this->isPost()
 		) {
 			// Installation d'un module
-			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
-			$zipFilename = $this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
+			$checkValidMaj = $this->getInput('configModulesCheck', Helper::FILTER_BOOLEAN);
+			$zipFilename = $this->getInput('configModulesInstallation', Helper::FILTER_STRING_SHORT);
 			if ($zipFilename !== '') {
 				$fullPath = self::FILE_DIR . 'source/' . $zipFilename;
 				// Vérifier que le fichier existe et n'est pas vide
 				if (!file_exists($fullPath) || filesize($fullPath) === 0) {
 					$state = [
 						'success' => false,
-						'notification' => helper::translate('Le fichier ZIP sélectionné est vide ou inexistant')
+						'notification' => Helper::translate('Le fichier ZIP sélectionné est vide ou inexistant')
 					];
 				} else {
 					$state = $this->install($fullPath, $checkValidMaj);
 				}
 			}
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'plugin',
+				'redirect' => Helper::baseUrl() . 'plugin',
 				'notification' => $state['notification'],
 				'state' => $state['success']
 			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Installer un module'),
+			'title' => Helper::translate('Installer un module'),
 			'view' => 'upload'
 		]);
 	}
@@ -359,18 +359,18 @@ class plugin extends Core
 			// Récupérer le module en ligne
 			$moduleName = $this->getUrl(2);
 			// Informations sur les module en ligne
-			$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
+			$store = json_decode(Helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 			// Url du module à télécharger
 			$moduleFilePath = $store[$moduleName]['file'];
 			// Télécharger le fichier
-			$moduleData = helper::getUrlContents(self::BASEURL_STORE . $moduleFilePath);
+			$moduleData = Helper::getUrlContents(self::BASEURL_STORE . $moduleFilePath);
 			
 			// Vérifier si le téléchargement a réussi
 			if ($moduleData === false || empty($moduleData)) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'plugin/store',
-					'notification' => helper::translate('Erreur de téléchargement du module depuis le store'),
+					'redirect' => Helper::baseUrl() . 'plugin/store',
+					'notification' => Helper::translate('Erreur de téléchargement du module depuis le store'),
 					'state' => false
 				]);
 				return;
@@ -393,8 +393,8 @@ class plugin extends Core
 			if (!$saved || !file_exists($tempFilePath) || filesize($tempFilePath) === 0) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'plugin/store',
-					'notification' => helper::translate('Erreur de sauvegarde du fichier module'),
+					'redirect' => Helper::baseUrl() . 'plugin/store',
+					'notification' => Helper::translate('Erreur de sauvegarde du fichier module'),
 					'state' => false
 				]);
 				return;
@@ -412,8 +412,8 @@ class plugin extends Core
 					unlink($tempFilePath);
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl() . 'plugin/store',
-						'notification' => helper::translate('Le fichier téléchargé n\'est pas une archive ZIP valide'),
+						'redirect' => Helper::baseUrl() . 'plugin/store',
+						'notification' => Helper::translate('Le fichier téléchargé n\'est pas une archive ZIP valide'),
 						'state' => false
 					]);
 					return;
@@ -429,7 +429,7 @@ class plugin extends Core
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'plugin/store',
+				'redirect' => Helper::baseUrl() . 'plugin/store',
 				'notification' => $r['notification'],
 				'state' => $r['success']
 			]);
@@ -437,7 +437,7 @@ class plugin extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Catalogue de modules'),
+			'title' => Helper::translate('Catalogue de modules'),
 			'view' => 'store'
 		]);
 	}
@@ -447,14 +447,14 @@ class plugin extends Core
 	 */
 	public function store()
 	{
-		$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
+		$store = json_decode(Helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 
 		if ($store) {
 			// Modules installés
-			$infoModules = helper::getModules();
+			$infoModules = Helper::getModules();
 
 			// Clés moduleIds dans les pages
-			$inPages = helper::arrayColumn($this->getData(['page']), 'moduleId', 'SORT_DESC');
+			$inPages = Helper::arrayColumn($this->getData(['page']), 'moduleId', 'SORT_DESC');
 
 			// Parcourir les données des modules
 			foreach ($store as $key => $value) {
@@ -463,30 +463,30 @@ class plugin extends Core
 				}
 				$pageInfos = array_keys($inPages, $key);
 				// Module non installé
-				$ico = template::ico('download');
+				$ico = Template::ico('download');
 				$class = '';
 				$help = 'Télécharger le module dans le gestionnaire de fichiers';
 				// Le module est installé
 				if (array_key_exists($key, $infoModules) === true) {
 					$class = 'buttonGreen';
-					$ico = template::ico('update');
+					$ico = Template::ico('update');
 					$help = 'Mettre à jour le module orphelin';
 				}
 				// Le module est installé et utilisé
 				if (in_array($key, $inPages) === true) {
 					$class = 'buttonRed';
-					$ico = template::ico('update');
+					$ico = Template::ico('update');
 					$help = 'Mettre à jour le module attaché, une sauvegarde des données de module est recommandée !';
 				}
 				self::$storeList[] = [
 					$store[$key]['category'],
 					'<a href="' . self::BASEURL_STORE . self::MODULE_STORE . $key . '" target="_blank" >' . $store[$key]['title'] . '</a>',
 					$store[$key]['version'],
-					helper::dateUTF8('%d %B %Y', $store[$key]['versionDate'], self::$i18nUI),
+					Helper::dateUTF8('%d %B %Y', $store[$key]['versionDate'], self::$i18nUI),
 					implode(' - ', $pageInfos),
-					template::button('moduleExport' . $key, [
+					Template::button('moduleExport' . $key, [
 						'class' => $class,
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/uploadItem/' . $key,
+						'href' => Helper::baseUrl() . $this->getUrl(0) . '/uploadItem/' . $key,
 						'value' => $ico,
 						'help' => $help
 					])
@@ -496,7 +496,7 @@ class plugin extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Catalogue de modules'),
+			'title' => Helper::translate('Catalogue de modules'),
 			'view' => 'store'
 		]);
 	}
@@ -506,12 +506,12 @@ class plugin extends Core
 	 */
 	public function item()
 	{
-		$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
+		$store = json_decode(Helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 		self::$storeItem = $store[$this->getUrl(2)];
-		self::$storeItem['fileDate'] = helper::dateUTF8('%d %B %Y', self::$storeItem['fileDate'], self::$i18nUI);
+		self::$storeItem['fileDate'] = Helper::dateUTF8('%d %B %Y', self::$storeItem['fileDate'], self::$i18nUI);
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Module ' . self::$storeItem['title']),
+			'title' => Helper::translate('Module ' . self::$storeItem['title']),
 			'view' => 'item'
 		]);
 	}
@@ -521,7 +521,7 @@ class plugin extends Core
 	 * @return mixed
 	 */
 	public static function getStore() {
-		$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
+		$store = json_decode(Helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 		return $store;
 	}
 
@@ -545,7 +545,7 @@ class plugin extends Core
 		}
 
 		// Lister les modules installés
-		$infoModules = helper::getModules();
+		$infoModules = Helper::getModules();
 
 		// Parcourir les langues du site traduit et recherche les modules affectés à des pages
 		$pagesInfos = [];
@@ -557,7 +557,7 @@ class plugin extends Core
 			$pagesList = is_array($pagesList) ? $pagesList : [];
 
 			// Extraire les clés des modules
-			$pagesModules[$keyi18n] = array_filter(helper::arrayColumn($pagesList, 'moduleId', 'SORT_DESC'), 'strlen');
+			$pagesModules[$keyi18n] = array_filter(Helper::arrayColumn($pagesList, 'moduleId', 'SORT_DESC'), 'strlen');
 
 			// Générer la liste des pages avec module de la langue par défaut
 			foreach ($pagesModules[$keyi18n] as $key => $value) {
@@ -592,10 +592,10 @@ class plugin extends Core
 					$infoModules[$key]['version'],
 					'',
 					$infoModules[$key]['delete'] === true
-					? template::button('moduleDelete' . $key, [
+					? Template::button('moduleDelete' . $key, [
 						'class' => 'moduleDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key,
-						'value' => template::ico('trash'),
+						'href' => Helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key,
+						'value' => Template::ico('trash'),
 						'help' => 'Supprimer le module'
 					])
 					: '',
@@ -614,14 +614,14 @@ class plugin extends Core
 					$key,
 					$infoModules[$key]['version'],
 					'',
-					template::button('moduleSave' . $key, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/save/filemanager/' . $key,
-						'value' => template::ico('download-cloud'),
+					Template::button('moduleSave' . $key, [
+						'href' => Helper::baseUrl() . $this->getUrl(0) . '/save/filemanager/' . $key,
+						'value' => Template::ico('download-cloud'),
 						'help' => 'Sauvegarder le module dans le gestionnaire de fichiers'
 					]),
-					template::button('moduleDownload' . $key, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/save/download/' . $key,
-						'value' => template::ico('download'),
+					Template::button('moduleDownload' . $key, [
+						'href' => Helper::baseUrl() . $this->getUrl(0) . '/save/download/' . $key,
+						'value' => Template::ico('download'),
 						'help' => 'Sauvegarder et télécharger le module'
 					])
 
@@ -644,23 +644,23 @@ class plugin extends Core
 							self::$modulesData[] = [
 								$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['realName'] . '&nbsp(' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . ')',
 								$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['version'],
-								template::flag($keyi18n, '20px') . '&nbsp<a href ="' . helper::baseUrl() . $keyPage . '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
-								template::button('dataExport' . $keyPage, [
-									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$siteContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage,
+								Template::flag($keyi18n, '20px') . '&nbsp<a href ="' . Helper::baseUrl() . $keyPage . '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
+								Template::button('dataExport' . $keyPage, [
+									'href' => Helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$siteContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage,
 									// appel de fonction vaut exécution, utiliser un paramètre
-									'value' => template::ico('download-cloud'),
+									'value' => Template::ico('download-cloud'),
 									'help' => 'Sauvegarder les données du module dans le gestionnaire de fichiers'
 								]),
-								template::button('dataExport' . $keyPage, [
-									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$siteContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage,
+								Template::button('dataExport' . $keyPage, [
+									'href' => Helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$siteContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage,
 									// appel de fonction vaut exécution, utiliser un paramètre
-									'value' => template::ico('download'),
+									'value' => Template::ico('download'),
 									'help' => 'Sauvegarder et télécharger les données du module'
 								]),
-								template::button('dataDelete' . $keyPage, [
-									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$siteContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage,
+								Template::button('dataDelete' . $keyPage, [
+									'href' => Helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$siteContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage,
 									// appel de fonction vaut exécution, utiliser un paramètre
-									'value' => template::ico('trash'),
+									'value' => Template::ico('trash'),
 									'class' => 'buttonRed dataDelete',
 									'help' => 'Détacher le module de la page',
 								])
@@ -676,7 +676,7 @@ class plugin extends Core
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Gestion des modules'),
+			'title' => Helper::translate('Gestion des modules'),
 			'view' => 'index'
 		]);
 	}
@@ -704,7 +704,7 @@ class plugin extends Core
 			$moduleId = $this->getUrl(3);
 
 			// Descripteur de l'archive
-			$infoModule = helper::getModules();
+			$infoModule = Helper::getModules();
 
 			//Nom de l'archive
 			$fileName = $moduleId . str_replace('.', '-', $infoModule[$moduleId]['version']) . '.zip';
@@ -723,8 +723,8 @@ class plugin extends Core
 					$success = copy($tmpFolder . $fileName, self::FILE_DIR . 'source/modules/' . $fileName);
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl() . 'plugin',
-						'notification' => $success ? helper::translate('Archive copiée dans le dossier Modules du gestionnaire de fichier') : helper::translate('Erreur de copie'),
+						'redirect' => Helper::baseUrl() . 'plugin',
+						'notification' => $success ? Helper::translate('Archive copiée dans le dossier Modules du gestionnaire de fichier') : Helper::translate('Erreur de copie'),
 						'state' => $success
 					]);
 					break;

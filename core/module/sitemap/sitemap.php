@@ -32,7 +32,7 @@ class sitemap extends Core
         foreach ($this->getHierarchy(null, true, null) as $parentId => $childIds) {
             $items .= ' <li>';
             if ($this->getData(['page', $parentId, 'disable']) === false  && $this->getUser('role') >= $this->getData(['page', $parentId, 'role'])) {
-                $pageUrl = ($parentId !== $this->getData(['locale', 'homePageId'])) ? helper::baseUrl() . $parentId : helper::baseUrl(false);
+                $pageUrl = ($parentId !== $this->getData(['locale', 'homePageId'])) ? Helper::baseUrl() . $parentId : Helper::baseUrl(false);
                 $items .= '<a href="' . $pageUrl . '">'  . $this->getData(['page', $parentId, 'title']) . '</a>';
             } else {
                 // page désactivée
@@ -46,8 +46,8 @@ class sitemap extends Core
             ) {
                 $items .= '<ul>';
                 // Ids des articles par ordre de publication
-                $articleIdsPublishedOns = helper::arrayColumn($this->getData(['module', $parentId, 'posts']), 'publishedOn', 'SORT_DESC');
-                $articleIdsStates = helper::arrayColumn($this->getData(['module', $parentId, 'posts']), 'state', 'SORT_DESC');
+                $articleIdsPublishedOns = Helper::arrayColumn($this->getData(['module', $parentId, 'posts']), 'publishedOn', 'SORT_DESC');
+                $articleIdsStates = Helper::arrayColumn($this->getData(['module', $parentId, 'posts']), 'state', 'SORT_DESC');
                 $articleIds = [];
                 foreach ($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
                     if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {
@@ -57,7 +57,7 @@ class sitemap extends Core
                 foreach ($articleIds as $articleId => $article) {
                     if ($this->getData(['module', $parentId, 'posts', $article, 'state']) === true) {
                         $items .= ' <li>';
-                        $items .= '<a href="' . helper::baseUrl() . $parentId . '/' . $article . '">' . $this->getData(['module', $parentId, 'posts', $article, 'title']) . '</a>';
+                        $items .= '<a href="' . Helper::baseUrl() . $parentId . '/' . $article . '">' . $this->getData(['module', $parentId, 'posts', $article, 'title']) . '</a>';
                         $items .= '</li>';
                     }
                 }
@@ -69,7 +69,7 @@ class sitemap extends Core
                 // Sous-page
                 $items .= ' <li>';
                 if ($this->getData(['page', $childId, 'disable']) === false && $this->getUser('role') >= $this->getData(['page', $parentId, 'role'])) {
-                    $pageUrl = ($childId !== $this->getData(['locale', 'homePageId'])) ? helper::baseUrl() . $childId : helper::baseUrl(false);
+                    $pageUrl = ($childId !== $this->getData(['locale', 'homePageId'])) ? Helper::baseUrl() . $childId : Helper::baseUrl(false);
                     $items .= '<a href="' . $pageUrl . '">' . $this->getData(['page', $childId, 'title']) . '</a>';
                 } else {
                     // page désactivée
@@ -84,8 +84,8 @@ class sitemap extends Core
                 ) {
                     $items .= '<ul>';
                     // Ids des articles par ordre de publication
-                    $articleIdsPublishedOns = helper::arrayColumn($this->getData(['module', $childId, 'posts']), 'publishedOn', 'SORT_DESC');
-                    $articleIdsStates = helper::arrayColumn($this->getData(['module', $childId, 'posts']), 'state', 'SORT_DESC');
+                    $articleIdsPublishedOns = Helper::arrayColumn($this->getData(['module', $childId, 'posts']), 'publishedOn', 'SORT_DESC');
+                    $articleIdsStates = Helper::arrayColumn($this->getData(['module', $childId, 'posts']), 'state', 'SORT_DESC');
                     $articleIds = [];
                     foreach ($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
                         if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {
@@ -95,7 +95,7 @@ class sitemap extends Core
                     foreach ($articleIds as $articleId => $article) {
                         if ($this->getData(['module', $childId, 'posts', $article, 'state']) === true) {
                             $items .= ' <li>';
-                            $items .=  '<a href="' . helper::baseUrl() . $childId . '/' . $article . '">' . $this->getData(['module', $childId, 'posts', $article, 'title']) . '</a>';
+                            $items .=  '<a href="' . Helper::baseUrl() . $childId . '/' . $article . '">' . $this->getData(['module', $childId, 'posts', $article, 'title']) . '</a>';
                             $items .= '</li>';
                         }
                     }
@@ -111,7 +111,7 @@ class sitemap extends Core
 
         // Valeurs en sortie
         $this->addOutput([
-            'title' => helper::translate('Plan du site'),
+            'title' => Helper::translate('Plan du site'),
             'view' => 'index'
         ]);
     }

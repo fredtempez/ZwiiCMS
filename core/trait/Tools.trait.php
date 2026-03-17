@@ -348,7 +348,7 @@ trait Tools {
 	 */
 	public function getRelativePath($path)
 	{
-		return str_replace(helper::baseUrl(false), '', $path);
+		return str_replace(Helper::baseUrl(false), '', $path);
 	}
 
 }

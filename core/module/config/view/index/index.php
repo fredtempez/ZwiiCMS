@@ -1,44 +1,44 @@
-<?php echo template::formOpen('configForm'); ?>
+<?php echo Template::formOpen('configForm'); ?>
 <div class="row">
     <div class="col1">
-        <?php echo template::button('configBack', [
+        <?php echo Template::button('configBack', [
             'class' => 'buttonGrey',
-            'href' => helper::baseUrl(false),
-            'value' => template::ico('home')
+            'href' => Helper::baseUrl(false),
+            'value' => Template::ico('home')
         ]); ?>
     </div>
     <div class="col2 offset7">
-        <?php echo template::button('configLocaleButton', [
+        <?php echo Template::button('configLocaleButton', [
             'value' => 'Identité',
-            'href' => helper::baseUrl() . 'language/site'
+            'href' => Helper::baseUrl() . 'language/site'
         ]); ?>
     </div>
     <div class="col2">
-        <?php echo template::submit('Submit'); ?>
+        <?php echo Template::submit('Submit'); ?>
     </div>
 </div>
 
 <div class="tab">
-    <?php echo template::button('configSetupButton', [
+    <?php echo Template::button('configSetupButton', [
         'value' => 'Configuration',
         'class' => 'buttonTab',
     ]); ?>
-    <?php echo template::button('configSocialButton', [
+    <?php echo Template::button('configSocialButton', [
         'value' => 'Référencement',
         'class' => 'buttonTab',
     ]); ?>
-    <?php echo template::button('configConnectButton', [
+    <?php echo Template::button('configConnectButton', [
         'value' => 'Connexion',
         'class' => 'buttonTab',
     ]); ?>
-    <?php echo template::button('configNetworkButton', [
+    <?php echo Template::button('configNetworkButton', [
         'value' => 'Réseau',
         'class' => 'buttonTab',
     ]); ?>
 </div>
 
 <!-- Champ caché pour transmettre l'onglet-->
-<?php echo template::hidden( 'containerSelected',
+<?php echo Template::hidden( 'containerSelected',
     ['value' => $this->getData(['user', $this->getUser('id'), 'view', 'config'])]
 );
 ?>
@@ -49,4 +49,4 @@
 <?php include('core/module/config/view/social/social.php') ?>
 <?php include('core/module/config/view/connect/connect.php') ?>
 <?php include('core/module/config/view/network/network.php') ?>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

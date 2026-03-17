@@ -1,38 +1,38 @@
-<?php echo template::formOpen('themeHeaderForm'); ?>
+<?php echo Template::formOpen('themeHeaderForm'); ?>
 <div id="zwii_site_content" data-variable="<?php echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : 'home'); ?>"></div>
 <div class="row">
     <div class="col1">
-        <?php echo template::button('themeHeaderBack', [
+        <?php echo Template::button('themeHeaderBack', [
             'class' => 'buttonGrey',
-            'href' => helper::baseUrl() . 'theme',
-            'value' => template::ico('left')
+            'href' => Helper::baseUrl() . 'theme',
+            'value' => Template::ico('left')
         ]); ?>
     </div>
     <div class="col2 offset9">
-        <?php echo template::submit('themeHeaderSubmit'); ?>
+        <?php echo Template::submit('themeHeaderSubmit'); ?>
     </div>
 </div>
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Paramètres'); ?>
+            <h4><?php echo Helper::translate('Paramètres'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::select('themeHeaderPosition', theme::$headerPositions, [
+                    <?php echo Template::select('themeHeaderPosition', theme::$headerPositions, [
                         'label' => 'Position',
                         'selected' => $this->getData(['theme', 'header', 'position'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeHeaderFeature', theme::$headerFeatures, [
+                    <?php echo Template::select('themeHeaderFeature', theme::$headerFeatures, [
                         'label' => 'Contenu',
                         'selected' => $this->getData(['theme', 'header', 'feature'])
                     ]); ?>
                 </div>
 
                 <div class="col4">
-                    <?php echo template::select('themeHeaderHeight', theme::$headerHeights, [
+                    <?php echo Template::select('themeHeaderHeight', theme::$headerHeights, [
                         'label' => 'Hauteur maximale',
                         'selected' => $this->getData(['theme', 'header', 'height']),
                     ]); ?>
@@ -40,21 +40,21 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::select('themeHeaderWide', theme::$containerWides, [
+                    <?php echo Template::select('themeHeaderWide', theme::$containerWides, [
                         'label' => 'Largeur',
                         'selected' => $this->getData(['theme', 'header', 'wide'])
                     ]); ?>
                 </div>
                 <div class="col4">
                     <div id="themeHeaderSmallDisplay" class="displayNone">
-                        <?php echo template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
+                        <?php echo Template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
                             'checked' => $this->getData(['theme', 'header', 'tinyHidden'])
                         ]); ?>
                     </div>
                 </div>
                 <div class="col4">
                     <div id="themeHeaderPositionOptions" class="displayNone">
-                        <?php echo template::checkbox('themeHeaderMargin', true, 'Aligner la bannière avec le contenu', [
+                        <?php echo Template::checkbox('themeHeaderMargin', true, 'Aligner la bannière avec le contenu', [
                             'checked' => $this->getData(['theme', 'header', 'margin'])
                         ]); ?>
                     </div>
@@ -66,11 +66,11 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Couleurs'); ?>
+            <h4><?php echo Helper::translate('Couleurs'); ?>
             </h4>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::text('themeHeaderBackgroundColor', [
+                    <?php echo Template::text('themeHeaderBackgroundColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
                         'label' => 'Arrière plan',
@@ -78,7 +78,7 @@
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::text('themeHeaderTextColor', [
+                    <?php echo Template::text('themeHeaderTextColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
                         'label' => 'Texte',
@@ -92,44 +92,44 @@
 <div class="row wallpaperContainer">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Mise en forme du titre'); ?>
+            <h4><?php echo Helper::translate('Mise en forme du titre'); ?>
             </h4>
             <div class="row">
                 <div class="col12">
-                    <?php echo template::checkbox('themeHeaderTextHide', true, 'Titre masqué', [
+                    <?php echo Template::checkbox('themeHeaderTextHide', true, 'Titre masqué', [
                         'checked' => $this->getData(['theme', 'header', 'textHide'])
                     ]); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::select('themeHeaderFont', theme::$fonts['name'], [
+                    <?php echo Template::select('themeHeaderFont', theme::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'header', 'font']),
                         'font' => theme::$fonts['family']
                     ]); ?>
                 </div>
                 <div class="col2">
-                    <?php echo template::select('themeHeaderFontSize', theme::$headerFontSizes, [
+                    <?php echo Template::select('themeHeaderFontSize', theme::$headerFontSizes, [
                         'label' => 'Taille',
                         'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'header', 'fontSize'])
                     ]); ?>
                 </div>
                 <div class="col2">
-                    <?php echo template::select('themeHeaderFontWeight', theme::$fontWeights, [
+                    <?php echo Template::select('themeHeaderFontWeight', theme::$fontWeights, [
                         'label' => 'Style',
                         'selected' => $this->getData(['theme', 'header', 'fontWeight'])
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeHeaderTextTransform', theme::$textTransforms, [
+                    <?php echo Template::select('themeHeaderTextTransform', theme::$textTransforms, [
                         'label' => 'Casse',
                         'selected' => $this->getData(['theme', 'header', 'textTransform'])
                     ]); ?>
                 </div>
                 <div class="col2">
-                    <?php echo template::select('themeHeaderTextAlign', theme::$aligns, [
+                    <?php echo Template::select('themeHeaderTextAlign', theme::$aligns, [
                         'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'header', 'textAlign'])
                     ]); ?>
@@ -142,7 +142,7 @@
 <div class="row wallpaperContainer">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Papier peint'); ?>
+            <h4><?php echo Helper::translate('Papier peint'); ?>
             </h4>
             <div class="row">
                 <div class="col12">
@@ -151,7 +151,7 @@
                     $normalizedImagePath = $this->getNormalizedFilePath($imagePath, $this->getUser('id'));
                     $imageFile = !empty($normalizedImagePath) && file_exists($normalizedImagePath) ? $imagePath : "";
                     ?>
-                    <?php echo template::file('themeHeaderImage', [
+                    <?php echo Template::file('themeHeaderImage', [
                         'label' => 'Image',
                         'language' => $this->getData(['user', $this->getUser('id'), 'language']),
                         'type' => 1,
@@ -160,39 +160,39 @@
                     ]);
                     ?>
                     <span class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
-                        <?php echo helper::translate('Largeur de l\'image'); ?> <span id="themeHeaderImageWidth"></span>
-                        ; <?php echo helper::translate('Largeur du site :'); ?>
+                        <?php echo Helper::translate('Largeur de l\'image'); ?> <span id="themeHeaderImageWidth"></span>
+                        ; <?php echo Helper::translate('Largeur du site :'); ?>
                         <?php echo $this->getData(['theme', 'site', 'width']); ?>
                         |
-                        <?php echo helper::translate('Hauteur de l\'image'); ?> <span
+                        <?php echo Helper::translate('Hauteur de l\'image'); ?> <span
                             id="themeHeaderImageHeight"></span>
                         |
-                        <?php echo helper::translate('Ratio'); ?> <span id="themeHeaderImageRatio"></span>
+                        <?php echo Helper::translate('Ratio'); ?> <span id="themeHeaderImageRatio"></span>
                     </span>
                 </div>
             </div>
             <div class="themeHeaderImageOptions" class="displayNone">
                 <div class="row">
                     <div class="col3">
-                        <?php echo template::select('themeHeaderImageRepeat', theme::$repeats, [
+                        <?php echo Template::select('themeHeaderImageRepeat', theme::$repeats, [
                             'label' => 'Répétition',
                             'selected' => $this->getData(['theme', 'header', 'imageRepeat'])
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::select('themeHeaderImageContainer', theme::$headerWide, [
+                        <?php echo Template::select('themeHeaderImageContainer', theme::$headerWide, [
                             'label' => 'Adaptation',
                             'selected' => $this->getData(['theme', 'header', 'imageContainer']),
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::select('themeHeaderImagePosition', theme::$imagePositions, [
+                        <?php echo Template::select('themeHeaderImagePosition', theme::$imagePositions, [
                             'label' => 'Position',
                             'selected' => $this->getData(['theme', 'header', 'imagePosition'])
                         ]); ?>
                     </div>
                     <div id="themeHeaderShow" class="col3">
-                        <?php echo template::checkbox('themeHeaderlinkHomePage', true, 'Bannière cliquable', [
+                        <?php echo Template::checkbox('themeHeaderlinkHomePage', true, 'Bannière cliquable', [
                             'checked' => $this->getData(['theme', 'header', 'linkHomePage'])
                         ]); ?>
                     </div>
@@ -205,8 +205,8 @@
     <div class="col12">
         <div class="row">
             <div class="col12">
-                <?php echo template::textarea('themeHeaderText', [
-                    'label' => '<div class="titleWysiwygContent">' . helper::translate('Contenu HTML') . '</div>',
+                <?php echo Template::textarea('themeHeaderText', [
+                    'label' => '<div class="titleWysiwygContent">' . Helper::translate('Contenu HTML') . '</div>',
                     'class' => 'editorWysiwyg',
                     'value' => $this->getData(['theme', 'header', 'featureContent'])
                 ]); ?>
@@ -217,4 +217,4 @@
 <div id="featureContent" class="displayNone">
     <?php echo $this->getData(['theme', 'header', 'featureContent']); ?>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

@@ -1,5 +1,8 @@
 <?php
-class layout extends Core
+
+namespace Zwii\Cms;
+
+class Layout extends Core
 {
 
     private $core;
@@ -24,19 +27,19 @@ class layout extends Core
                 return $this->getData(['page', $pageId, 'shortTitle']);
             case 'icon':
                 if ($this->getData(['page', $pageId, 'iconUrl']) != '') {
-                    return '<img alt="' . $this->getData(['page', $pageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $pageId, 'iconUrl']) . '" />';
+                    return '<img alt="' . $this->getData(['page', $pageId, 'shortTitle']) . '" src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $pageId, 'iconUrl']) . '" />';
                 } else {
                     return $this->getData(['page', $pageId, 'shortTitle']);
                 }
             case 'icontitle':
                 if ($this->getData(['page', $pageId, 'iconUrl']) != '') {
-                    return '<img alt="' . $this->getData(['page', $pageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $pageId, 'iconUrl']) . '" data-tippy-content="' . $this->getData(['page', $pageId, 'shortTitle']) . '"/>';
+                    return '<img alt="' . $this->getData(['page', $pageId, 'shortTitle']) . '" src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $pageId, 'iconUrl']) . '" data-tippy-content="' . $this->getData(['page', $pageId, 'shortTitle']) . '"/>';
                 } else {
                     return $this->getData(['page', $pageId, 'shortTitle']);
                 }
             case 'icontext':
                 if ($this->getData(['page', $pageId, 'iconUrl']) != '') {
-                    return '<img alt="' . $this->getData(['page', $pageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $pageId, 'iconUrl']) . '" />' . $this->getData(['page', $pageId, 'shortTitle']);
+                    return '<img alt="' . $this->getData(['page', $pageId, 'shortTitle']) . '" src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $pageId, 'iconUrl']) . '" />' . $this->getData(['page', $pageId, 'shortTitle']);
                 } else {
                     return $this->getData(['page', $pageId, 'shortTitle']);
                 }
@@ -61,7 +64,7 @@ class layout extends Core
         $item = '<div id="cookieConsent">';
         // Bouton de fermeture
         $item .= '<div class="cookieClose">';
-        $item .= template::ico('cancel');
+        $item .= Template::ico('cancel');
         $item .= '</div>';
         // Texte de la popup
         $item .= '<h3>' . $this->getData(['locale', 'cookies', 'titleLabel']) . '</h3>';
@@ -70,9 +73,9 @@ class layout extends Core
         if (
             $this->getData(['locale', 'homePageId']) === $this->getUrl(0)
         ) {
-            $item .= '<form method="POST" action="' . helper::baseUrl(false) . '" id="cookieForm">';
+            $item .= '<form method="POST" action="' . Helper::baseUrl(false) . '" id="cookieForm">';
         } else {
-            $item .= '<form method="POST" action="' . helper::baseUrl(true) . $this->getUrl() . '" id="cookieForm">';
+            $item .= '<form method="POST" action="' . Helper::baseUrl(true) . $this->getUrl() . '" id="cookieForm">';
         }
         $item .= '<br><br>';
         $item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'buttonValidLabel']) . '">';
@@ -80,7 +83,7 @@ class layout extends Core
         // mentions légales si la page est définie
         $legalPage = $this->getData(['locale', 'legalPageId']);
         if ($legalPage !== 'none') {
-            $item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'linkLegalLabel']) . '</a></p>';
+            $item .= '<p><a href="' . Helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'linkLegalLabel']) . '</a></p>';
         }
         $item .= '</div>';
         echo $item;
@@ -346,14 +349,14 @@ class layout extends Core
         $items .= '<span id="footerDisplaySiteMap"';
         $items .= $this->getData(['theme', 'footer', 'displaySiteMap']) === false ? ' class="displayNone"' : '';
         $label = ($this->getData(['locale', 'sitemapPageLabel']) === 'none') ? 'Plan du site' : $this->getData(['locale', 'sitemapPageLabel']);
-        $items .= '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'sitemap"  >' . $label . '</a>';
+        $items .= '><wbr>&nbsp;|&nbsp;<a href="' . Helper::baseUrl() . 'sitemap"  >' . $label . '</a>';
         $items .= '</span>';
         // Affichage du module de recherche
         $items .= '<span id="footerDisplaySearch"';
         $items .= $this->getData(['theme', 'footer', 'displaySearch']) === false ? ' class="displayNone" >' : '>';
         $label = empty($this->getData(['locale', 'searchPageLabel'])) ? 'Rechercher' : $this->getData(['locale', 'searchPageLabel']);
         if ($this->getData(['locale', 'searchPageId']) !== 'none') {
-            $items .= '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale', 'searchPageId']) . '"  >' . $label . '</a>';
+            $items .= '<wbr>&nbsp;|&nbsp;<a href="' . Helper::baseUrl() . $this->getData(['locale', 'searchPageId']) . '"  >' . $label . '</a>';
         }
         $items .= '</span>';
         // Affichage des mentions légales
@@ -361,7 +364,7 @@ class layout extends Core
         $items .= $this->getData(['theme', 'footer', 'displayLegal']) === false ? ' class="displayNone" >' : '>';
         $label = empty($this->getData(['locale', 'legalPageLabel'])) ? 'Mentions Légales' : $this->getData(['locale', 'legalPageLabel']);
         if ($this->getData(['locale', 'legalPageId']) !== 'none') {
-            $items .= '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale', 'legalPageId']) . '"  >' . $label . '</a>';
+            $items .= '<wbr>&nbsp;|&nbsp;<a href="' . Helper::baseUrl() . $this->getData(['locale', 'legalPageId']) . '"  >' . $label . '</a>';
         }
         $items .= '</span>';
         // Affichage de la gestion des cookies
@@ -380,8 +383,8 @@ class layout extends Core
             $items .= '<span id="footerLoginLink" ' .
                 ($this->getUrl(0) === 'theme' ? 'class="displayNone">' : '>') .
                 '<wbr>&nbsp;|&nbsp;<wbr>' .
-                template::ico('login', [
-                    'href' => helper::baseUrl() . 'user/login/' . strip_tags(str_replace('/', '_', $this->getUrl())),
+                Template::ico('login', [
+                    'href' => Helper::baseUrl() . 'user/login/' . strip_tags(str_replace('/', '_', $this->getUrl())),
                     'attr' => 'rel="nofollow"',
                     'help' => 'Connexion'
                 ]) . '</span>';
@@ -397,8 +400,8 @@ class layout extends Core
             if (
                 $this->getUser('permission', 'filemanager') === true
             ) {
-                $items .= '<wbr>' . template::ico('folder', [
-                    'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
+                $items .= '<wbr>' . Template::ico('folder', [
+                    'href' => Helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
                     'margin' => 'all',
                     'attr' => 'data-lity',
                     'help' => 'Fichiers du site'
@@ -407,16 +410,16 @@ class layout extends Core
             if (
                 $this->getUser('permission', 'user', 'edit') === true
             ) {
-                $items .= '<wbr>' . template::ico('user', [
+                $items .= '<wbr>' . Template::ico('user', [
                     'margin' => 'all',
                     'help' => 'Mon compte',
-                    'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id')
+                    'href' => Helper::baseUrl() . 'user/edit/' . $this->getUser('id')
                 ]);
             }
-            $items .= '<wbr>' . template::ico('logout', [
+            $items .= '<wbr>' . Template::ico('logout', [
                 'margin' => 'all',
                 'help' => 'Déconnecter',
-                'href' => helper::baseUrl() . 'user/logout'
+                'href' => Helper::baseUrl() . 'user/logout'
             ]);
             $items .= '</span>';
         }
@@ -486,7 +489,7 @@ class layout extends Core
                     $socialUrl = '';
             }
             if ($socialId !== '') {
-                $socials .= '<a href="' . $socialUrl . $socialId . '" onclick="window.open(this.href);return false" data-tippy-content="' . $title . '" alt="' . $title . '">' . template::ico(substr(str_replace('User', '', $socialName), 0, -2)) . '</a>';
+                $socials .= '<a href="' . $socialUrl . $socialId . '" onclick="window.open(this.href);return false" data-tippy-content="' . $title . '" alt="' . $title . '">' . Template::ico(substr(str_replace('User', '', $socialName), 0, -2)) . '</a>';
             }
         }
         if ($socials !== '') {
@@ -507,9 +510,9 @@ class layout extends Core
             $favicon &&
             file_exists(self::FILE_DIR . 'source/' . $favicon)
         ) {
-            echo '<link rel="shortcut icon" media="(prefers-color-scheme:light)" href="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $favicon . '">';
+            echo '<link rel="shortcut icon" media="(prefers-color-scheme:light)" href="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $favicon . '">';
         } else {
-            echo '<link rel="shortcut icon" media="(prefers-color-scheme:light)"  href="' . helper::baseUrl(false) . 'core/vendor/zwiico/ico/favicon.ico">';
+            echo '<link rel="shortcut icon" media="(prefers-color-scheme:light)"  href="' . Helper::baseUrl(false) . 'core/vendor/zwiico/ico/favicon.ico">';
         }
         // Dark scheme
         $faviconDark = $this->getData(['config', 'faviconDark']);
@@ -517,8 +520,8 @@ class layout extends Core
             !empty($faviconDark) &&
             file_exists(self::FILE_DIR . 'source/' . $faviconDark)
         ) {
-            echo '<link rel="shortcut icon" media="(prefers-color-scheme:dark)" href="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $faviconDark . '">';
-            echo '<script src="' . helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous"></script>';
+            echo '<link rel="shortcut icon" media="(prefers-color-scheme:dark)" href="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $faviconDark . '">';
+            echo '<script src="' . Helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous"></script>';
         }
     }
 
@@ -541,8 +544,8 @@ class layout extends Core
             or $this->getUrl(0) === 'theme'
         ) {
             $itemsRight .= '<li id="menuLoginLink" ' . ($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') . '>' .
-                template::ico('login', [
-                    'href' => helper::baseUrl() . 'user/login/' . strip_tags(str_replace('/', '_', $this->getUrl())),
+                Template::ico('login', [
+                    'href' => Helper::baseUrl() . 'user/login/' . strip_tags(str_replace('/', '_', $this->getUrl())),
                     'help' => "Connexion"
                 ]) .
                 '</li>';
@@ -556,8 +559,8 @@ class layout extends Core
                 $this->getUser('role') >= self::ROLE_MEMBER &&
                 $this->getUser('permission', 'filemanager') === true
             ) {
-                $itemsRight .= '<li>' . template::ico('folder', [
-                    'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
+                $itemsRight .= '<li>' . Template::ico('folder', [
+                    'href' => Helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
                     'attr' => 'data-lity',
                     'help' => 'Fichiers du site'
                 ]) . '</li>';
@@ -565,16 +568,16 @@ class layout extends Core
             if (
                 $this->getUser('permission', 'user', 'edit') === true
             ) {
-                $itemsRight .= '<li>' . template::ico('user', [
+                $itemsRight .= '<li>' . Template::ico('user', [
                     'help' => 'Mon compte',
                     'margin' => 'right',
-                    'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id')
+                    'href' => Helper::baseUrl() . 'user/edit/' . $this->getUser('id')
                 ]) . '</li>';
             }
             $itemsRight .= '<li>' .
-                template::ico('logout', [
+                Template::ico('logout', [
                     'help' => 'Déconnecter',
-                    'href' => helper::baseUrl() . 'user/logout',
+                    'href' => Helper::baseUrl() . 'user/logout',
                     'id' => 'barLogout'
                 ]) . '</li>';
         }
@@ -669,10 +672,10 @@ class layout extends Core
                     $this->isConnected() === true and
                     $this->getUser('role') < self::ROLE_EDITOR)
             ) {
-                $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
+                $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? Helper::baseUrl(false) : Helper::baseUrl() . $this->getUrl(0);
                 $items .= '<a class="navLevel' . $depth . '" href="' . $pageUrl . '">';
             } else {
-                $pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false) : helper::baseUrl() . $childKey;
+                $pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? Helper::baseUrl(false) : Helper::baseUrl() . $childKey;
                 $items .= '<a class="' . $active . 'navLevel' . $depth . ' ' . $parentId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
             }
 
@@ -682,7 +685,7 @@ class layout extends Core
             // Afficher l'icône de déroulement si enfants visibles
             if ($hasChildren) {
                 // Indicateur systématiquement orienté vers le bas
-                $items .= template::ico('down', ['margin' => 'left']);
+                $items .= Template::ico('down', ['margin' => 'left']);
             }
             
             $items .= '</a>';
@@ -745,10 +748,10 @@ class layout extends Core
                     $this->isConnected() === true and
                     $this->getUser('role') < self::ROLE_EDITOR)
             ) {
-                $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
+                $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? Helper::baseUrl(false) : Helper::baseUrl() . $this->getUrl(0);
                 $items .= '<a href="' . $pageUrl . '">';
             } else {
-                $pageUrl = ($this->getData(['locale', 'homePageId']) === $parentPageId) ? helper::baseUrl(false) : helper::baseUrl() . $parentPageId;
+                $pageUrl = ($this->getData(['locale', 'homePageId']) === $parentPageId) ? Helper::baseUrl(false) : Helper::baseUrl() . $parentPageId;
                 $items .= '<a class="' . $active . '" href="' . $pageUrl . '"' . $targetBlank . '>';
             }
 
@@ -768,7 +771,7 @@ class layout extends Core
                 $hasVisibleChildren &&
                 $this->getdata(['page', $parentPageId, 'hideMenuChildren']) === false
             ) {
-                $items .= template::ico('down', ['margin' => 'left']);
+                $items .= Template::ico('down', ['margin' => 'left']);
             }
             // ------------------------------------------------
             $items .= '</a>';
@@ -853,7 +856,7 @@ class layout extends Core
                 ) {
                     $items .= '<a href="' . $this->getUrl(1) . '">';
                 } else {
-                    $items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . $active . '>';
+                    $items .= '<a href="' . Helper::baseUrl() . $parentPageId . '"' . $targetBlank . $active . '>';
                 }
                 $items .= $this->getData(['page', $parentPageId, 'shortTitle']);
                 $items .= '</a>';
@@ -944,7 +947,7 @@ class layout extends Core
             ) {
                 $items .= '<a href="' . $this->getUrl(1) . '">' . $indent;
             } else {
-                $items .= '<a href="' . helper::baseUrl() . $childKey . '"' . $targetBlank . $active . '>' . $indent;
+                $items .= '<a href="' . Helper::baseUrl() . $childKey . '"' . $targetBlank . $active . '>' . $indent;
             }
 
             $items .= $this->getData(['page', $childKey, 'shortTitle']);
@@ -977,9 +980,9 @@ class layout extends Core
         if (
             $this->getData(['locale', 'homePageId']) === $this->getUrl(0)
         ) {
-            echo '<link rel="canonical" href="' . helper::baseUrl(false) . '" />';
+            echo '<link rel="canonical" href="' . Helper::baseUrl(false) . '" />';
         } else {
-            echo '<link rel="canonical" href="' . helper::baseUrl(true) . $this->getUrl() . '" />';
+            echo '<link rel="canonical" href="' . Helper::baseUrl(true) . $this->getUrl() . '" />';
         }
     }
 
@@ -1026,7 +1029,7 @@ class layout extends Core
             $wide = $imageSize[0];
             $height = $imageSize[1];
             //Sortie
-            $items = '<meta property="og:image" content="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['config', 'seo', 'openGraphImage']) . '" />';
+            $items = '<meta property="og:image" content="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['config', 'seo', 'openGraphImage']) . '" />';
             $items .= '<meta property="og:image:type" content="' . $typeMime . '" />';
             $items .= '<meta property="og:image:width" content="' . $wide . '" />';
             $items .= '<meta property="og:image:height" content="' . $height . '" />';
@@ -1048,7 +1051,7 @@ class layout extends Core
             $notificationClass = 'notificationError';
         }
         if (core::$coreNotices) {
-            $notification = sprintf('%s <p> | ', helper::translate('Restauration des bases de données absentes'));
+            $notification = sprintf('%s <p> | ', Helper::translate('Restauration des bases de données absentes'));
             foreach (core::$coreNotices as $item)
                 $notification .= $item . ' | ';
             $notificationClass = 'notificationError';
@@ -1066,7 +1069,7 @@ class layout extends Core
             unset($_SESSION['ZWII_NOTIFICATION_OTHER']);
         }
         if (isset($notification) and isset($notificationClass)) {
-            echo '<div id="notification" class="' . $notificationClass . '">' . $notification . '<span id="notificationClose">' . template::ico('cancel') . '<!----></span><div id="notificationProgress"></div></div>';
+            echo '<div id="notification" class="' . $notificationClass . '">' . $notification . '<span id="notificationClose">' . Template::ico('cancel') . '<!----></span><div id="notificationProgress"></div></div>';
         }
     }
 
@@ -1083,7 +1086,7 @@ class layout extends Core
                 $leftItem = '';
                 foreach (self::$languages as $key => $value) {
                     if (is_dir(self::DATA_DIR . $key)) {
-                        $location = helper::baseUrl() . 'language/content/' . $key;
+                        $location = Helper::baseUrl() . 'language/content/' . $key;
                         $leftItem .= '<option name="' . $key . '" value="' . $location . '" ' . ($key === self::$siteContent ? 'selected' : '') . '>' . $value . '</option>';
                     }
                 }
@@ -1092,17 +1095,17 @@ class layout extends Core
                 $leftItems .= '</select></li>';
             }
             if ($this->getUser('role') >= self::ROLE_ADMIN) {
-                $leftItems .= '<li>' . template::ico('flag', [
+                $leftItems .= '<li>' . Template::ico('flag', [
                     'help' => 'Langues',
-                    'href' => helper::baseUrl() . 'language'
+                    'href' => Helper::baseUrl() . 'language'
                 ]) . '</li>';
             }
 
             // Liste des pages
             if ($this->getUser('role') >= self::ROLE_EDITOR) {
                 $leftItems .= '<li><select id="barSelectPage">';
-                $leftItems .= '<option value="">' . helper::translate('Pages du site') . '</option>';
-                $leftItems .= '<optgroup label="' . helper::translate('Pages orphelines') . '">';
+                $leftItems .= '<option value="">' . Helper::translate('Pages du site') . '</option>';
+                $leftItems .= '<optgroup label="' . Helper::translate('Pages orphelines') . '">';
                 $orpheline = true;
                 $currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
                 foreach ($this->getHierarchy(null, false) as $parentPageId => $childrenPageIds) {
@@ -1111,7 +1114,7 @@ class layout extends Core
                         $orpheline
                     ) {
                         $orpheline = false;
-                        $leftItems .= '<optgroup label="' . helper::translate('Pages dans le menu') . '">';
+                        $leftItems .= '<optgroup label="' . Helper::translate('Pages dans le menu') . '">';
                     }
                     // Exclure les barres latérales de cette boucle
                     if ($this->getData(['page', $parentPageId, 'block']) === 'bar') {
@@ -1131,7 +1134,7 @@ class layout extends Core
                     // Exclure les barres
                     if ($this->getData(['page', $parentPageId, 'block']) !== 'bar') {
                         $leftItems .= '<option value="' .
-                            helper::baseUrl() .
+                            Helper::baseUrl() .
                             $parentPageId . '"' .
                             ($parentPageId === $currentPageId ? ' selected' : false) .
                             ' class="' .
@@ -1147,21 +1150,21 @@ class layout extends Core
                 }
                 $leftItems .= '</optgroup' >
                     // Afficher les barres
-                    $leftItems .= '<optgroup label="' . helper::translate('Barres latérales') . '">';
+                    $leftItems .= '<optgroup label="' . Helper::translate('Barres latérales') . '">';
                 foreach ($this->getHierarchy(null, false, true) as $parentPageId => $childrenPageIds) {
-                    $leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'shortTitle']) . '</option>';
+                    $leftItems .= '<option value="' . Helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'shortTitle']) . '</option>';
                     
                     // Pour les barres latérales, afficher les enfants avec simple indentation (pas de récursion)
                     foreach ($childrenPageIds as $childKey) {
-                        $leftItems .= '<option value="' . helper::baseUrl() . $childKey . '"' . ($childKey === $currentPageId ? ' selected' : false) . '>&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'shortTitle']) . '</option>';
+                        $leftItems .= '<option value="' . Helper::baseUrl() . $childKey . '"' . ($childKey === $currentPageId ? ' selected' : false) . '>&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'shortTitle']) . '</option>';
                     }
                 }
                 $leftItems .= '</optgroup>';
                 $leftItems .= '</select></li>';
                 // Bouton Ajouter une page
                 if ($this->getUser('permission', 'page', 'add')) {
-                    $leftItems .= '<li>' . template::ico('plus', [
-                        'href' => helper::baseUrl() . 'page/add/' . self::$siteContent,
+                    $leftItems .= '<li>' . Template::ico('plus', [
+                        'href' => Helper::baseUrl() . 'page/add/' . self::$siteContent,
                         'help' => 'Nouvelle page ou barre latérale'
                     ]) . '</li>';
                 }
@@ -1182,8 +1185,8 @@ class layout extends Core
                         $this->getUser('permission', 'page', 'edit')
                         and $this->geturl(1) !== 'edit'
                     ) {
-                        $leftItems .= '<li>' . template::ico('pencil', [
-                            'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '/' . self::$siteContent,
+                        $leftItems .= '<li>' . Template::ico('pencil', [
+                            'href' => Helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '/' . self::$siteContent,
                             'help' => 'Éditer la page'
                         ]) . '</li>';
                     }
@@ -1195,8 +1198,8 @@ class layout extends Core
                         and class_exists($this->getData(['page', $this->getUrl(0), 'moduleId'])) === true
                         and $this->getUser('permission',$this->getData(['page', $this->getUrl(0), 'moduleId']), 'config') === true
                     ) {
-                        $leftItems .= '<li>' . template::ico('gear', [
-                            'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
+                        $leftItems .= '<li>' . Template::ico('gear', [
+                            'href' => Helper::baseUrl() . $this->getUrl(0) . '/config',
                             'help' => 'Module de la page'
                         ]) . '</li>';
                     }
@@ -1205,8 +1208,8 @@ class layout extends Core
                         $this->getUser('permission', 'page', 'duplicate')
                         and $this->geturl(1) !== 'edit'
                     ) {
-                        $leftItems .= '<li>' . template::ico('clone', [
-                            'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '/' . self::$siteContent,
+                        $leftItems .= '<li>' . Template::ico('clone', [
+                            'href' => Helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '/' . self::$siteContent,
                             'help' => 'Dupliquer la page'
                         ])
                             . '</li>';
@@ -1217,8 +1220,8 @@ class layout extends Core
                         and $this->geturl(1) !== 'edit'
 
                     ) {
-                        $leftItems .= '<li>' . template::ico('trash', [
-                            'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '/' . self::$siteContent,
+                        $leftItems .= '<li>' . Template::ico('trash', [
+                            'href' => Helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '/' . self::$siteContent,
                             'help' => 'Supprimer la page',
                             'id' => 'pageDelete'
                         ])
@@ -1235,35 +1238,35 @@ class layout extends Core
                     'filemanager'
                 )
             ) {
-                $rightItems .= '<li>' . template::ico('folder', [
+                $rightItems .= '<li>' . Template::ico('folder', [
                     'help' => 'Fichiers',
-                    'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
+                    'href' => Helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
                     'attr' => 'data-lity'
                 ]) . '</li>';
             }
             if ($this->getUser('role') >= self::ROLE_ADMIN) {
-                $rightItems .= '<li>' . template::ico('brush', [
+                $rightItems .= '<li>' . Template::ico('brush', [
                     'help' => 'Thème',
-                    'href' => helper::baseUrl() . 'theme'
+                    'href' => Helper::baseUrl() . 'theme'
                 ]) . '</li>';
-                $rightItems .= '<li>' . template::ico('users', [
+                $rightItems .= '<li>' . Template::ico('users', [
                     'help' => 'Utilisateurs',
-                    'href' => helper::baseUrl() . 'user'
+                    'href' => Helper::baseUrl() . 'user'
                 ]) . '</li>';
                 if ($this->getData(['core', 'updateModuleAvailable'])) {
-                    $rightItems .= '<li>' . template::ico('puzzle colorRed', [
+                    $rightItems .= '<li>' . Template::ico('puzzle colorRed', [
                         'help' => 'Modules',
-                        'href' => helper::baseUrl() . 'plugin'
+                        'href' => Helper::baseUrl() . 'plugin'
                     ]) . '</li>';
                 } else {
-                    $rightItems .= '<li>' . template::ico('puzzle', [
+                    $rightItems .= '<li>' . Template::ico('puzzle', [
                         'help' => 'Modules',
-                        'href' => helper::baseUrl() . 'plugin'
+                        'href' => Helper::baseUrl() . 'plugin'
                     ]) . '</li>';
                 }
-                $rightItems .= '<li>' . template::ico('cog-alt', [
+                $rightItems .= '<li>' . Template::ico('cog-alt', [
                     'help' => 'Configuration',
-                    'href' => helper::baseUrl() . 'config'
+                    'href' => Helper::baseUrl() . 'config'
                 ]) . '</li>';
                 // Mise à jour automatique
                 $today = mktime(0, 0, 0);
@@ -1278,15 +1281,15 @@ class layout extends Core
                         // Dernier auto controle
                         $this->setData(['core', 'lastAutoUpdate', $today], false);
                         if (
-                            helper::checkNewVersion(core::ZWII_UPDATE_CHANNEL)
+                            Helper::checkNewVersion(core::ZWII_UPDATE_CHANNEL)
                         ) {
                             $this->setData(['core', 'updateAvailable', true], false);
                         }
 
                         // Modules installés
-                        $infoModules = helper::getModules();
+                        $infoModules = Helper::getModules();
                         // Recherche de mise à jour des modules
-                        $store = plugin::getStore();
+                        $store = \plugin::getStore();
                         if (is_array($store)) {
                             // Parcourir les données des modules du store
                             foreach ($store as $key => $value) {
@@ -1310,7 +1313,7 @@ class layout extends Core
                 }
                 // Afficher le bouton : Mise à jour détectée + activée
                 if ($this->getData(['core', 'updateAvailable'])) {
-                    $rightItems .= '<li><a href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii ' . core::ZWII_VERSION . ' vers ' . helper::getOnlineVersion(core::ZWII_UPDATE_CHANNEL) . '">' . template::ico('update colorRed') . '</a></li>';
+                    $rightItems .= '<li><a href="' . Helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii ' . core::ZWII_VERSION . ' vers ' . Helper::getOnlineVersion(core::ZWII_UPDATE_CHANNEL) . '">' . Template::ico('update colorRed') . '</a></li>';
                 }
             }
 
@@ -1320,14 +1323,14 @@ class layout extends Core
                 && $this->getUser('permission', 'user', 'edit')
 
             ) {
-                $rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id') .
-                    '" data-tippy-content="' . helper::translate('Configurer mon compte') . '">' .
-                    template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') .
+                $rightItems .= '<li><a href="' . Helper::baseUrl() . 'user/edit/' . $this->getUser('id') .
+                    '" data-tippy-content="' . Helper::translate('Configurer mon compte') . '">' .
+                    Template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') .
                     '</span></a></li>';
             }
-            $rightItems .= '<li>' . template::ico('logout', [
+            $rightItems .= '<li>' . Template::ico('logout', [
                 'help' => 'Déconnecter',
-                'href' => helper::baseUrl() . 'user/logout',
+                'href' => Helper::baseUrl() . 'user/logout',
                 'id' => 'barLogout'
             ]) . '</li>';
             // Barre de membre
@@ -1347,8 +1350,8 @@ class layout extends Core
         if ($this->core->output['inlineScript']) {
             $inlineScript = implode($this->core->output['inlineScript']);
         }
-        echo '<script defer>' . helper::minifyJs($coreScript . $this->core->output['script']) . '</script>';
-        echo '<script defer>' . helper::minifyJs(htmlspecialchars_decode($inlineScript)) . '</script>';
+        echo '<script defer>' . Helper::minifyJs($coreScript . $this->core->output['script']) . '</script>';
+        echo '<script defer>' . Helper::minifyJs(htmlspecialchars_decode($inlineScript)) . '</script>';
     }
 
     /**
@@ -1358,11 +1361,11 @@ class layout extends Core
     {
         // Import des styles liés à la page
         if ($this->core->output['style']) {
-            echo '<base href="' . helper::baseUrl(true) . '">';
+            echo '<base href="' . Helper::baseUrl(true) . '">';
             if (strpos($this->core->output['style'], 'admin.css') >= 1) {
                 echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR . 'admin.css') . '">';
             }
-            echo '<style type="text/css">' . helper::minifyCss($this->core->output['style']) . '</style>';
+            echo '<style type="text/css">' . Helper::minifyCss($this->core->output['style']) . '</style>';
         }
     }
 
@@ -1375,7 +1378,7 @@ class layout extends Core
         if ($this->core->output['inlineStyle']) {
             foreach ($this->core->output['inlineStyle'] as $style) {
                 if ($style) {
-                    echo '<style type="text/css">' . helper::minifyCss(htmlspecialchars_decode($style)) . '</style>';
+                    echo '<style type="text/css">' . Helper::minifyCss(htmlspecialchars_decode($style)) . '</style>';
                 }
 
             }
@@ -1399,8 +1402,8 @@ class layout extends Core
     public function showVendor(): void
     {
         // Variables partagées
-        $vars = 'var baseUrl = ' . json_encode(helper::baseUrl(false)) . ';';
-        $vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
+        $vars = 'var baseUrl = ' . json_encode(Helper::baseUrl(false)) . ';';
+        $vars .= 'var baseUrlQs = ' . json_encode(Helper::baseUrl()) . ';';
         // Liste des fontes disponibles pour TinyMCE (nom=font-family)
         $fontFormats = [];
         foreach (['websafe', 'imported', 'files'] as $typeFont) {
@@ -1418,7 +1421,7 @@ class layout extends Core
         ) {
             $vars .= 'var privateKey = ' . json_encode(md5_file(self::DATA_DIR . 'core.json')) . ';';
         }
-        echo '<script defer >' . helper::minifyJs($vars) . '</script>';
+        echo '<script defer >' . Helper::minifyJs($vars) . '</script>';
         // Librairies
         $moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
         foreach ($this->core->output['vendor'] as $vendorName) {
@@ -1447,10 +1450,10 @@ class layout extends Core
                         $reload = $vendorPath === 'core/vendor/zwiico/'
                             ? '?' . md5_file('core/vendor/zwiico/css/zwiico-codes.css')
                             : '';
-                        echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . $vendorPath . $vendorFile . $reload . '">';
+                        echo '<link rel="stylesheet" href="' . Helper::baseUrl(false) . $vendorPath . $vendorFile . $reload . '">';
                         break;
                     case 'js':
-                        echo '<script src="' . helper::baseUrl(false) . $vendorPath . $vendorFile . '"></script>';
+                        echo '<script src="' . Helper::baseUrl(false) . $vendorPath . $vendorFile . '"></script>';
                         break;
                 }
             }
@@ -1472,7 +1475,7 @@ class layout extends Core
         }
 
         $items = '<li>';
-        $items .= '<a href="' . helper::baseUrl() . 'language/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
+        $items .= '<a href="' . Helper::baseUrl() . 'language/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . Helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
         $items .= '</li>';
         return $items;
     }
@@ -1527,17 +1530,17 @@ class layout extends Core
         if (
             $previousPage !== null && $this->getData(['page', $this->getUrl(0), 'navLeft']) === $position
         ) {
-            $items .= template::button('navPreviousButtonLeft', [
-                'href' => helper::baseUrl() . $previousPage,
-                'value' => template::ico($leftButton)
+            $items .= Template::button('navPreviousButtonLeft', [
+                'href' => Helper::baseUrl() . $previousPage,
+                'value' => Template::ico($leftButton)
             ]);
         }
         $items .= '</div>';
         $items .= '<div class="col1 offset10">';
         if ($nextPage !== null && $this->getData(['page', $this->getUrl(0), 'navRight']) === $position) {
-            $items .= template::button('navNextButtonRight', [
-                'href' => helper::baseUrl() . $nextPage,
-                'value' => template::ico($rightButton)
+            $items .= Template::button('navNextButtonRight', [
+                'href' => Helper::baseUrl() . $nextPage,
+                'value' => Template::ico($rightButton)
             ]);
         }
         $items .= '</div></div></div>';
@@ -1569,7 +1572,7 @@ class layout extends Core
             }
             
             $leftItems .= '<option value="'
-                . helper::baseUrl()
+                . Helper::baseUrl()
                 . $childKey . '"'
                 . ($childKey === $currentPageId ? ' selected' : false)
                 . ' class="'

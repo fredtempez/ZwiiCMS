@@ -1,45 +1,45 @@
-<?php echo template::formOpen('themeSiteForm'); ?>
+<?php echo Template::formOpen('themeSiteForm'); ?>
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('themeSiteBack', [
+		<?php echo Template::button('themeSiteBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . 'theme',
-			'value' => template::ico('left')
+			'href' => Helper::baseUrl() . 'theme',
+			'value' => Template::ico('left')
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php /* echo template::button('themeSiteHelp', [
+		<?php /* echo Template::button('themeSiteHelp', [
 			  'href' => 'https://doc.zwiicms.fr/site61863d315ffe0',
 			  'target' => '_blank',
-			  'value' => template::ico('help'),
+			  'value' => Template::ico('help'),
 			  'class' => 'buttonHelp'
 		  ]); */?>
 	</div>
 	<div class="col2 offset8">
-		<?php echo template::submit('themeSiteSubmit'); ?>
+		<?php echo Template::submit('themeSiteSubmit'); ?>
 	</div>
 </div>
 <div class="row">
 	<div class="col12">
 		<div class="block">
 			<h4>
-				<?php echo helper::translate('Paramètres'); ?>
+				<?php echo Helper::translate('Paramètres'); ?>
 			</h4>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::select('themeSiteWidth', theme::$siteWidths, [
+					<?php echo Template::select('themeSiteWidth', theme::$siteWidths, [
 						'label' => 'Largeur',
 						'selected' => $this->getData(['theme', 'site', 'width'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('themeSiteRadius', theme::$radius, [
+					<?php echo Template::select('themeSiteRadius', theme::$radius, [
 						'label' => 'Arrondi des angles',
 						'selected' => $this->getData(['theme', 'site', 'radius'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('themeSiteShadow', theme::$shadows, [
+					<?php echo Template::select('themeSiteShadow', theme::$shadows, [
 						'label' => 'Ombre',
 						'selected' => $this->getData(['theme', 'site', 'shadow'])
 					]); ?>
@@ -47,7 +47,7 @@
 			</div>
 			<div class="row">
 				<div class="col6">
-					<?php echo template::checkbox('themeSiteMargin', true, 'Pas de marge au-dessus et en dessous du site', [
+					<?php echo Template::checkbox('themeSiteMargin', true, 'Pas de marge au-dessus et en dessous du site', [
 						'checked' => $this->getData(['theme', 'site', 'margin'])
 					]); ?>
 				</div>
@@ -59,13 +59,13 @@
 	<div class="col12">
 		<div class="block">
 			<h4>
-				<?php echo helper::translate('Couleurs'); ?>
+				<?php echo Helper::translate('Couleurs'); ?>
 			</h4>
 			<div class="row">
 				<div class="col12">
 					<div class="row">
 						<div class="col4">
-							<?php echo template::text('themeSiteBackgroundColor', [
+							<?php echo Template::text('themeSiteBackgroundColor', [
 								'class' => 'colorPicker',
 								'help' => 'Le curseur horizontal règle le niveau de transparence.',
 								'label' => 'Arrière plan',
@@ -73,7 +73,7 @@
 							]); ?>
 						</div>
 						<div class="col4">
-							<?php echo template::text('themeTextTextColor', [
+							<?php echo Template::text('themeTextTextColor', [
 								'class' => 'colorPicker',
 								'help' => 'Le curseur horizontal règle le niveau de transparence.',
 								'label' => 'Texte',
@@ -82,7 +82,7 @@
 						</div>
 
 						<div class="col4">
-							<?php echo template::text('themeTitleTextColor', [
+							<?php echo Template::text('themeTitleTextColor', [
 								'class' => 'colorPicker',
 								'help' => 'Le curseur horizontal règle le niveau de transparence.',
 								'label' => 'Titres',
@@ -92,7 +92,7 @@
 					</div>
 					<div class="row">
 						<div class="col3">
-							<?php echo template::text('themeTextLinkColor', [
+							<?php echo Template::text('themeTextLinkColor', [
 								'class' => 'colorPicker',
 								'help' => 'Le curseur horizontal règle le niveau de transparence.',
 								'label' => 'Liens',
@@ -100,7 +100,7 @@
 							]); ?>
 						</div>
 						<div class="col3">
-							<?php echo template::text('themeBlockBackgroundColor', [
+							<?php echo Template::text('themeBlockBackgroundColor', [
 								'class' => 'colorPicker',
 								'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 								'label' => 'Arrière plan des blocs',
@@ -108,7 +108,7 @@
 							]); ?>
 						</div>
 						<div class="col3">
-							<?php echo template::text('themeBlockBorderColor', [
+							<?php echo Template::text('themeBlockBorderColor', [
 								'class' => 'colorPicker',
 								'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 								'label' => 'Bordure des blocs',
@@ -116,7 +116,7 @@
 							]); ?>
 						</div>
 						<div class="col3">
-							<?php echo template::text('themeButtonBackgroundColor', [
+							<?php echo Template::text('themeButtonBackgroundColor', [
 								'class' => 'colorPicker',
 								'help' => 'Le curseur horizontal règle le niveau de transparence.',
 								'label' => 'Boutons',
@@ -133,19 +133,19 @@
 	<div class="col6">
 		<div class="block">
 			<h4>
-				<?php echo helper::translate('Mise en forme du texte'); ?>
+				<?php echo Helper::translate('Mise en forme du texte'); ?>
 			</h4>
 			<div class="row">
 				<div class="col6">
 					<?php
-					echo template::select('themeTextFont', theme::$fonts['name'], [
+					echo Template::select('themeTextFont', theme::$fonts['name'], [
 						'label' => 'Fonte',
 						'selected' => $this->getData(['theme', 'text', 'font']),
 						'font' => theme::$fonts['family']
 					]); ?>
 				</div>
 				<div class="col6">
-					<?php echo template::select('themeTextFontSize', theme::$siteFontSizes, [
+					<?php echo Template::select('themeTextFontSize', theme::$siteFontSizes, [
 						'label' => 'Taille',
 						'help' => 'Les tailles des polices de la bannière, de menu et de pied de page sont proportionnelles à cette taille.',
 						'selected' => $this->getData(['theme', 'text', 'fontSize'])
@@ -157,24 +157,24 @@
 	<div class="col6">
 		<div class="block">
 			<h4>
-				<?php echo helper::translate('Mise en forme des titres'); ?>
+				<?php echo Helper::translate('Mise en forme des titres'); ?>
 			</h4>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::select('themeTitleFont', theme::$fonts['name'], [
+					<?php echo Template::select('themeTitleFont', theme::$fonts['name'], [
 						'label' => 'Fonte',
 						'selected' => $this->getData(['theme', 'title', 'font']),
 						'font' => theme::$fonts['family']
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('themeTitleFontWeight', theme::$fontWeights, [
+					<?php echo Template::select('themeTitleFontWeight', theme::$fontWeights, [
 						'label' => 'Style',
 						'selected' => $this->getData(['theme', 'title', 'fontWeight'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('themeTitleTextTransform', theme::$textTransforms, [
+					<?php echo Template::select('themeTitleTextTransform', theme::$textTransforms, [
 						'label' => 'Casse',
 						'selected' => $this->getData(['theme', 'title', 'textTransform'])
 					]); ?>
@@ -183,4 +183,4 @@
 		</div>
 	</div>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

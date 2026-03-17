@@ -27,12 +27,12 @@ trait InputOutput
 			$firstKey = explode('[', $key)[0];
 			$secondKey = $secondKey[1];
 			if (empty($this->input['_POST'][$firstKey][$secondKey])) {
-				core::$inputNotices[$firstKey . '_' . $secondKey] = helper::translate('Obligatoire');
+				core::$inputNotices[$firstKey . '_' . $secondKey] = Helper::translate('Obligatoire');
 			}
 		}
 		// La clef est une chaine
 		elseif (empty($this->input['_POST'][$key])) {
-			core::$inputNotices[$key] = helper::translate('Obligatoire');
+			core::$inputNotices[$key] = Helper::translate('Obligatoire');
 		}
 	}
 
@@ -108,7 +108,7 @@ trait InputOutput
 	 * @param bool $required Champ requis
 	 * @return mixed
 	 */
-	public function getInput($key, $filter = helper::FILTER_STRING_SHORT, $required = false)
+	public function getInput($key, $filter = Helper::FILTER_STRING_SHORT, $required = false)
 	{
 		// La clef est un tableau
 		if (preg_match('#\[(.*)\]#', $key, $secondKey)) {
@@ -127,7 +127,7 @@ trait InputOutput
 				) {
 					// Retourne la valeur filtrée
 					if ($filter) {
-						return helper::filter($this->input[$type][$firstKey][$secondKey], $filter);
+						return Helper::filter($this->input[$type][$firstKey][$secondKey], $filter);
 					}
 					// Retourne la valeur
 					else {
@@ -148,7 +148,7 @@ trait InputOutput
 				if (array_key_exists($key, $values)) {
 					// Retourne la valeur filtrée
 					if ($filter) {
-						return helper::filter($this->input[$type][$key], $filter);
+						return Helper::filter($this->input[$type][$key], $filter);
 					}
 					// Retourne la valeur
 					else {
@@ -158,7 +158,7 @@ trait InputOutput
 			}
 		}
 		// Sinon retourne null
-		return helper::filter(null, $filter);
+		return Helper::filter(null, $filter);
 	}
 
 	/**
@@ -185,7 +185,7 @@ trait InputOutput
 	{
 		// 1. Initialisation des variables par défaut
 		$serverName = $this->getData(['locale', 'title']);
-		$serverDomain = parse_url(helper::baseUrl(false), PHP_URL_HOST);
+		$serverDomain = parse_url(Helper::baseUrl(false), PHP_URL_HOST);
 
 		// 2. Validation de sécurité
 		if (empty($to) || empty($subject) || empty($content)) {
@@ -218,7 +218,7 @@ trait InputOutput
 					$smtpHost = $this->getData(['config', 'smtp', 'host']);
 					
 					// Déchiffrer le password avec le host comme clé (voir config.php ligne 533)
-					$mail->Password  = helper::decrypt($storedPassword, $smtpHost);
+					$mail->Password  = Helper::decrypt($storedPassword, $smtpHost);
 				
 				}
 			}
@@ -288,7 +288,7 @@ trait InputOutput
 		}
 
 		// Extraire le domaine du site
-		$baseUrl = helper::baseUrl(false);
+		$baseUrl = Helper::baseUrl(false);
 		$parsedUrl = parse_url($baseUrl);
 		$hostname = isset($parsedUrl['host']) ? $parsedUrl['host'] : (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
 
@@ -352,9 +352,9 @@ trait InputOutput
 		}
 
 		// Création de l'entrée de journal
-		$dataLog = helper::dateUTF8('%Y%m%d', time(), self::$i18nUI) . ';'
-			. helper::dateUTF8('%H:%M', time(), self::$i18nUI) . ';';
-		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
+		$dataLog = Helper::dateUTF8('%Y%m%d', time(), self::$i18nUI) . ';'
+			. Helper::dateUTF8('%H:%M', time(), self::$i18nUI) . ';';
+		$dataLog .= Helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
 		$dataLog .= empty($this->getUser('id')) ? 'visitor;' : $this->getUser('id') . ';';
 		$dataLog .= $message ? $this->getUrl() . ';' . $message : $this->getUrl();
 		$dataLog .= PHP_EOL;

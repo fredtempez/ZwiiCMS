@@ -3,11 +3,11 @@
 	or $this->getData(['theme', 'menu', 'position']) === 'hide'
 	or $this->getData(['theme', 'footer', 'position']) === 'hide'
 ): ?>
-	<?php echo template::speech('Cliquez sur une zone afin d\'accéder à ses options de personnalisation. Vous pouvez également afficher les zones cachées à l\'aide du bouton ci-dessous.'); ?>
+	<?php echo Template::speech('Cliquez sur une zone afin d\'accéder à ses options de personnalisation. Vous pouvez également afficher les zones cachées à l\'aide du bouton ci-dessous.'); ?>
 	<div class="row">
 		<div class="col4 offset4">
-			<?php echo template::button('themeBack', [
-				'href' => helper::baseUrl(false),
+			<?php echo Template::button('themeBack', [
+				'href' => Helper::baseUrl(false),
 				'ico' => 'home',
 				'value' => 'Accueil'
 			]); ?>
@@ -15,50 +15,50 @@
 	</div>
 	<div class="row">
 		<div class="col2 offset4">
-			<?php echo template::button('themeFonts', [
+			<?php echo Template::button('themeFonts', [
 				'ico' => 'font',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/font',
+				'href' => Helper::baseUrl() . $this->getUrl(0) . '/font',
 				'value' => 'Fontes'
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('themeAdvanced', [
+			<?php echo Template::button('themeAdvanced', [
 				'ico' => 'code',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
+				'href' => Helper::baseUrl() . $this->getUrl(0) . '/advanced',
 				'value' => 'Éditeur CSS'
 			]); ?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col2 offset4">
-			<?php echo template::button('themeAdmin', [
+			<?php echo Template::button('themeAdmin', [
 				'ico' => 'brush',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/admin',
+				'href' => Helper::baseUrl() . $this->getUrl(0) . '/admin',
 				'value' => 'Administration'
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('themeManage', [
+			<?php echo Template::button('themeManage', [
 				'ico' => 'sliders',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
+				'href' => Helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'value' => 'Gestion'
 			]); ?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col4 offset4">
-			<?php echo template::button('themeShowAll', [
+			<?php echo Template::button('themeShowAll', [
 				'ico' => 'eye',
 				'value' => 'Zones cachées'
 			]); ?>
 		</div>
 	</div>
 <?php else: ?>
-	<?php echo template::speech('Cliquez sur une zone afin d\'accéder à ses options de personnalisation.'); ?>
+	<?php echo Template::speech('Cliquez sur une zone afin d\'accéder à ses options de personnalisation.'); ?>
 	<div class="row">
 		<div class="col4 offset4">
-			<?php echo template::button('themeBack', [
-				'href' => helper::baseUrl(false),
+			<?php echo Template::button('themeBack', [
+				'href' => Helper::baseUrl(false),
 				'ico' => 'home',
 				'value' => 'Accueil'
 			]); ?>
@@ -66,32 +66,32 @@
 	</div>
 	<div class="row">
 		<div class="col2 offset4">
-			<?php echo template::button('themeFonts', [
+			<?php echo Template::button('themeFonts', [
 				'ico' => 'font',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/font',
+				'href' => Helper::baseUrl() . $this->getUrl(0) . '/font',
 				'value' => 'Fontes'
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('themeAdvanced', [
+			<?php echo Template::button('themeAdvanced', [
 				'ico' => 'code',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
+				'href' => Helper::baseUrl() . $this->getUrl(0) . '/advanced',
 				'value' => 'Éditeur CSS'
 			]); ?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col2 offset4">
-			<?php echo template::button('themeAdmin', [
+			<?php echo Template::button('themeAdmin', [
 				'ico' => 'brush',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/admin',
+				'href' => Helper::baseUrl() . $this->getUrl(0) . '/admin',
 				'value' => 'Administration'
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('themeManage', [
+			<?php echo Template::button('themeManage', [
 				'ico' => 'sliders',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
+				'href' => Helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'value' => 'Gestion'
 			]); ?>
 		</div>

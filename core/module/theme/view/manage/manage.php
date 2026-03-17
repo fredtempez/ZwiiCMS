@@ -1,22 +1,22 @@
-<?php echo template::formOpen('themeManageForm'); ?>
+<?php echo Template::formOpen('themeManageForm'); ?>
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('themeManageBack', [
+		<?php echo Template::button('themeManageBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . 'theme',
-			'value' => template::ico('left')
+			'href' => Helper::baseUrl() . 'theme',
+			'value' => Template::ico('left')
 		]); ?>
 	</div>
 	<div class="col1 offset8">
-		<?php echo template::button('configManageReset', [
+		<?php echo Template::button('configManageReset', [
 			'class' => 'buttonRed',
-			'href' => helper::baseUrl() . 'theme/reset/manage',
-			'value' => template::ico('cancel'),
+			'href' => Helper::baseUrl() . 'theme/reset/manage',
+			'value' => Template::ico('cancel'),
 			'help' => 'Réinitialiser avec le thème par défaut'
 		]); ?>
 	</div>
 	<div class="col2">
-		<?php echo template::submit('themeImportSubmit', [
+		<?php echo Template::submit('themeImportSubmit', [
 			'value' => 'Appliquer'
 		]); ?>
 	</div>
@@ -24,11 +24,11 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4><?php echo helper::translate('Installer un thème archivé (site ou administration)'); ?>
+			<h4><?php echo Helper::translate('Installer un thème archivé (site ou administration)'); ?>
 			</h4>
 			<div class="row">
 				<div class="col6 offset3">
-					<?php echo template::file('themeManageImport', [
+					<?php echo Template::file('themeManageImport', [
 						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 						'label' => 'Archive ZIP :',
 						'type' => 2
@@ -41,22 +41,22 @@
 <div class="row">
 	<div class="col6">
 		<div class="block">
-			<h4><?php echo helper::translate('Sauvegarde du thème dans le'); ?>
-				<a href="<?php echo helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=theme&type=0&akey=<?php echo md5_file(self::DATA_DIR . 'core.json');?>&lang=<?php echo $this->getData(['user', $this->getUser('id'), 'language']);?>" data-lity>
-					<?php echo helper::translate('gestionnaire de fichiers'); ?>
+			<h4><?php echo Helper::translate('Sauvegarde du thème dans le'); ?>
+				<a href="<?php echo Helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=theme&type=0&akey=<?php echo md5_file(self::DATA_DIR . 'core.json');?>&lang=<?php echo $this->getData(['user', $this->getUser('id'), 'language']);?>" data-lity>
+					<?php echo Helper::translate('gestionnaire de fichiers'); ?>
 				</a>
 			</h4>
 			<div class="row">
 				<div class="col6">
-					<?php echo template::button('themeSave', [
-						'href' => helper::baseUrl() . 'theme/save/theme',
+					<?php echo Template::button('themeSave', [
+						'href' => Helper::baseUrl() . 'theme/save/theme',
 						'ico' => 'download-cloud',
 						'value' => 'Thème du site'
 					]); ?>
 				</div>
 				<div class="col6">
-					<?php echo template::button('themeSaveAdmin', [
-						'href' => helper::baseUrl() . 'theme/save/admin',
+					<?php echo Template::button('themeSaveAdmin', [
+						'href' => Helper::baseUrl() . 'theme/save/admin',
 						'ico' => 'download-cloud',
 						'value' => 'Thème de l\'administration'
 					]); ?>
@@ -67,19 +67,19 @@
 
 	<div class="col6">
 		<div class="block">
-			<h4><?php echo helper::translate('Télécharger le thème'); ?>
+			<h4><?php echo Helper::translate('Télécharger le thème'); ?>
 			</h4>
 			<div class="row">
 				<div class="col6">
-					<?php echo template::button('themeExport', [
-						'href' => helper::baseUrl() . 'theme/export/theme',
+					<?php echo Template::button('themeExport', [
+						'href' => Helper::baseUrl() . 'theme/export/theme',
 						'ico' => 'download',
 						'value' => 'Thème du site'
 					]); ?>
 				</div>
 				<div class="col6">
-					<?php echo template::button('themeExport', [
-						'href' => helper::baseUrl() . 'theme/export/admin',
+					<?php echo Template::button('themeExport', [
+						'href' => Helper::baseUrl() . 'theme/export/admin',
 						'ico' => 'download',
 						'value' => 'Thème de l\'administration'
 					]); ?>
@@ -88,4 +88,4 @@
 		</div>
 	</div>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

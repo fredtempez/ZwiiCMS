@@ -1,23 +1,23 @@
-<?php echo template::formOpen('pageJsEditorForm'); ?>
-<input type="hidden" name="returnUrl" value="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent; ?>">
+<?php echo Template::formOpen('pageJsEditorForm'); ?>
+<input type="hidden" name="returnUrl" value="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : Helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent; ?>">
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('pageJsEditorBack', [
+		<?php echo Template::button('pageJsEditorBack', [
 			'class' => 'buttonGrey',
-			'href' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent,
-			'value' => template::ico('left')
+			'href' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : Helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent,
+			'value' => Template::ico('left')
 		]); ?>
 	</div>
 	<div class="col2 offset9">
-		<?php echo template::submit('pageJsEditorSubmit'); ?>
+		<?php echo Template::submit('pageJsEditorSubmit'); ?>
 	</div>
 </div>
 <div class="row">
 	<div class="col12">
-		<?php echo template::textarea('pageJsEditorContent', [
+		<?php echo Template::textarea('pageJsEditorContent', [
 			'value' => is_null($this->getData(['page', $this->getUrl(2), 'js'])) ? '' : $this->getData(['page', $this->getUrl(2), 'js']),
 			'class' => 'editor'
 		]); ?>
 	</div>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

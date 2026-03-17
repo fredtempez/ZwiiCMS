@@ -62,7 +62,7 @@ if ($this->getData(['core', 'dataVersion']) < 10000) {
 		}
 	}
 	// Contrôle des options php.ini pour la mise à jour auto
-	if (helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version') === false) {
+	if (Helper::getUrlContents(Core::ZWII_UPDATE_URL . Core::ZWII_UPDATE_CHANNEL . '/version') === false) {
 		$this->setData(['config', 'autoUpdate', false]);
 	}
 
@@ -310,7 +310,7 @@ if ($this->getData(['core', 'dataVersion']) < 10400) {
 	foreach ($hierarchy as $parentKey => $parent) {
 		//La page est un blog
 		if ($this->getData(['page', $parent, 'moduleId']) === 'blog') {
-			$articleIds = array_keys(helper::arrayColumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
+			$articleIds = array_keys(Helper::arrayColumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
 			foreach ($articleIds as $key => $article) {
 				// Droits les deux rôles
 				$this->setData(['module', $parent, 'posts', $article, 'editConsent', 3]);
@@ -345,7 +345,7 @@ if ($this->getData(['core', 'dataVersion']) < 10400) {
 	$this->setData(['locale', 'title', $this->getData(['config', 'title'])]);
 
 	// Renommer les fichier de backup
-	if ($this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN) === false) {
+	if ($this->getInput('configAdvancedFileBackup', Helper::FILTER_BOOLEAN) === false) {
 		$path = realpath('site/data');
 		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
 			if (strpos($filename, 'back.json')) {
@@ -879,7 +879,7 @@ if ($this->getData(['core', 'dataVersion']) < 11506) {
 if ($this->getData(['core', 'dataVersion']) < 12000) {
 
 	// Supprime un cookie non nécessaire
-	helper::deleteCookie('ZWII_USER_LONGTIME');
+	Helper::deleteCookie('ZWII_USER_LONGTIME');
 
 	// Suppression de la variable URL dans core
 	$this->deleteData(['core', 'baseUrl']);
@@ -895,7 +895,7 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	$this->deleteData(['config', 'i18n', 'scriptGoogle']);
 	$this->deleteData(['config', 'i18n', 'showCredits']);
 	$this->deleteData(['config', 'i18n', 'autoDetect']);
-	helper::deleteCookie('ZWII_CONTENTSCRIPT');
+	Helper::deleteCookie('ZWII_CONTENTSCRIPT');
 
 	// Nettoyage de fichiers inutiles
 	if (file_exists('core/module/user/view/import/import.help.html')) {

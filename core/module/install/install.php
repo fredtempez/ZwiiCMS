@@ -59,7 +59,7 @@ class install extends Core
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'install/postinstall'
+				'redirect' => Helper::baseUrl() . 'install/postinstall'
 			]);
 		}
 
@@ -72,7 +72,7 @@ class install extends Core
 
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
-			'title' => helper::translate('ZwiiCMS Installation'),
+			'title' => Helper::translate('ZwiiCMS Installation'),
 			'view' => 'index'
 		]);
 	}
@@ -97,14 +97,14 @@ class install extends Core
 				$this->isPost()
 			) {
 				// Double vérification pour le mot de passe
-				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
+				if ($this->getInput('installPassword', Helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', Helper::FILTER_STRING_SHORT, true)) {
 					self::$inputNotices['installConfirmPassword'] = 'Incorrect';
 				}
 				// Utilisateur
-				$userFirstname = $this->getInput('installFirstname', helper::FILTER_STRING_SHORT, true);
-				$userLastname = $this->getInput('installLastname', helper::FILTER_STRING_SHORT, true);
-				$userMail = $this->getInput('installMail', helper::FILTER_MAIL, true);
-				$userId = $this->getInput('installId', helper::FILTER_ID, true);
+				$userFirstname = $this->getInput('installFirstname', Helper::FILTER_STRING_SHORT, true);
+				$userLastname = $this->getInput('installLastname', Helper::FILTER_STRING_SHORT, true);
+				$userMail = $this->getInput('installMail', Helper::FILTER_MAIL, true);
+				$userId = $this->getInput('installId', Helper::FILTER_ID, true);
 
 				// Validation de la langue transmise
 				self::$i18nUI = $this->getData(['config', 'defaultLanguageUI']);
@@ -124,7 +124,7 @@ class install extends Core
 				// Installation du site de test
 				$sample = false;
 				if (
-					$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false &&
+					$this->getInput('installDefaultData', Helper::FILTER_BOOLEAN) === false &&
 					$_SESSION['ZWII_SITE_CONTENT'] === 'fr_FR'
 				) {
 					$sample = true;
@@ -148,7 +148,7 @@ class install extends Core
 						'pseudo' => 'Admin',
 						'signature' => 1,
 						'mail' => $userMail,
-						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true),
+						'password' => $this->getInput('installPassword', Helper::FILTER_PASSWORD, true),
 						'language' => $_SESSION['ZWII_SITE_CONTENT']
 					]
 				]);
@@ -219,9 +219,9 @@ class install extends Core
 				// Sauvegarder la configuration du Proxy
 				$this->setData(['config', 'proxyType', $this->getInput('installProxyType')], false);
 				$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')], false);
-				$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)], false);
+				$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', Helper::FILTER_INT)], false);
 				// Fixe l'adresse from pour les envois d'email avec le domaine principal
-				$smtpFrom = $this->getCorrectedSmtpFrom('no-reply@' . parse_url(helper::baseUrl(false), PHP_URL_HOST));
+				$smtpFrom = $this->getCorrectedSmtpFrom('no-reply@' . parse_url(Helper::baseUrl(false), PHP_URL_HOST));
 				$this->setData(['config', 'smtp', 'from', $smtpFrom]);
 
 				// Envoie le mail
@@ -231,7 +231,7 @@ class install extends Core
 					'Installation de votre site',
 					'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>'
 						. 'Voici les détails de votre installation.<br><br>'
-						. '<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>'
+						. '<strong>URL du site :</strong> <a href="' . Helper::baseUrl(false) . '" target="_blank">' . Helper::baseUrl(false) . '</a><br>'
 						. '<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 					$userMail,
 					$smtpFrom
@@ -239,12 +239,12 @@ class install extends Core
 
 				// Notification
 				$notification = $sent === true 
-							? helper::translate('Installation terminée') 
-							: helper::translate('Installation terminée') . '<br>' . helper::translate('Message non envoyé') . '<br>' . $sent;
+							? Helper::translate('Installation terminée') 
+							: Helper::translate('Installation terminée') . '<br>' . Helper::translate('Message non envoyé') . '<br>' . $sent;
 
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl(),
+					'redirect' => Helper::baseUrl(),
 					'notification' => $notification,
 					'state' => $sent === true ? true : false,
 				]);
@@ -256,7 +256,7 @@ class install extends Core
 			// Valeurs en sortie
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
-				'title' => helper::translate('Installation'),
+				'title' => Helper::translate('Installation'),
 				'view' => 'postinstall'
 			]);
 		}
@@ -279,7 +279,7 @@ class install extends Core
 		}
 
 		// Installation par étapes
-		switch ($this->getInput('step', helper::FILTER_INT)) {
+		switch ($this->getInput('step', Helper::FILTER_INT)) {
 			// Préparation
 			case 1:
 				$success = true;
@@ -287,7 +287,7 @@ class install extends Core
 				// RAZ la mise à jour auto
 				$this->setData(['core', 'updateAvailable', false]);
 				// Backup du dossier Data
-				helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
+				Helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
 
 				/**
 				 * Le mode maintenance n'était pas activé
@@ -318,7 +318,7 @@ class install extends Core
 
 				// Check la réécriture d'URL avant d'écraser les fichiers
 				// Création du fichier de marqueur et l'effacer si présent
-				if (helper::checkRewrite()) {
+				if (Helper::checkRewrite()) {
 					touch(self::DATA_DIR . '.rewrite');
 				} elseif (file_exists(self::DATA_DIR . '.rewrite')) {
 					unlink(self::DATA_DIR . '.rewrite');
@@ -340,8 +340,8 @@ class install extends Core
 			case 2:
 				$success = true;
 				$message = '';
-				$this->secure_file_put_contents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
-				$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
+				$this->secure_file_put_contents(self::TEMP_DIR . 'update.tar.gz', Helper::getUrlContents(Core::ZWII_UPDATE_URL . Core::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
+				$md5origin = Helper::getUrlContents(Core::ZWII_UPDATE_URL . Core::ZWII_UPDATE_CHANNEL . '/update.md5');
 				$md5origin = explode(' ', $md5origin);
 				$md5target = md5_file(self::TEMP_DIR . 'update.tar.gz');
 				// Vérifier si les checksums correspondent
@@ -447,7 +447,7 @@ class install extends Core
 					// L'écraser avec le backup
 					$success = copy('.htaccess.bak', '.htaccess');
 					if ($success === false) {
-						$message = helper::translate("La copie de sauvegarde du fichier htaccess n'a pas été restaurée !");
+						$message = Helper::translate("La copie de sauvegarde du fichier htaccess n'a pas été restaurée !");
 						http_response_code(500);
 					}
 					// Effacer le backup
@@ -460,7 +460,7 @@ class install extends Core
 							. '# URL rewriting' . PHP_EOL
 							. '<IfModule mod_rewrite.c>' . PHP_EOL
 							. "\tRewriteEngine on" . PHP_EOL
-							. "\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL
+							. "\tRewriteBase " . Helper::baseUrl(false, false) . PHP_EOL
 							. "\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL
 							. "\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL
 							. "\tRewriteRule ^(.*)\$ index.php?\$1 [L]" . PHP_EOL
@@ -521,17 +521,17 @@ class install extends Core
 			]);
 		} else {
 			// Nouvelle version
-			self::$newVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
+			self::$newVersion = Helper::getUrlContents(Core::ZWII_UPDATE_URL . Core::ZWII_UPDATE_CHANNEL . '/version');
 
 			// Variable de version
-			if (helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
-				self::$updateButtonText = helper::translate('Mise à jour');
+			if (Helper::checkNewVersion(Core::ZWII_UPDATE_CHANNEL)) {
+				self::$updateButtonText = Helper::translate('Mise à jour');
 			}
 
 			// Valeurs en sortie
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
-				'title' => helper::translate(self::$updateButtonText),
+				'title' => Helper::translate(self::$updateButtonText),
 				'view' => 'update'
 			]);
 		}

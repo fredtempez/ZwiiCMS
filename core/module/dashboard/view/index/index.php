@@ -1,10 +1,10 @@
-<?php echo template::formOpen('dashboard'); ?>
+<?php echo Template::formOpen('dashboard'); ?>
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('dashboardFormBack', [
+		<?php echo Template::button('dashboardFormBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl(false),
-			'value' => template::ico('home')
+			'href' => Helper::baseUrl(false),
+			'value' => Template::ico('home')
 		]); ?>
 	</div>
 </div>
@@ -12,12 +12,12 @@
 	<div class="col12">
 		<div class="block">
 			<h4>
-				<?php echo helper::translate('Système'); ?>
+				<?php echo Helper::translate('Système'); ?>
 			</h4>
 			<div class="row">
 				<div class="col6">
 					<p>
-						<?php echo helper::translate('Serveur Web'); ?>
+						<?php echo Helper::translate('Serveur Web'); ?>
 					</p>
 					<p>
 						<?php echo $module::$infos['webserver']; ?>
@@ -25,7 +25,7 @@
 				</div>
 				<div class="col6">
 					<p>
-						<?php echo helper::translate('PHP') . ' ' . $module::$infos['php']['version']; ?>
+						<?php echo Helper::translate('PHP') . ' ' . $module::$infos['php']['version']; ?>
 					</p>
 					<p>
 						<?php echo implode(' - ', $module::$infos['php']['extension']); ?>
@@ -36,7 +36,7 @@
 			<div class="row">
 				<div class="col12">
 					<p>
-						<?php echo helper::translate('Mémoire'); ?>
+						<?php echo Helper::translate('Mémoire'); ?>
 					</p>
 					<p>
 						<?php echo $module::$infos['system']['memory']; ?>

@@ -1,6 +1,8 @@
 <?php
 
-class template
+namespace Zwii\Cms;
+
+class Template
 {
 
     /**
@@ -25,17 +27,17 @@ class template
             'help' => ''
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['value'] = helper::translate($attributes['value']);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['value'] = Helper::translate($attributes['value']);
+        $attributes['help'] = Helper::translate($attributes['help']);
         // Retourne le html
         return sprintf(
             '<a %s class="button %s %s %s" %s>%s</a>',
-            helper::sprintAttributes($attributes, ['class', 'disabled', 'ico', 'value']),
+            Helper::sprintAttributes($attributes, ['class', 'disabled', 'ico', 'value']),
             $attributes['disabled'] ? 'disabled' : '',
             $attributes['class'],
             $attributes['uniqueSubmission'] ? 'uniqueSubmission' : '',
             $attributes['help'] ? ' title="' . $attributes['help'] . '" ' : '',
-            ($attributes['ico'] ? template::ico($attributes['ico'], ['margin' => 'right']) : '') . $attributes['value']
+            ($attributes['ico'] ? Template::ico($attributes['ico'], ['margin' => 'right']) : '') . $attributes['value']
         );
     }
 
@@ -59,8 +61,8 @@ class template
             'type' => 'alpha' // num(érique) ou alpha(bétique)
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        // $attributes['value'] = helper::translate($attributes['value']);
-        $attributes['help'] = helper::translate($attributes['help']);
+        // $attributes['value'] = Helper::translate($attributes['value']);
+        $attributes['help'] = Helper::translate($attributes['help']);
         // Captcha quatre opérations
         // Limite addition et soustraction selon le type de captcha
         $numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20];
@@ -93,19 +95,19 @@ class template
         // Icône de l'opérateur et calcul du résultat
         switch ($operator) {
             case 1:
-                $operator = template::ico('plus', ['fontSize' => '2em;']);
+                $operator = Template::ico('plus', ['fontSize' => '2em;']);
                 $result = $firstNumber + $secondNumber;
                 break;
             case 2:
-                $operator = template::ico('minus', ['fontSize' => '2em;']);
+                $operator = Template::ico('minus', ['fontSize' => '2em;']);
                 $result = $firstNumber - $secondNumber;
                 break;
             case 3:
-                $operator = template::ico('cancel', ['fontSize' => '2em;']);
+                $operator = Template::ico('cancel', ['fontSize' => '2em;']);
                 $result = $firstNumber * $secondNumber;
                 break;
             case 4:
-                $operator = template::ico('divide', ['fontSize' => '2em;']);
+                $operator = Template::ico('divide', ['fontSize' => '2em;']);
                 $limit2 = [10, 10, 6, 5, 4, 3, 2, 2, 2, 2];
                 for ($i = 1; $i <= $firstNumber; $i++) {
                     $limit = $limit2[$i - 1];
@@ -134,7 +136,7 @@ class template
         // Label
         $html .= self::label(
             $attributes['id'],
-            '<img class="captcha' . ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' . ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />' . template::ico('eq', ['fontSize' => '2em;']),
+            '<img class="captcha' . ucFirst($attributes['type']) . '"  src="' . Helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' . ucFirst($attributes['type']) . '" src="' . Helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />' . Template::ico('eq', ['fontSize' => '2em;']),
             [
                 'help' => $attributes['help']
             ]
@@ -151,7 +153,7 @@ class template
         // captcha
         $html .= sprintf(
             '<input type="text" %s>',
-            helper::sprintAttributes($attributes)
+            Helper::sprintAttributes($attributes)
         );
 
         // Champ résultat codé
@@ -189,8 +191,8 @@ class template
             'name' => $nameId
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $label = helper::translate($label);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $label = Helper::translate($label);
+        $attributes['help'] = Helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
         if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
             $attributes['checked'] = (bool) core::$inputBefore[$attributes['id']];
@@ -208,7 +210,7 @@ class template
         $html .= sprintf(
             '<input type="checkbox" value="%s" %s>',
             $value,
-            helper::sprintAttributes($attributes)
+            Helper::sprintAttributes($attributes)
         );
         // Label
         $html .= self::label($attributes['id'], '<span>' . $label . '</span>', [
@@ -248,19 +250,19 @@ class template
             'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['help'] = helper::translate($attributes['help']);
-        //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        $attributes['label'] = Helper::translate($attributes['label']);
+        $attributes['help'] = Helper::translate($attributes['help']);
+        //$attributes['placeholder'] = Helper::translate($attributes['placeholder']);
         // Filtre selon le type 
         switch ($attributes['type']) {
             case 'datetime-local':
-                $filter = helper::FILTER_TIMESTAMP;
+                $filter = Helper::FILTER_TIMESTAMP;
                 break;
             case 'date':
-                $filter = helper::FILTER_DATE; // Pour générer une valeur uniquement sur la date
+                $filter = Helper::FILTER_DATE; // Pour générer une valeur uniquement sur la date
                 break;
             case 'time':
-                $filter = helper::FILTER_TIME; // Pour générer une valeur uniquement sur l'heure
+                $filter = Helper::FILTER_TIME; // Pour générer une valeur uniquement sur l'heure
                 break;
             default:
                 $filter = null; // pas de filtre pour month and year
@@ -270,7 +272,7 @@ class template
         if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
             $attributes['value'] = core::$inputBefore[$attributes['id']];
         } else {
-            $attributes['value'] = ($attributes['value'] ? helper::filter($attributes['value'], $filter) : '');
+            $attributes['value'] = ($attributes['value'] ? Helper::filter($attributes['value'], $filter) : '');
         }
         // Gestion du champ obligatoire 
         if (isset($attributes['required']) && $attributes['required']) {
@@ -302,7 +304,7 @@ class template
             '<input type="' . $attributes['type'] . '" class="datepicker %s" value="%s" %s>',
             $attributes['class'],
             $attributes['value'],
-            helper::sprintAttributes($attributes, ['class', 'value'])
+            Helper::sprintAttributes($attributes, ['class', 'value'])
         );
         $html .= '</div>';
         // Fin du wrapper
@@ -340,8 +342,8 @@ class template
             'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['value'] = helper::translate($attributes['value']);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['value'] = Helper::translate($attributes['value']);
+        $attributes['help'] = Helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
         if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
             $attributes['value'] = core::$inputBefore[$attributes['id']];
@@ -382,7 +384,7 @@ class template
         $html .= sprintf(
             '<a
                 href="' .
-            helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
+            Helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
             '?relative_url=1' .
             '&lang=' . $attributes['language'] .
             '&field_id=' . $attributes['id'] .
@@ -401,7 +403,7 @@ class template
             </a>',
             $attributes['class'],
             $attributes['disabled'] ? 'disabled' : '',
-            helper::sprintAttributes($attributes, ['class', 'extensions', 'type', 'maxlength'])
+            Helper::sprintAttributes($attributes, ['class', 'extensions', 'type', 'maxlength'])
 
         );
         $html .= self::button($attributes['id'] . 'Delete', [
@@ -444,11 +446,11 @@ class template
         ], $attributes);
 
         // Traduction des champs
-        $attributes['help'] = helper::translate($attributes['help']);
-        $attributes['value'] = helper::translate($attributes['value']);
-        $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['uploadText'] = helper::translate($attributes['uploadText']);
-        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        $attributes['help'] = Helper::translate($attributes['help']);
+        $attributes['value'] = Helper::translate($attributes['value']);
+        $attributes['label'] = Helper::translate($attributes['label']);
+        $attributes['uploadText'] = Helper::translate($attributes['uploadText']);
+        $attributes['placeholder'] = Helper::translate($attributes['placeholder']);
 
         // Sauvegarde de la valeur si présente dans core::$inputBefore
         if ($attributes['before'] && array_key_exists($attributes['id'], core::$inputBefore)) {
@@ -597,7 +599,7 @@ class template
             $attributes['value'] = core::$inputBefore[$attributes['id']];
         }
         // Texte
-        $html = sprintf('<input type="hidden" %s>', helper::sprintAttributes($attributes, ['before']));
+        $html = sprintf('<input type="hidden" %s>', Helper::sprintAttributes($attributes, ['before']));
         // Retourne le html
         return $html;
     }
@@ -621,10 +623,10 @@ class template
      * 
      * @example
      * // Icône simple
-     * echo template::ico('user');
+     * echo Template::ico('user');
      * 
      * // Icône avec lien et aide
-     * echo template::ico('edit', [
+     * echo Template::ico('edit', [
      *     'href' => 'edit/123',
      *     'help' => 'Modifier',
      *     'class' => 'text-primary'
@@ -646,7 +648,7 @@ class template
             'class' => '',
         ], $attributes);
         // Traduction de l'aide
-        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['help'] = Helper::translate($attributes['help']);
         // Contenu de l'icône
         $alt = $attributes['help'] ? $attributes['help'] : $ico;
         $item = $attributes['href'] && $attributes['disabled'] === false ? '<a id="' . $attributes['id'] . '" data-tippy-content="' . $attributes['help'] . '" alt="' . $alt . '" href="' . $attributes['href'] . '" ' . $attributes['attr'] . ' >' : '';
@@ -681,7 +683,7 @@ class template
                     $lang = 'fr_FR';
                 }
         }
-        return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"
+        return '<img class="flag" src="' . Helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"
                 width="' . $size . '"
                 height="' . $size . '"
                 title="' . $lang . '"
@@ -704,13 +706,13 @@ class template
             'help' => ''
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $text = helper::translate($text);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $text = Helper::translate($text);
+        $attributes['help'] = Helper::translate($attributes['help']);
 
         if (
             get_called_class() !== 'template'
         ) {
-            $attributes['help'] = helper::translate($attributes['help']);
+            $attributes['help'] = Helper::translate($attributes['help']);
         }
         if ($attributes['help'] !== '') {
             $text = $text . self::help($attributes['help']);
@@ -718,7 +720,7 @@ class template
         // Retourne le html
         return sprintf(
             '<label %s>%s</label>',
-            helper::sprintAttributes($attributes),
+            Helper::sprintAttributes($attributes),
             $text
         );
     }
@@ -766,9 +768,9 @@ class template
             'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['help'] = helper::translate($attributes['help']);
-        //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        $attributes['label'] = Helper::translate($attributes['label']);
+        $attributes['help'] = Helper::translate($attributes['help']);
+        //$attributes['placeholder'] = Helper::translate($attributes['placeholder']);
         // Casse optionnelle
         if (!empty($attributes['case'])) {
             $attributes['case'] = in_array($attributes['case'], ['lower', 'upper', 'sentence', 'title'], true) ? $attributes['case'] : '';
@@ -808,7 +810,7 @@ class template
         // Texte
         $html .= sprintf(
             '<input type="email" %s>',
-            helper::sprintAttributes($attributes)
+            Helper::sprintAttributes($attributes)
         );
         // Fin du wrapper
         $html .= '</div>';
@@ -852,9 +854,9 @@ class template
             'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['label'] = helper::translate($attributes['label']);
-        //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['label'] = Helper::translate($attributes['label']);
+        //$attributes['placeholder'] = Helper::translate($attributes['placeholder']);
+        $attributes['help'] = Helper::translate($attributes['help']);
         // Gestion du champ obligatoire 
         if (isset($attributes['required']) && $attributes['required']) {
             // Affiche l'astérisque dans le label
@@ -882,7 +884,7 @@ class template
         // Mot de passe
         $html .= sprintf(
             '<input type="password" %s>',
-            helper::sprintAttributes($attributes)
+            Helper::sprintAttributes($attributes)
         );
         // Fin du wrapper
         $html .= '</div>';
@@ -916,8 +918,8 @@ class template
             'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['label'] = Helper::translate($attributes['label']);
+        $attributes['help'] = Helper::translate($attributes['help']);
         // Stocker les fontes et remettre à zéro le tableau des fontes transmis pour éviter une erreur de sprintAttributes
         if (empty($attributes['font']) === false) {
             $fonts = $attributes['font'];
@@ -959,7 +961,7 @@ class template
         // Début sélection
         $html .= sprintf(
             '<select %s>',
-            helper::sprintAttributes($attributes)
+            Helper::sprintAttributes($attributes)
         );
         foreach ($options as $value => $text) {
             // Select des liste de fontes
@@ -974,7 +976,7 @@ class template
                 '<option value="%s"%s>%s</option>',
                 $value,
                 $attributes['selected'] == $value ? ' selected' : '', // Double == pour ignorer le type de variable car $_POST change les types en string
-                helper::translate($text)
+                Helper::translate($text)
             );
         }
         // Fin sélection
@@ -993,7 +995,7 @@ class template
      */
     public static function speech($text)
     {
-        return '<div class="speech"><div class="speechBubble">' . helper::translate($text) . '</div>' . template::ico('mimi speechMimi', ['fontSize' => '7em']) . '</div>';
+        return '<div class="speech"><div class="speechBubble">' . Helper::translate($text) . '</div>' . Template::ico('mimi speechMimi', ['fontSize' => '7em']) . '</div>';
     }
 
     /**
@@ -1015,14 +1017,14 @@ class template
             'value' => 'Enregistrer'
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['value'] = helper::translate($attributes['value']);
+        $attributes['value'] = Helper::translate($attributes['value']);
         // Retourne le html
         return sprintf(
             '<button type="submit" class="%s%s" %s>%s</button>',
             $attributes['class'],
             $attributes['uniqueSubmission'] ? 'uniqueSubmission' : '',
-            helper::sprintAttributes($attributes, ['class', 'ico', 'value']),
-            ($attributes['ico'] ? template::ico($attributes['ico'], ['margin' => 'right']) : '') . $attributes['value']
+            Helper::sprintAttributes($attributes, ['class', 'ico', 'value']),
+            ($attributes['ico'] ? Template::ico($attributes['ico'], ['margin' => 'right']) : '') . $attributes['value']
         );
     }
 
@@ -1046,7 +1048,7 @@ class template
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         foreach ($head as $value) {
-            $head[array_search($value, $head)] = helper::translate($value);
+            $head[array_search($value, $head)] = Helper::translate($value);
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper'] . '">';
@@ -1136,9 +1138,9 @@ class template
             'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['help'] = helper::translate($attributes['help']);
-        //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        $attributes['label'] = Helper::translate($attributes['label']);
+        $attributes['help'] = Helper::translate($attributes['help']);
+        //$attributes['placeholder'] = Helper::translate($attributes['placeholder']);
         // Casse optionnelle
         if (!empty($attributes['case'])) {
             $attributes['case'] = in_array($attributes['case'], ['lower', 'upper', 'sentence', 'title'], true) ? $attributes['case'] : '';
@@ -1178,7 +1180,7 @@ class template
         // Texte
         $html .= sprintf(
             '<input type="' . $attributes['type'] . '" %s>',
-            helper::sprintAttributes($attributes)
+            Helper::sprintAttributes($attributes)
         );
         // Fin du wrapper
         $html .= '</div>';
@@ -1249,8 +1251,8 @@ class template
         }
 
         // Traduction de l'aide et de l'étiquette
-        $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['label'] = Helper::translate($attributes['label']);
+        $attributes['help'] = Helper::translate($attributes['help']);
 
         // Sauvegarde des données en cas d'erreur
         if ($attributes['before'] && array_key_exists($attributes['id'], core::$inputBefore)) {
@@ -1288,7 +1290,7 @@ class template
         // Input number
         $html .= sprintf(
             '<input type="number" %s>',
-            helper::sprintAttributes($attributes)
+            Helper::sprintAttributes($attributes)
         );
 
         // Fin du wrapper
@@ -1322,8 +1324,8 @@ class template
             'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['label'] = Helper::translate($attributes['label']);
+        $attributes['help'] = Helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
         if ($attributes['before'] and array_key_exists($attributes['id'], core::$inputBefore)) {
             $attributes['value'] = core::$inputBefore[$attributes['id']];
@@ -1355,7 +1357,7 @@ class template
         // Texte long
         $html .= sprintf(
             '<textarea %s>%s</textarea>',
-            helper::sprintAttributes($attributes, ['value']),
+            Helper::sprintAttributes($attributes, ['value']),
             $attributes['value']
         );
         // Fin du wrapper

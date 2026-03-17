@@ -1,14 +1,14 @@
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('configStoreBack', [
+		<?php echo Template::button('configStoreBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl()  . 'plugin',
-			'value' => template::ico('left')
+			'href' => Helper::baseUrl()  . 'plugin',
+			'value' => Template::ico('left')
 		]); ?>
 	</div>
 </div>
 <?php if (plugin::$storeList) : ?>
-	<?php echo template::table([2, 2, 1, 2, 2, 1], plugin::$storeList, ['Catégorie', 'Module', 'Version', 'Date', 'Page', '']); ?>
+	<?php echo Template::table([2, 2, 1, 2, 2, 1], plugin::$storeList, ['Catégorie', 'Module', 'Version', 'Date', 'Page', '']); ?>
 <?php else : ?>
-	<?php echo template::speech('Le catalogue est vide.'); ?>
+	<?php echo Template::speech('Le catalogue est vide.'); ?>
 <?php endif; ?>

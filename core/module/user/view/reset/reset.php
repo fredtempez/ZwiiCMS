@@ -1,27 +1,27 @@
-<?php echo template::formOpen('userResetForm'); ?>
+<?php echo Template::formOpen('userResetForm'); ?>
 <div class="row">
 	<div class="col6">
-		<?php echo template::password('userResetNewPassword', [
+		<?php echo Template::password('userResetNewPassword', [
 			'label' => 'Nouveau mot de passe'
 		]); ?>
 	</div>
 	<div class="col6">
-		<?php echo template::password('userResetConfirmPassword', [
+		<?php echo Template::password('userResetConfirmPassword', [
 			'label' => 'Confirmation'
 		]); ?>
 	</div>
 </div>
 <div class="row">
 	<div class="col3">
-		<?php echo template::button('userResetBack', [
-			'href' => helper::baseUrl(),
-			'value' => template::ico('left')
+		<?php echo Template::button('userResetBack', [
+			'href' => Helper::baseUrl(),
+			'value' => Template::ico('left')
 		]); ?>
 	</div>
 	<div class="col3 offset6">
-		<?php echo template::submit('userResetSubmit', [
+		<?php echo Template::submit('userResetSubmit', [
 			'value' => 'Valider'
 		]); ?>
 	</div>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

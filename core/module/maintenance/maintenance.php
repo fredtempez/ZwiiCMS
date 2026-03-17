@@ -29,7 +29,7 @@ class maintenance extends Core
 	{
 		// Redirection vers l'accueil après rafraîchissement et que la maintenance est terminée.
 		if ($this->getData(['config', 'maintenance']) == False) {
-			header('Location:' . helper::baseUrl());
+			header('Location:' . Helper::baseUrl());
 			exit();
 		}
 		// Page perso définie et existante
@@ -50,7 +50,7 @@ class maintenance extends Core
 			// Valeurs en sortie
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
-				'title' => helper::translate('Maintenance en cours...'),
+				'title' => Helper::translate('Maintenance en cours...'),
 				'view' => 'index'
 			]);
 		}

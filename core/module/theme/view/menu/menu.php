@@ -1,32 +1,32 @@
-<?php echo template::formOpen('themeMenuForm'); ?>
+<?php echo Template::formOpen('themeMenuForm'); ?>
 <div class="row">
     <div class="col1">
-        <?php echo template::button('themeMenuBack', [
+        <?php echo Template::button('themeMenuBack', [
             'class' => 'buttonGrey',
-            'href' => helper::baseUrl() . 'theme',
-            'value' => template::ico('left')
+            'href' => Helper::baseUrl() . 'theme',
+            'value' => Template::ico('left')
         ]); ?>
     </div>
     <div class="col2 offset9">
-        <?php echo template::submit('themeMenuSubmit'); ?>
+        <?php echo Template::submit('themeMenuSubmit'); ?>
     </div>
 </div>
 <div class="row">
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Paramètres'); ?>
+                <?php echo Helper::translate('Paramètres'); ?>
             </h4>
             <div class="row">
                 <div class="col6">
                     <?php
                     if ($this->getData(['theme', 'header', 'position']) == "site") {
-                        echo template::select('themeMenuPosition', theme::$menuPositionsSite, [
+                        echo Template::select('themeMenuPosition', theme::$menuPositionsSite, [
                             'label' => 'Position',
                             'selected' => $this->getData(['theme', 'menu', 'position'])
                         ]);
                     } else {
-                        echo template::select('themeMenuPosition', theme::$menuPositionsBody, [
+                        echo Template::select('themeMenuPosition', theme::$menuPositionsBody, [
                             'label' => 'Position',
                             'selected' => $this->getData(['theme', 'menu', 'position'])
                         ]);
@@ -34,7 +34,7 @@
                     ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('themeMenuWide', theme::$containerWides, [
+                    <?php echo Template::select('themeMenuWide', theme::$containerWides, [
                         'label' => 'Largeur',
                         'selected' => $this->getData(['theme', 'menu', 'wide'])
                     ]); ?>
@@ -42,32 +42,32 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::select('themeMenuRadius', theme::$menuRadius, [
+                    <?php echo Template::select('themeMenuRadius', theme::$menuRadius, [
                         'label' => 'Bords arrondis',
                         'selected' => $this->getData(['theme', 'menu', 'radius']),
                         'help' => 'Autour de la page sélectionnée'
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeMenuHeight', theme::$menuHeights, [
+                    <?php echo Template::select('themeMenuHeight', theme::$menuHeights, [
                         'label' => 'Hauteur',
                         'selected' => $this->getData(['theme', 'menu', 'height'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeMenuTextAlign', theme::$aligns, [
+                    <?php echo Template::select('themeMenuTextAlign', theme::$aligns, [
                         'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'menu', 'textAlign'])
                     ]); ?>
                 </div>
             </div>
             <div id="themeMenuPositionOptions" class="displayNone">
-                <?php echo template::checkbox('themeMenuMargin', true, 'Aligner le menu avec le contenu', [
+                <?php echo Template::checkbox('themeMenuMargin', true, 'Aligner le menu avec le contenu', [
                     'checked' => $this->getData(['theme', 'menu', 'margin'])
                 ]); ?>
             </div>
             <div id="themeMenuPositionFixed" class="displayNone">
-                <?php echo template::checkbox('themeMenuFixed', true, 'Menu fixe', [
+                <?php echo Template::checkbox('themeMenuFixed', true, 'Menu fixe', [
                     'checked' => $this->getData(['theme', 'menu', 'fixed'])
                 ]); ?>
             </div>
@@ -78,21 +78,21 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Contenu'); ?>
+                <?php echo Helper::translate('Contenu'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('themeMenuLoginLink', true, 'Lien de connexion', [
+                    <?php echo Template::checkbox('themeMenuLoginLink', true, 'Lien de connexion', [
                         'checked' => $this->getData(['theme', 'menu', 'loginLink'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('themeMenuMemberBar', true, 'Barre de membre', [
+                    <?php echo Template::checkbox('themeMenuMemberBar', true, 'Barre de membre', [
                         'checked' =>  $this->getData(['theme', 'menu', 'memberBar']),
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeMenuBurgerContent', theme::$burgerContent, [
+                    <?php echo Template::select('themeMenuBurgerContent', theme::$burgerContent, [
                         'label' => 'Menu burger dans écran réduit',
                         'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
                     ]); ?>
@@ -106,7 +106,7 @@
                     $normalizedImagePath = $this->getNormalizedFilePath($imagePath, $this->getUser('id'));
                     $imageFile = !empty($normalizedImagePath) && file_exists($normalizedImagePath) ? $imagePath : "";
                     ?>
-                    <?php echo template::file('themeMenuBurgerLogo', [
+                    <?php echo Template::file('themeMenuBurgerLogo', [
                         'help' => 'Sélectionner une image de dimensions adaptées',
                         'language' => $this->getData(['user', $this->getUser('id'), 'language']),
                         'label' => 'Logo du menu burger',
@@ -124,11 +124,11 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Couleurs'); ?>
+                <?php echo Helper::translate('Couleurs'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::text('themeMenuTextColor', [
+                    <?php echo Template::text('themeMenuTextColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
                         'label' => 'Texte',
@@ -136,7 +136,7 @@
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::text('themeMenuBackgroundColor', [
+                    <?php echo Template::text('themeMenuBackgroundColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
                         'label' => 'Arrière plan',
@@ -144,7 +144,7 @@
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::text('themeMenuBackgroundColorSub', [
+                    <?php echo Template::text('themeMenuBackgroundColorSub', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
                         'label' => 'Fond du sous-menu',
@@ -154,7 +154,7 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::text('themeMenuActiveTextColor', [
+                    <?php echo Template::text('themeMenuActiveTextColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
                         'label' => 'Couleur texte page active',
@@ -163,12 +163,12 @@
                 </div>
                 <div class="col4 verticalAlignBottom">
                     <?php
-                    echo template::checkbox('themeMenuActiveColorAuto', true, 'Couleur de fond automatique', [
+                    echo Template::checkbox('themeMenuActiveColorAuto', true, 'Couleur de fond automatique', [
                         'checked' => $this->getData(['theme', 'menu', 'activeColorAuto']),
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::text('themeMenuActiveColor', [
+                    <?php echo Template::text('themeMenuActiveColor', [
                         'class' => 'colorPicker',
                         'help' => 'Couleur de fond de la page sélectionnée dans le menu.<br>Le curseur horizontal règle le niveau de transparence.',
                         'label' => 'Fond page active',
@@ -183,31 +183,31 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Mise en forme du texte'); ?>
+                <?php echo Helper::translate('Mise en forme du texte'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::select('themeMenuFont', theme::$fonts['name'], [
+                    <?php echo Template::select('themeMenuFont', theme::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'menu', 'font']),
                         'font' => theme::$fonts['family']
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeMenuFontSize', theme::$menuFontSizes, [
+                    <?php echo Template::select('themeMenuFontSize', theme::$menuFontSizes, [
                         'label' => 'Taille',
                         'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'menu', 'fontSize'])
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeMenuFontWeight', theme::$fontWeights, [
+                    <?php echo Template::select('themeMenuFontWeight', theme::$fontWeights, [
                         'label' => 'Style',
                         'selected' => $this->getData(['theme', 'menu', 'fontWeight'])
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeMenuTextTransform', theme::$textTransforms, [
+                    <?php echo Template::select('themeMenuTextTransform', theme::$textTransforms, [
                         'label' => 'Casse',
                         'selected' => $this->getData(['theme', 'menu', 'textTransform'])
                     ]); ?>
@@ -216,4 +216,4 @@
         </div>
     </div>
 </div>
-<?php echo template::formClose(); ?>
+<?php echo Template::formClose(); ?>

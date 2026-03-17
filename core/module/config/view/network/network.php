@@ -3,24 +3,24 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo helper::translate('Paramètres'); ?>
+					<?php echo Helper::translate('Paramètres'); ?>
 				</h4>
 				<div class="row">
 					<div class="col2">
-						<?php echo template::select('configProxyType', config::$proxyType, [
+						<?php echo Template::select('configProxyType', config::$proxyType, [
 							'label' => 'Type de proxy',
 							'selected' => $this->getData(['config', 'proxyType'])
 						]); ?>
 					</div>
 					<div class="col8">
-						<?php echo template::text('configProxyUrl', [
+						<?php echo Template::text('configProxyUrl', [
 							'label' => 'Adresse du proxy',
 							'placeholder' => 'cache.proxy.fr',
 							'value' => $this->getData(['config', 'proxyUrl'])
 						]); ?>
 					</div>
 					<div class="col2">
-						<?php echo template::number('configProxyPort', [
+						<?php echo Template::number('configProxyPort', [
 							'label' => 'Port du proxy',
 							'placeholder' => '6060',
 							'value' => $this->getData(['config', 'proxyPort'])
@@ -34,11 +34,11 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo helper::translate('SMTP'); ?>
+					<?php echo Helper::translate('SMTP'); ?>
 				</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::text('smtpFrom', [
+						<?php echo Template::text('smtpFrom', [
 							'label' => 'Expéditeur',
 							'placeholder' => 'no-reply@host',
 							'value' => $this->getData(['config', 'smtp', 'from']),
@@ -47,7 +47,7 @@
 					</div>
 					<div class="row">
 						<div class="col12">
-							<?php echo template::checkbox('smtpEnable', true, 'SMTP personnalisé', [
+							<?php echo Template::checkbox('smtpEnable', true, 'SMTP personnalisé', [
 								'checked' => $this->getData(['config', 'smtp', 'enable']),
 								'help' => 'Paramètres à utiliser lorsque votre hébergeur ne propose pas la fonctionnalité d\'envoi de mail.'
 							]); ?>
@@ -56,21 +56,21 @@
 					<div id="smtpParam">
 						<div class="row">
 							<div class="col8">
-								<?php echo template::text('smtpHost', [
+								<?php echo Template::text('smtpHost', [
 									'label' => 'Adresse SMTP',
 									'placeholder' => 'smtp.fr',
 									'value' => $this->getData(['config', 'smtp', 'host'])
 								]); ?>
 							</div>
 							<div class="col2">
-								<?php echo template::text('smtpPort', [
+								<?php echo Template::text('smtpPort', [
 									'label' => 'Port SMTP',
 									'placeholder' => '589',
 									'value' => $this->getData(['config', 'smtp', 'port'])
 								]); ?>
 							</div>
 							<div class="col2">
-								<?php echo template::select('smtpAuth', config::$SMTPauth, [
+								<?php echo Template::select('smtpAuth', config::$SMTPauth, [
 									'label' => 'Authentification',
 									'selected' => $this->getData(['config', 'smtp', 'auth'])
 								]); ?>
@@ -79,20 +79,20 @@
 						<div id="smtpAuthParam">
 							<div class="row">
 								<div class="col5">
-									<?php echo template::text('smtpUsername', [
+									<?php echo Template::text('smtpUsername', [
 										'label' => 'Nom utilisateur',
 										'value' => $this->getData(['config', 'smtp', 'username'])
 									]); ?>
 								</div>
 								<div class="col5">
-									<?php echo template::password('smtpPassword', [
+									<?php echo Template::password('smtpPassword', [
 										'label' => 'Mot de passe',
 										'autocomplete' => 'off',
 										'value' => $this->getData(['config', 'smtp', 'password'])
 									]); ?>
 								</div>
 								<div class="col2">
-									<?php echo template::select('smtpSecure', config::$SMTPEnc, [
+									<?php echo Template::select('smtpSecure', config::$SMTPEnc, [
 										'label' => 'Sécurité',
 										'selected' => $this->getData(['config', 'smtp', 'secure'])
 									]); ?>
