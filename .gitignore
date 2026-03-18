@@ -54,19 +54,10 @@ logs/
 # Dépendances (Node.js, Composer)
 # ============================================
 node_modules/
-vendor/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 composer.lock
-
-# ============================================
-# Archives et compressions
-# ============================================
-*.zip
-*.tar.gz
-*.rar
-*.7z
 
 # ============================================
 # Fichiers Git (déjà gérés par Git)
