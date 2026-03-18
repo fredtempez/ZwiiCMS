@@ -1,5 +1,7 @@
 <?php
 
+namespace Zwii\Cms;
+
 /**
  * This file is part of Zwii.
  * For full copyright and license information, please see the LICENSE
@@ -171,11 +173,11 @@ class install extends Core
 						unlink(self::TEMP_DIR . 'files.tar');
 					}
 					copy('core/module/install/ressource/files.tar.gz', self::TEMP_DIR . 'files.tar.gz');
-					$pharData = new PharData(self::TEMP_DIR . 'files.tar.gz');
+					$pharData = new \PharData(self::TEMP_DIR . 'files.tar.gz');
 					$pharData->decompress();
 					// Installation
 					$pharData->extractTo(__DIR__ . '/../../../', null, true);
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$success = $e->getMessage();
 				}
 
@@ -378,11 +380,11 @@ class install extends Core
 				// Décompression et installation
 				try {
 					// Décompression dans le dossier de fichier temporaires
-					$pharData = new PharData(self::TEMP_DIR . 'update.tar.gz');
+					$pharData = new \PharData(self::TEMP_DIR . 'update.tar.gz');
 					$pharData->decompress();
 					// Installation
 					$pharData->extractTo(__DIR__ . '/../../../', null, true);
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$message = $e->getMessage();
 					$success = false;
 					http_response_code(500);

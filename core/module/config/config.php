@@ -1,5 +1,7 @@
 <?php
 
+namespace Zwii\Cms;
+
 /**
  * This file is part of Zwii.
  *
@@ -380,7 +382,7 @@ class config extends Core
 					]);
 				}
 				// Ouverture de l'archive
-				$zip = new ZipArchive();
+				$zip = new \ZipArchive();
 				if ($zip->open(self::FILE_DIR . 'source/' . $fileZip) === FALSE) {
 					// Valeurs en sortie erreur
 					$this->addOutput([
@@ -561,7 +563,7 @@ class config extends Core
 			// Efface les fichiers de backup lorsque l'option est désactivée
 			if ($this->getInput('configFileBackup', Helper::FILTER_BOOLEAN) === false) {
 				$path = realpath('site/data');
-				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
+				foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $filename) {
 					if (strpos($filename, 'backup.json')) {
 						unlink($filename);
 					}
@@ -1031,7 +1033,7 @@ class config extends Core
 
 			$path = realpath(self::BACKUP_DIR);
 			$success = $fail = 0;
-			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
+			foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $filename) {
 				if (strpos($filename, '.zip')) {
 					$r = unlink($filename);
 					$success = $r === true ? $success + 1 : $success;

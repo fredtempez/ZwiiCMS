@@ -1,5 +1,7 @@
 <?php
 
+namespace Zwii\Cms;
+
 /**
  * This file is part of Zwii.
  * For full copyright and license information, please see the LICENSE

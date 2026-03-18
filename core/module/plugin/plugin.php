@@ -1,5 +1,7 @@
 <?php
 
+namespace Zwii\Cms;
+
 /**
  * This file is part of Zwii.
  *
@@ -118,7 +120,7 @@ class plugin extends Core
 			]);
 		}
 		
-		$zip = new ZipArchive();
+		$zip = new \ZipArchive();
 		$zipResult = $zip->open($moduleFileName);
 		if ($zipResult === true) {
 
@@ -282,15 +284,15 @@ class plugin extends Core
 		} else {
 			// Message de retour avec détails sur l'erreur
 			$errorMessages = [
-				ZipArchive::ER_EXISTS => "Le fichier existe déjà",
-				ZipArchive::ER_INCONS => "Archive inconsistante",
-				ZipArchive::ER_INVAL => "Argument invalide",
-				ZipArchive::ER_MEMORY => "Erreur de mémoire",
-				ZipArchive::ER_NOENT => "Fichier non trouvé",
-				ZipArchive::ER_NOZIP => "Ce n'est pas une archive ZIP",
-				ZipArchive::ER_OPEN => "Impossible d'ouvrir le fichier",
-				ZipArchive::ER_READ => "Erreur de lecture",
-				ZipArchive::ER_SEEK => "Erreur de positionnement"
+				\ZipArchive::ER_EXISTS => "Le fichier existe déjà",
+				\ZipArchive::ER_INCONS => "Archive inconsistante",
+				\ZipArchive::ER_INVAL => "Argument invalide",
+				\ZipArchive::ER_MEMORY => "Erreur de mémoire",
+				\ZipArchive::ER_NOENT => "Fichier non trouvé",
+				\ZipArchive::ER_NOZIP => "Ce n'est pas une archive ZIP",
+				\ZipArchive::ER_OPEN => "Impossible d'ouvrir le fichier",
+				\ZipArchive::ER_READ => "Erreur de lecture",
+				\ZipArchive::ER_SEEK => "Erreur de positionnement"
 			];
 			
 			$errorMessage = isset($errorMessages[$zipResult]) ? $errorMessages[$zipResult] : "Erreur inconnue (code: $zipResult)";

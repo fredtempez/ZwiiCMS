@@ -1,4 +1,7 @@
 <?php
+
+namespace Zwii\Cms;
+
 class init extends Core
 {
 	public static $defaultData = [

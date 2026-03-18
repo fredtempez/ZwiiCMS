@@ -1,5 +1,7 @@
 <?php
 
+namespace Zwii\Cms;
+
 /**
  * This file is part of Zwii.
  *
@@ -1055,7 +1057,7 @@ class theme extends Core
 				// Dossier temporaire
 				$tempFolder = uniqid();
 				// Ouvrir le zip
-				$zip = new ZipArchive();
+				$zip = new \ZipArchive();
 				if ($zip->open($zipName) === TRUE) {
 					mkdir(self::TEMP_DIR . $tempFolder, 0755);
 					$zip->extractTo(self::TEMP_DIR . $tempFolder);
@@ -1172,8 +1174,8 @@ class theme extends Core
 	{
 		// Creation du dossier
 		$zipFilename = $modele . date('Y-m-d-H-i-s', time()) . '.zip';
-		$zip = new ZipArchive();
-		if ($zip->open(self::TEMP_DIR . $zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+		$zip = new \ZipArchive();
+		if ($zip->open(self::TEMP_DIR . $zipFilename, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
 			switch ($modele) {
 				case 'admin':
 					$zip->addFile(self::DATA_DIR . 'admin.json', self::DATA_DIR . 'admin.json');

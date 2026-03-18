@@ -187,6 +187,12 @@ class Autoloader
         foreach ($locations as $location) {
             $file = $location . $className . '/' . $className . '.php';
             if (self::requireFile($file)) {
+                // Créer un alias pour la compatibilité avec les anciens modules
+                // Si le module est dans le namespace Zwii\Cms, créer un alias global
+                $namespacedClass = self::NAMESPACE_ROOT . '\\' . $className;
+                if (class_exists($namespacedClass, false) && !class_exists($className, false)) {
+                    class_alias($namespacedClass, $className);
+                }
                 return $file;
             }
         }
@@ -242,6 +248,7 @@ class Autoloader
             'Template' => 'Zwii\\Cms\\Template',
             'Layout' => 'Zwii\\Cms\\Layout',
             'Asset' => 'Zwii\\Cms\\Asset',
+            'init' => 'Zwii\\Cms\\init',
         ];
         
         foreach ($globalToNamespace as $global => $namespaced) {
