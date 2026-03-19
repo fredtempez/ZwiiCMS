@@ -263,20 +263,26 @@ class Router extends Core
 		}
 
 
+		// Définir l'identifiant de la page courante
+		$pageId = $this->getUrl(0);
 		// Importe le style de la page principale
 		$inlineStyle[] = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
+		// Importe le style de la page principale
+		$inlineStyle[] = $this->getData(['page', $pageId, 'css']) === null ? '' : $this->getData(['page', $pageId, 'css']);
 		// Importe le script de la page principale
-		$inlineScript[] = $this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']);
+		$inlineScript[] = $this->getData(['page', $pageId, 'js']) === null ? '' : $this->getData(['page', $pageId, 'js']);
 
 		// Importe le contenu, le CSS et le script des barres
-		$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), core::$siteContent) : '';
-		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
-		$inlineScript[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']);
-		$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), core::$siteContent) : '';
-		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
-		$inlineScript[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']);
+		$barRightId = $this->getData(['page', $pageId, 'barRight']);
+		$barLeftId = $this->getData(['page', $pageId, 'barLeft']);
 
+		$contentRight = $barRightId ? $this->getPage($barRightId, core::$siteContent) : '';
+		$inlineStyle[] = $barRightId && $this->getData(['page', $barRightId, 'css']) !== null ? $this->getData(['page', $barRightId, 'css']) : '';
+		$inlineScript[] = $barRightId && $this->getData(['page', $barRightId, 'js']) !== null ? $this->getData(['page', $barRightId, 'js']) : '';
 
+		$contentLeft = $barLeftId ? $this->getPage($barLeftId, core::$siteContent) : '';
+		$inlineStyle[] = $barLeftId && $this->getData(['page', $barLeftId, 'css']) !== null ? $this->getData(['page', $barLeftId, 'css']) : '';
+		$inlineScript[] = $barLeftId && $this->getData(['page', $barLeftId, 'js']) !== null ? $this->getData(['page', $barLeftId, 'js']) : '';
 		// Importe la page simple sans module ou avec un module inexistant
 		if (
 			$this->getData(['page', $this->getUrl(0)]) !== null
