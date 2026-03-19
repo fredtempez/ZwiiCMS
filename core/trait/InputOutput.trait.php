@@ -167,11 +167,13 @@ trait InputOutput
 
 	/**
 	 * Check qu'une valeur est transmise par la méthode _POST
+	 * Check la présence du jeston CSRF pour éviter les attaques de type Cross-Site Request Forgery
+	 * Check que l'utilisateur est connecté pour éviter les attaques de type Cross-Site Request Forgery ciblant les visiteurs
 	 * @return bool
 	 */
 	public function isPost()
 	{
-		return ($this->checkCSRF() and $this->input['_POST'] !== []);
+			return ($this->isConnected() && $this->checkCSRF() && $this->input['_POST'] !== []);
 	}
 
 
