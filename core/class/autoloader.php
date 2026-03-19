@@ -113,6 +113,9 @@ class Autoloader
             'Icamys\\SitemapGenerator\\Runtime' => 'core/class/sitemap/Runtime.class.php',
             'Prowebcraft\\JsonDb' => 'core/class/jsondb/JsonDb.class.php',
             'Prowebcraft\\Dot' => 'core/class/jsondb/Dot.class.php',
+            'PHPMailer\\PHPMailer\\PHPMailer' => 'core/class/phpmailer/PHPMailer.class.php',
+            'PHPMailer\\PHPMailer\\SMTP' => 'core/class/phpmailer/SMTP.class.php',
+            'PHPMailer\\PHPMailer\\Exception' => 'core/class/phpmailer/Exception.class.php',
         ];
 
         if (isset($namespaceMap[$className])) {

@@ -14,6 +14,9 @@
  * @Licensed under the GNU General Public License v3.0 or later.
  * @link http://zwiicms.fr/
  */
+
+use Zwii\Cms\Helper;
+
 trait Tools {
 
 	/**

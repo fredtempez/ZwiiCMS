@@ -1,4 +1,5 @@
 <?php
+// - Ajoute une fonctionnalité de compression d'image dans le gestionnaire de fichiers, créé par https://github.com/artweavedigital/filemanager 
 header('Content-Type: application/json');
 
 $base_dir = __DIR__ . "/../../../../site/file/source/"; 

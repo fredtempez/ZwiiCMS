@@ -200,7 +200,7 @@ class install extends Core
 
 				// Appliquer la configuration des bases de données depuis defaultdata.php
 				require_once('core/module/install/ressource/defaultdata.php');
-				$databaseConfig = init::$defaultData['config']['database'] ?? [];
+				$databaseConfig = \init::$defaultData['config']['database'] ?? [];
 				
 				// Initialiser les bases de données avec leur configuration
 				foreach ($databaseConfig as $dbName => $config) {
@@ -480,7 +480,7 @@ class install extends Core
 				/** Met à jour les dictionnaires des langues depuis les nouveaux modèles installés */
 				require_once ('core/module/install/ressource/defaultdata.php');
 				$installedLanguages = $this->getData(['language']);
-				$defaultLanguages = init::$defaultData['language'];
+				$defaultLanguages = \init::$defaultData['language'];
 				foreach ($installedLanguages as $key => $value) {
 					if (
 						isset($defaultLanguages[$key]['date']) &&

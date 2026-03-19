@@ -14,6 +14,10 @@
  * @Licensed under the GNU General Public License v3.0 or later.
  * @link http://zwiicms.fr/
  */
+
+use Zwii\Cms\Core;
+use Zwii\Cms\Helper;
+
 trait InputOutput
 {
 	/**
@@ -27,12 +31,12 @@ trait InputOutput
 			$firstKey = explode('[', $key)[0];
 			$secondKey = $secondKey[1];
 			if (empty($this->input['_POST'][$firstKey][$secondKey])) {
-				core::$inputNotices[$firstKey . '_' . $secondKey] = Helper::translate('Obligatoire');
+				Core::$inputNotices[$firstKey . '_' . $secondKey] = Helper::translate('Obligatoire');
 			}
 		}
 		// La clef est une chaine
 		elseif (empty($this->input['_POST'][$key])) {
-			core::$inputNotices[$key] = Helper::translate('Obligatoire');
+			Core::$inputNotices[$key] = Helper::translate('Obligatoire');
 		}
 	}
 
@@ -198,7 +202,7 @@ trait InputOutput
 		include 'core/layout/mail.php';
 		$layout = ob_get_clean();
 
-		$mail = new PHPMailer\PHPMailer\PHPMailer(true);
+		$mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 		$mail->CharSet = 'UTF-8';
 
 		try {

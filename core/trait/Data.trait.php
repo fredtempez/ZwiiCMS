@@ -132,26 +132,26 @@ trait Data
 				}
 				// Site en français avec site exemple
 				if ($lang == 'fr_FR' && $sampleSite === true && $module !== 'locale') {
-					$this->setData([$module, init::$siteTemplate[$module]]);
+					$this->setData([$module, \init::$siteTemplate[$module]]);
 					// Création des pages
-					foreach (init::$siteContent as $key => $value) {
+					foreach (\init::$siteContent as $key => $value) {
 						$this->setPage($key, $value['content'], 'fr_FR');
 					}
 					// Version en langue étrangère ou fr_FR sans site de test
 				} else {
 					// En_EN par défaut si le contenu localisé n'est pas traduit
-					$langDefault = array_key_exists($lang, init::$defaultDataI18n) === true ? $lang : 'default';
+					$langDefault = array_key_exists($lang, \init::$defaultDataI18n) === true ? $lang : 'default';
 					// Charger les données de cette langue
-					$this->setData([$module, init::$defaultDataI18n[$langDefault][$module]]);
+					$this->setData([$module, \init::$defaultDataI18n[$langDefault][$module]]);
 					// Créer la page d'accueil, une seule page dans cette configuration
-					$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
-					$content = init::$defaultDataI18n[$langDefault]['html'];
+					$pageId = \init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
+					$content = \init::$defaultDataI18n[$langDefault]['html'];
 					$this->setPage($pageId, $content, $lang);
 				}
 				break;
 			default:
 				// Installation des données des autres modules cad theme profil font config, admin et core
-				$this->setData([$module, init::$defaultData[$module]]);
+				$this->setData([$module, \init::$defaultData[$module]]);
 				break;
 		}
 	}
@@ -487,7 +487,7 @@ trait Data
 
 		// 2. Sinon, utiliser la configuration par défaut depuis defaultdata.php (priorité 2)
 		require_once('core/module/install/ressource/defaultdata.php');
-		return init::$dataFilesConfig ?? [];
+		return \init::$dataFilesConfig ?? [];
 	}
 
 	//

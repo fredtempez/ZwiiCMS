@@ -13,6 +13,7 @@
   - Compatibilité ascendante avec les anciens noms (helper::, template::, etc.)
   - Factorisation des méthodes de core en traits.
 - Réorganisation structurelle du script router.class.php, les méthodes liées à la création des feuilles de style depuis le fichier json sont incluses dans une classe dédiée.
+- Ajoute une fonctionnalité de compression d'image dans le gestionnaire de fichiers, créé par https://github.com/artweavedigital/filemanager 
 ### 🛠️ Corrections
 - Données d'identité manquante dans la configuration par défaut.
 
