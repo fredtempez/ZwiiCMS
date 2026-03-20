@@ -112,8 +112,11 @@ trait InputOutput
 	 * @param bool $required Champ requis
 	 * @return mixed
 	 */
-	public function getInput($key, $filter = Helper::FILTER_STRING_SHORT, $required = false)
+	public function getInput($key, $filter = null, $required = false)
 	{
+		// Si aucun filtre n'est fourni, appliquer la valeur par défaut
+		$filter = $filter ?? Helper::FILTER_STRING_SHORT;
+		
 		// La clef est un tableau
 		if (preg_match('#\[(.*)\]#', $key, $secondKey)) {
 			$firstKey = explode('[', $key)[0];
@@ -173,9 +176,9 @@ trait InputOutput
 	 */
 	public function isPost()
 	{
-			   // Autoriser isPost si l'utilisateur est connecté OU si on est sur la page de connexion (getUrl(0) == 'user')
-			   return (($this->isConnected() || $this->getUrl(0) === 'user' || $this->getUrl(0) === 'install')
-				   && $this->checkCSRF() && $this->input['_POST'] !== []);
+		// Autoriser isPost si l'utilisateur est connecté OU si on est sur la page de connexion (getUrl(0) == 'user')
+		return (($this->isConnected() || $this->getUrl(0) === 'user' || $this->getUrl(0) === 'install')
+			&& $this->checkCSRF() && $this->input['_POST'] !== []);
 	}
 
 
@@ -224,10 +227,10 @@ trait InputOutput
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
 					$storedPassword = $this->getData(['config', 'smtp', 'password']);
 					$smtpHost = $this->getData(['config', 'smtp', 'host']);
-					
+
 					// Déchiffrer le password avec le host comme clé (voir config.php ligne 533)
-					$mail->Password  = Helper::decrypt($storedPassword, $smtpHost);
-				
+					$mail->Password = Helper::decrypt($storedPassword, $smtpHost);
+
 				}
 			}
 
@@ -346,7 +349,7 @@ trait InputOutput
 		return $localPart . '@' . $siteDomain;
 	}
 
-		/**
+	/**
 	 * Journalisation avec gestion de la taille maximale et compression
 	 */
 	public function saveLog($message = '', $force = false)
@@ -376,7 +379,7 @@ trait InputOutput
 		}
 	}
 
-		/**
+	/**
 	 * Gère la rotation et la compression des fichiers journaux
 	 * @return bool True si la rotation a réussi, false sinon
 	 */
