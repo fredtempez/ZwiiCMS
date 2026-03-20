@@ -174,7 +174,7 @@ trait InputOutput
 	public function isPost()
 	{
 			   // Autoriser isPost si l'utilisateur est connecté OU si on est sur la page de connexion (getUrl(0) == 'user')
-			   return (($this->isConnected() || $this->getUrl(0) === 'user')
+			   return (($this->isConnected() || $this->getUrl(0) === 'user' || $this->getUrl(0) === 'install')
 				   && $this->checkCSRF() && $this->input['_POST'] !== []);
 	}
 
