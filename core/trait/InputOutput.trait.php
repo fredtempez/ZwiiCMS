@@ -176,9 +176,8 @@ trait InputOutput
 	 */
 	public function isPost()
 	{
-		// Autoriser isPost si l'utilisateur est connecté OU si on est sur la page de connexion (getUrl(0) == 'user')
-		return (($this->isConnected() || $this->getUrl(0) === 'user' || $this->getUrl(0) === 'install')
-			&& $this->checkCSRF() && $this->input['_POST'] !== []);
+		// Autoriser isPost si le jeton CSRF est valide et qu'il y a des données POST
+		return ($this->checkCSRF() && $this->input['_POST'] !== []);
 	}
 
 
