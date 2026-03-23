@@ -136,6 +136,7 @@ $mime_types = array(
     "application/vnd.wap.wbxml" => "wbxml",
     "video/webm" => "webm",
     "image/webp" => "webp",
+    'image/avif' => 'avif',
     "video/x-ms-wm" => "wm",
     "audio/x-ms-wma" => "wma",
     "text/vnd.wap.wml" => "wml",

@@ -112,10 +112,8 @@ trait InputOutput
 	 * @param bool $required Champ requis
 	 * @return mixed
 	 */
-	public function getInput($key, $filter = null, $required = false)
+	public function getInput($key, $filter = Helper::FILTER_STRING_SHORT, $required = false)
 	{
-		// Si aucun filtre n'est fourni, appliquer la valeur par défaut
-		$filter = $filter ?? Helper::FILTER_STRING_SHORT;
 		
 		// La clef est un tableau
 		if (preg_match('#\[(.*)\]#', $key, $secondKey)) {
