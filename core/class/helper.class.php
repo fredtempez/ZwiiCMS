@@ -461,6 +461,12 @@ class Helper
 	 */
 	public static function filter($text, $filter)
 	{
+
+		// Si aucun filtre n'est spécifié, retourner le texte tel quel
+		if (is_null($filter)) {
+			return $text;
+		}
+	
 		$text = is_null($text) ? $text : trim($text);
 		switch ($filter) {
 			case self::FILTER_BOOLEAN:
