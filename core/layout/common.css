@@ -489,11 +489,31 @@ nav a>img {
     vertical-align: middle;
 }
 
+/* -----------------------------------------------
+ * Menu Burger — ouverture/fermeture CSS (sans JS)
+ * Principe : checkbox cachée + label comme bouton
+ * ----------------------------------------------- */
+
+/* Checkbox cachée, inaccessible visuellement */
+.toggleCheck {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.toggleCheck + #toggle::before {
+    display: none;
+}
+
 nav #toggle {
     cursor: pointer;
     text-align: right;
-    display: none;
+    display: none;        /* caché en desktop, affiché via media query mobile */
     font-weight: bold;
+    user-select: none;
 }
 
 nav #toggle span {
@@ -1819,6 +1839,21 @@ th.col12 {
     }
     body > header {
         margin: 0;
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Contenir le contenu du header pour éviter le débordement */
+    header #featureContent {
+        overflow: hidden;
+        margin: 0;
+        padding: 0 10px;
+    }
+    
+    header .container {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
     }
     
     /* Barre d'administration */
@@ -1880,6 +1915,7 @@ th.col12 {
     /* Menu / Navigation */
     body > nav {
         margin: 0;
+        padding: 0;
     }
     nav #toggle,
     nav #menuLeft {
@@ -1910,6 +1946,31 @@ th.col12 {
     nav .zwiico-menu,
     nav .zwiico-cancel {
         font-size: 1.5em;
+    }
+
+    /* --- Ouverture du menu quand la checkbox est cochée --- */
+    .toggleCheck:checked ~ #toggle ~ #menu,
+    .toggleCheck:checked + #toggle + #menu {
+        display: block;
+    }
+    /* Sélecteurs élargis pour couvrir les variantes de structure HTML */
+    .toggleCheck:checked ~ * #menu {
+        display: block;
+    }
+
+    /* --- Changement d'icône : menu → cancel --- */
+    /* Icône par défaut : hamburger */
+    nav #toggle .zwiico-menu::before {
+        /* la classe zwiico-menu gère déjà le glyphe via la police d'icônes */
+    }
+    /* Quand ouvert : remplacer le glyphe zwiico-menu par zwiico-cancel */
+    .toggleCheck:checked ~ #toggle .zwiico-menu,
+    .toggleCheck:checked + #toggle .zwiico-menu {
+        font-family: inherit; /* conserve la police d'icônes */
+    }
+    .toggleCheck:checked ~ #toggle .zwiico-menu::before {
+        /* Remplace le contenu par le glyphe "cancel" de la police ZwiiCMS */
+        content: '\e802'; /* code unicode correct pour zwiico-cancel */
     }
 
     /* Sous-menus multi-niveaux en mode mobile */

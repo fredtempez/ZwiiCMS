@@ -335,19 +335,6 @@ core.start = function () {
     });
 
     /**
-     * Affiche / Cache le menu en mode responsive
-     */
-    var menuDOM = $("#menu");
-    $("#toggle").on("click", function () {
-        menuDOM.slideToggle();
-    });
-    $(window).on("resize", function () {
-        if ($(window).width() > 768) {
-            menuDOM.css("display", "");
-        }
-    });
-
-    /**
      * Normalise la casse des champs avec data-case
      */
     $("[data-case]").on("input change", function () {
@@ -755,18 +742,6 @@ $(document).ready(function () {
                 open($(this).closest('.accordion-item'), toggleSpeed);
             }
         });
-    });
-
-    /**
-     * Icône du Menu Burger
-     */
-    $("#toggle").click(function () {
-        var changeIcon = $('#toggle').children("span");
-        if ($(changeIcon).hasClass('zwiico-menu')) {
-            $(changeIcon).removeClass('zwiico-menu').addClass('zwiico-cancel');
-        } else {
-            $(changeIcon).addClass('zwiico-menu');
-        };
     });
 
     /**

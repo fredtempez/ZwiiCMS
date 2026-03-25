@@ -92,12 +92,13 @@
 			echo '<nav id="navfixedlogout" >';
 		}
 		?>
-		<!-- Menu Burger -->
-		<div id="toggle">
+		<!-- Menu Burger (ouverture CSS, sans JS) -->
+		<input type="checkbox" id="toggleCheck" class="toggleCheck" aria-hidden="true">
+		<label id="toggle" for="toggleCheck" role="button" aria-label="Menu">
 			<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title' ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
 			<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
 			<?php echo Template::ico('menu', ['fontSize' => '2em']); ?>
-		</div>
+		</label>
 		<!-- fin du menu burger -->
 		<?php
 		$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"' : 'class="container"';
@@ -141,11 +142,12 @@
 	<?php if ($this->getData(['theme', 'menu', 'position']) === 'body-second'): ?>
 		<nav>
 			<!-- Menu burger -->
-			<div id="toggle">
+			<input type="checkbox" id="toggleCheck" class="toggleCheck" aria-hidden="true">
+			<label id="toggle" for="toggleCheck" role="button" aria-label="Menu">
 				<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title' ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
 				<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
 				<?php echo Template::ico('menu', ['fontSize' => '2em']); ?>
-			</div>
+			</label>
 			<!-- fin du menu burger -->
 			<?php
 			$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"' : 'class="container"';
@@ -160,11 +162,12 @@
 		<?php if ($this->getData(['theme', 'menu', 'position']) === 'site-first'): ?>
 			<!-- Menu dans le site avant la bannière -->
 			<nav>
-				<div id="toggle">
+				<input type="checkbox" id="toggleCheck" class="toggleCheck" aria-hidden="true">
+				<label id="toggle" for="toggleCheck" role="button" aria-label="Menu">
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title' ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
 					<?php echo Template::ico('menu', ['fontSize' => '2em']); ?>
-				</div>
+				</label>
 				<div id="menu" class="container">
 					<?php $layout->showMenu(); ?>
 				</div>
@@ -214,11 +217,12 @@
 		): ?>
 			<!-- Menu dans le site après la bannière -->
 			<nav <?php if ($this->getData(['theme', 'menu', 'position']) === 'hide'): ?>class="displayNone" <?php endif; ?>>
-				<div id="toggle">
+				<input type="checkbox" id="toggleCheck" class="toggleCheck" aria-hidden="true">
+				<label id="toggle" for="toggleCheck" role="button" aria-label="Menu">
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title' ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo' ? '<div  id="burgerLogo"><img src="' . Helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
 					<?php echo Template::ico('menu', ['fontSize' => '2em']); ?>
-				</div>
+				</label>
 				<div id="menu" class="container">
 					<?php $layout->showMenu(); ?>
 				</div>
