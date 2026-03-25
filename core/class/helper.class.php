@@ -125,25 +125,32 @@ class Helper
 		if (strpos(self::baseUrl(), 'free.fr') > 0) {
 			return false;
 		}
-		if (
-			function_exists('file_get_contents') &&
-			ini_get('allow_url_fopen')
-		) {
-			$url_get_contents_data = @file_get_contents($url);  // Masque un warning éventuel
-		} elseif (function_exists('curl_version')) {
+		if (function_exists('curl_version')) {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_HEADER, 0);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
 			$url_get_contents_data = curl_exec($ch);
+			if (curl_errno($ch)) {
+				$url_get_contents_data = false;
+			}
 			curl_close($ch);
+		} elseif (
+			function_exists('file_get_contents') &&
+			ini_get('allow_url_fopen')
+		) {
+			$context = stream_context_create(['http' => ['timeout' => 5]]);
+			$url_get_contents_data = @file_get_contents($url, false, $context);  // Masque un warning éventuel
 		} elseif (
 			function_exists('fopen') &&
 			function_exists('stream_get_contents') &&
 			ini_get('allow_url_fopen')
 		) {
-			$handle = fopen($url, 'r');
-			$url_get_contents_data = stream_get_contents($handle);
+			$context = stream_context_create(['http' => ['timeout' => 5]]);
+			$handle = fopen($url, 'r', false, $context);
+			$url_get_contents_data = $handle ? stream_get_contents($handle) : false;
 		} else {
 			$url_get_contents_data = false;
 		}
