@@ -183,51 +183,53 @@ core.toggleAdminBar = function() {
 
     // Afficher la barre (elle est masquée par défaut en CSS)
     bar.style.display = 'block';
-    
-    // Animation d'introduction au chargement (plus courte)
-    setTimeout(() => {
-        bar.setAttribute('class', 'visible');
-        setTimeout(() => {
-            bar.removeAttribute('class');
-        }, timerBar); // La barre reste visible pendant le délai configuré
-    }, 500); // Délai de 0.5 seconde avant de commencer l'animation
-    
+
     // Zone sensible en haut de l'écran (20 premiers pixels)
     const SENSITIVE_AREA_HEIGHT = 20;
     let isInSensitiveArea = false;
+    let isBarHovered = false;
     let hideTimeout;
+
+    // Animation d'introduction au chargement
+    setTimeout(() => {
+        bar.setAttribute('class', 'visible');
+        setTimeout(() => {
+            if (!isBarHovered) {
+                bar.removeAttribute('class');
+            }
+        }, timerBar);
+    }, 500);
 
     // Afficher la barre quand la souris entre dans la zone sensible
     document.addEventListener('mousemove', (e) => {
         clearTimeout(hideTimeout);
-        
+
         if (e.clientY <= SENSITIVE_AREA_HEIGHT) {
             if (!isInSensitiveArea) {
                 bar.setAttribute('class', 'visible');
                 isInSensitiveArea = true;
             }
         } else {
-            if (isInSensitiveArea) {
-                // Délai avant de cacher la barre quand la souris quitte la zone
+            if (isInSensitiveArea && !isBarHovered) {
+                // La souris a quitté la zone sensible sans survoler la barre
                 hideTimeout = setTimeout(() => {
-                    if (!bar.matches(':hover')) {
-                        bar.removeAttribute('class');
-                        isInSensitiveArea = false;
-                    }
-                }, timerBar / 2); // Délai proportionnel au temps de visibilité
+                    bar.removeAttribute('class');
+                    isInSensitiveArea = false;
+                }, timerBar / 2);
             }
         }
     });
 
-    // Gérer le survol de la barre pour éviter qu'elle ne disparaisse trop tôt
+    // Suivre le survol de la barre pour ne jamais l'escamoter pendant ce temps
     bar.addEventListener('mouseenter', () => {
+        isBarHovered = true;
         clearTimeout(hideTimeout);
     });
 
     bar.addEventListener('mouseleave', (e) => {
-        // Ne pas cacher si on est toujours dans la zone sensible
+        isBarHovered = false;
+        // Masquer seulement si la souris ne revient pas dans la zone sensible
         if (e.clientY > SENSITIVE_AREA_HEIGHT) {
-            // Utiliser un délai avant de masquer la barre
             hideTimeout = setTimeout(() => {
                 bar.removeAttribute('class');
                 isInSensitiveArea = false;
