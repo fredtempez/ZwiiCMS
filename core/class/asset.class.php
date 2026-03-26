@@ -187,6 +187,12 @@ class Asset extends Core
 			$css .= 'header { height: var(--header-height); min-height: var(--header-height); overflow: hidden; }';
 		}
 
+		// Option "Masquer la bannière en écran réduit" (tinyHidden)
+		// La classe .bannerDisplay est ajoutée au <header> par main.php quand cette option est active.
+		if ($this->getData(['theme', 'header', 'tinyHidden']) === true) {
+			$css .= '@media (max-width: 767px) { header.bannerDisplay { display: none; } }';
+		}
+
 		// Menu
 		$css .= 'nav, nav.navMain a { background-color: var(--menu-normal); }';
 		$css .= 'nav a, #toggle span, nav a:hover { color: var(--menu-text); }';
