@@ -81,10 +81,11 @@
 	<?php if ($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top'): ?>
 		<!-- Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté -->
 		<?php
+		// Si l'utilisateur est connecté avec un rôle admin/éditeur, la barre d'administration
+		// est visible ; on utilise navfixedconnected pour que le menu sticky se positionne
+		// dynamiquement sous la barre (top: var(--bar-height)), quelle que soit la config du thème.
 		if (
-			$this->getData(['theme', 'menu', 'position']) === 'top'
-			and $this->getData(['theme', 'menu', 'fixed']) === true
-			and $this->isConnected() === true
+			$this->isConnected() === true
 			and $this->getUser('role') > self::ROLE_MEMBER
 		) {
 			echo '<nav id="navfixedconnected" >';

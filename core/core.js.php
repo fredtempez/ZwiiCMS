@@ -166,6 +166,10 @@ core.toggleAdminBar = function() {
         bar.style.display = 'block';
         bar.setAttribute('class', 'fixed');
         document.body.classList.add('bar-fixed');
+        // Mesurer la hauteur réelle après rendu (peut être > 45px si les items se replient sur 2 lignes)
+        requestAnimationFrame(function() {
+            document.documentElement.style.setProperty('--bar-height', bar.offsetHeight + 'px');
+        });
         return;
     }
 
@@ -174,6 +178,10 @@ core.toggleAdminBar = function() {
         bar.style.display = 'block';
         bar.setAttribute('class', 'fixed');
         document.body.classList.add('bar-fixed');
+        // Mesurer la hauteur réelle après rendu
+        requestAnimationFrame(function() {
+            document.documentElement.style.setProperty('--bar-height', bar.offsetHeight + 'px');
+        });
         return; // On sort de la fonction car pas besoin du reste du code
     }
     
@@ -250,6 +258,7 @@ core.start = function () {
         if (bar) {
             document.body.classList.remove('bar-fixed');
             bar.removeAttribute('class');
+            document.documentElement.style.removeProperty('--bar-height');
             // Réinitialiser la barre
             core.toggleAdminBar();
         }

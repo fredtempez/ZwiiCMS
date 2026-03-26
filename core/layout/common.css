@@ -365,8 +365,9 @@ td>.col12 {
 }
 
 /* Ajoute un padding au body uniquement quand la barre est en mode fixe */
+/* --bar-height est calculé dynamiquement par JS (hauteur réelle de la barre, variable selon le responsive) */
 body.bar-fixed {
-    padding-top: 45px;
+    padding-top: var(--bar-height, 45px);
 }
 
 
@@ -645,11 +646,16 @@ nav::before {
 }
 
 #navfixedconnected {
-    top: 45px;
+    top: 0px;           /* par défaut : pas de barre visible, coller en haut */
     z-index: 10;
     position: -webkit-sticky;
     /* Safari */
     position: sticky;
+}
+
+/* Quand la barre d'admin est fixée, décaler le menu sticky sous elle */
+body.bar-fixed #navfixedconnected {
+    top: var(--bar-height, 45px);
 }
 
 #navfixedconnected .navSub,
@@ -2045,5 +2051,11 @@ th.col12 {
 
     header {
         background-size: cover !important;
+    }
+
+    /* Masquer le titre de la bannière en mode petit écran :
+       la hauteur réduite du header ne laisse pas assez de place pour l'afficher correctement */
+    #themeHeaderTitle {
+        display: none;
     }
 }

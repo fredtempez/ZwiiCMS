@@ -16,6 +16,9 @@
 ### 🚀 Autres méliorations
 - Ajoute une fonctionnalité de compression d'image dans le gestionnaire de fichiers, créé par https://github.com/artweavedigital/filemanager 
 - La barre d'administration escamotable reste fixe lorsque la pointeur de la souris la survole.
+- Petits écrans (smartphone) : 
+  - Positionnement du titre du site dans l'image du header.
+  - Barre d'administration qui ne masque plus l'image dans le header.
 
 ### 🛠️ Corrections
 - Données d'identité manquante dans la configuration par défaut.
