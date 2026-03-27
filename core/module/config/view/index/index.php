@@ -7,10 +7,17 @@
             'value' => Template::ico('home')
         ]); ?>
     </div>
-    <div class="col2 offset7">
+    <div class="col2 offset5">
         <?php echo Template::button('configLocaleButton', [
             'value' => 'Identité',
             'href' => Helper::baseUrl() . 'language/site'
+        ]); ?>
+    </div>
+    <div class="col2">
+        <?php echo Template::button('configDashBoardButton', [
+            'value' => 'Tableau de bord',
+            'href' => Helper::baseUrl() . 'dashboard',
+            'ico' => 'chart-line'
         ]); ?>
     </div>
     <div class="col2">

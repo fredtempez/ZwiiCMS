@@ -1,0 +1,109 @@
+/**
+ * This file is part of Zwii.
+ *
+ * For full copyright and license information, please see the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Rémi Jean <remi.jean@outlook.com>
+ * @copyright Copyright (C) 2008-2018, Rémi Jean
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @copyright Copyright (C) 2018-2025, Frédéric Tempez
+ * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
+ * @Copyright (C) 2026, Frédéric Tempez
+ * @Licensed under the GNU General Public License v3.0 or later.
+ * @link http://zwiicms.fr/
+ */
+
+
+/** NE PAS EFFACER
+* admin.css
+*/
+
+.db-subtitle {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .4rem;
+    font-size: .85rem;
+    color: #888;
+}
+
+.db-badge {
+    display: inline-block;
+    padding: .15rem .55rem;
+    border-radius: 12px;
+    font-size: .75rem;
+    font-weight: 600;
+    background: #e8f0fe;
+    color: #1a73e8;
+}
+.db-badge.ok   { background: #e6f4ea; color: #34a853; }
+.db-badge.warn { background: #fef9e7; color: #e37400; }
+.db-badge.red  { background: #fce8e6; color: #ea4335; }
+
+.db-kpi {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+}
+
+.db-kpi .db-val {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a73e8;
+    line-height: 1.1;
+}
+
+.db-kpi .db-val-sm {
+    font-size: 1.1rem;
+}
+
+.db-kpi .db-val.ok   { color: #34a853; }
+.db-kpi .db-val.warn { color: #fbbc04; }
+.db-kpi .db-val.bad  { color: #ea4335; }
+
+.db-kpi .db-lbl {
+    font-size: .8rem;
+    color: #666;
+    margin-top: .3rem;
+}
+
+.db-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .82rem;
+}
+
+.db-table th {
+    background: #f5f5f5;
+    padding: .45rem .7rem;
+    text-align: left;
+    font-weight: 600;
+    color: #555;
+    border-bottom: 2px solid #ddd;
+}
+
+.db-table td {
+    padding: .4rem .7rem;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+}
+
+.db-table tr:last-child td { border-bottom: none; }
+
+.db-tag {
+    display: inline-block;
+    background: #e8f0fe;
+    color: #1a73e8;
+    border-radius: 4px;
+    padding: .1rem .4rem;
+    font-size: .75rem;
+}
+
+.db-tag.green { background: #e6f4ea; color: #34a853; }
+.db-tag.red   { background: #fce8e6; color: #ea4335; }
+
+
