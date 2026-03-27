@@ -80,7 +80,7 @@ class dashboard extends Core
         self::$infos['cms']['lastBackup']      = $lastBackup ? date('d/m/Y H:i', $lastBackup) : '-';
         $lastClear = $this->getData(['core', 'lastClearTmp']);
         self::$infos['cms']['lastClearTmp']    = $lastClear ? date('d/m/Y H:i', $lastClear) : '-';
-        self::$infos['cms']['siteTitle']       = $this->getData(['locale', 'title']) ?? '';
+        self::$infos['cms']['siteTitle']       = html_entity_decode($this->getData(['locale', 'title']) ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
         // === Langues / Sites localisés ===
         $langs = [];
@@ -112,25 +112,47 @@ class dashboard extends Core
         $users = $this->getData(['user']) ?? [];
         self::$infos['cms']['userCount'] = count($users);
 
-        // === Journal : erreurs 30j ===
-        $logErrors = 0;
-        $logFile   = self::DATA_DIR . 'journal.log';
-        if (file_exists($logFile)) {
+        // === Journal : erreurs 30j (journal courant uniquement) ===
+        $logErrors     = 0;
+        $logErrorLines = [];
+        $logFile       = self::DATA_DIR . 'journal.log';
+        if (file_exists($logFile) && filesize($logFile) > 0) {
             $lines  = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             $cutoff = strtotime('-30 days');
-            foreach ($lines as $line) {
-                $parts = explode(';', $line, 6);
-                if (count($parts) >= 5) {
-                    $ts = \DateTime::createFromFormat('Ymd', $parts[0]);
-                    if ($ts && $ts->getTimestamp() >= $cutoff) {
-                        if (stripos($parts[4], 'erreur') !== false || stripos($parts[4], 'error') !== false) {
-                            $logErrors++;
+            if ($lines !== false) {
+                foreach ($lines as $line) {
+                    $parts = explode(';', $line, 6);
+                    if (count($parts) >= 5) {
+                        $ts = \DateTime::createFromFormat('Ymd', $parts[0]);
+                        if ($ts && $ts->getTimestamp() >= $cutoff) {
+                            $url = $parts[4];
+                            $msg = isset($parts[5]) ? $parts[5] : '';
+                            $isError = stripos($url, 'erreur') !== false
+                                || stripos($url, 'error') !== false
+                                || ($msg !== '' && (
+                                    stripos($msg, 'erreur')       !== false
+                                    || stripos($msg, 'error')     !== false
+                                    || stripos($msg, 'fail')      !== false
+                                    || stripos($msg, 'exception') !== false
+                                ));
+                            if ($isError) {
+                                $logErrors++;
+                                $logErrorLines[] = [
+                                    'date' => substr($parts[0], 6, 2) . '/' . substr($parts[0], 4, 2) . '/' . substr($parts[0], 0, 4),
+                                    'time' => $parts[1],
+                                    'ip'   => $parts[2],
+                                    'user' => $parts[3],
+                                    'url'  => $url,
+                                    'msg'  => $msg,
+                                ];
+                            }
                         }
                     }
                 }
             }
         }
-        self::$infos['logs']['errors'] = $logErrors;
+        self::$infos['logs']['errors']     = $logErrors;
+        self::$infos['logs']['errorLines'] = $logErrorLines;
 
         // === Santé des fichiers de base de données ===
         $dbFilesConfig = $this->getData(['config', 'database']) ?? [];

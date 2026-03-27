@@ -89,6 +89,35 @@ $hasErrors = $infos['logs']['errors'] > 0;
     </div>
 </div>
 
+<!-- Erreurs journal -->
+<?php if (!empty($infos['logs']['errorLines'])): ?>
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <h4 style="color:#c00"><?php echo Helper::translate('Erreurs journal (30 derniers jours)'); ?> <span style="font-size:.8rem;font-weight:normal;color:#888">(<?php echo count($infos['logs']['errorLines']); ?>)</span></h4>
+            <table class="db-table">
+                <tr>
+                    <th><?php echo Helper::translate('Date'); ?></th>
+                    <th><?php echo Helper::translate('Heure'); ?></th>
+                    <th><?php echo Helper::translate('Utilisateur'); ?></th>
+                    <th><?php echo Helper::translate('URL'); ?></th>
+                    <th><?php echo Helper::translate('Message'); ?></th>
+                </tr>
+                <?php foreach ($infos['logs']['errorLines'] as $err): ?>
+                <tr style="background:#fff5f5">
+                    <td><?php echo htmlspecialchars($err['date']); ?></td>
+                    <td><?php echo htmlspecialchars($err['time']); ?></td>
+                    <td><?php echo htmlspecialchars($err['user']); ?></td>
+                    <td><?php echo htmlspecialchars($err['url']); ?></td>
+                    <td style="color:#c00"><?php echo htmlspecialchars($err['msg']); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 <!-- Tableaux -->
 <div class="row">
     <div class="col4">

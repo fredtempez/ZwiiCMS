@@ -12,8 +12,9 @@
  * @link http://zwiicms.fr/
  */
 
-// --- Graphiques Plotly ---
-(function() {
+$(document).ready(function() {
+
+    // --- Graphiques Plotly ---
     var cfg = {responsive: true, displayModeBar: false};
     var layoutBase = {
         paper_bgcolor: 'rgba(0,0,0,0)',
@@ -47,7 +48,7 @@
         hoverinfo: 'skip',
         showlegend: false,
         sort: false
-    }], Object.assign({}, layoutBase, {
+    }], $.extend({}, layoutBase, {
         margin: {t: 10, b: 10, l: 10, r: 10},
         annotations: [
             {
@@ -76,7 +77,7 @@
             return $s >= 1048576 ? round($s/1048576, 1).' Mo'
                                  : ($s >= 1024 ? round($s/1024, 1).' Ko' : $s.' o');
         }, $dbSizes);
-        $dbColors = array_map(fn($f) => $f['scope'] === 'global' ? '#1a73e8' : '#34a853', $dbAll);
+        $dbColors = array_map(function($f) { return $f['scope'] === 'global' ? '#1a73e8' : '#34a853'; }, $dbAll);
         $maxLen   = max(array_map('strlen', $dbNames));
         $marginL  = $maxLen < 15 ? 100 : ($maxLen < 25 ? 140 : 170);
     ?>
@@ -88,7 +89,7 @@
         textposition: 'outside',
         hovertemplate: '%{y}: %{text}<extra></extra>',
         marker: {color: <?php echo json_encode(array_values($dbColors)); ?>, opacity: 0.85}
-    }], Object.assign({}, layoutBase, {
+    }], $.extend({}, layoutBase, {
         margin: {t: 4, b: 18, l: <?php echo $marginL; ?>, r: 55},
         xaxis: {visible: false, fixedrange: true},
         yaxis: {fixedrange: true},
@@ -96,4 +97,4 @@
     }), cfg);
     <?php endif; ?>
 
-})();
+});
