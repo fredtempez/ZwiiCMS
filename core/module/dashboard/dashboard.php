@@ -66,12 +66,15 @@ class dashboard extends Core
         $moduleBytes = self::dirSize(self::MODULE_DIR);
         self::$infos['disk']['siteBytes']   = $siteBytes;
         self::$infos['disk']['siteSize']    = self::formatSize($siteBytes);
+        self::$infos['disk']['sourceSize']  = self::formatSize(self::dirSize(self::FILE_DIR . 'source/'));
+        self::$infos['disk']['thumbSize']   = self::formatSize(self::dirSize(self::FILE_DIR . 'thumb/'));
         self::$infos['disk']['coreBytes']   = $coreBytes;
         self::$infos['disk']['coreSize']    = self::formatSize($coreBytes);
         self::$infos['disk']['moduleBytes'] = $moduleBytes;
         self::$infos['disk']['moduleSize']  = self::formatSize($moduleBytes);
         self::$infos['disk']['backSize']    = self::formatSize(self::dirSize(self::BACKUP_DIR));
         self::$infos['disk']['tmpSize']     = self::formatSize(self::dirSize(self::TEMP_DIR));
+        self::$infos['disk']['dataSize']    = self::formatSize(self::dirSize(self::DATA_DIR));
 
         // === Infos CMS ===
         self::$infos['cms']['version']         = self::ZWII_VERSION;
@@ -158,7 +161,9 @@ class dashboard extends Core
         $dbFilesConfig = $this->getData(['config', 'database']) ?? [];
         $defaultDbCfg  = ['minify' => false, 'compression' => false, 'encryption' => false];
 
-        $globalFiles = ['config', 'user', 'core', 'group', 'admin', 'blacklist', 'font', 'language'];
+        // Fichiers à surveiller : globaux + par langue
+        $contentFiles = ['page', 'module', 'theme'];
+        $globalFiles  = array_values(array_diff(array_keys($this->dataFiles), $contentFiles));
         $dbStats = [];
         foreach ($globalFiles as $name) {
             $path = self::DATA_DIR . $name . '.json';
@@ -173,7 +178,6 @@ class dashboard extends Core
                 'encrypt'  => !empty($cfg['encryption']),
             ];
         }
-        $contentFiles = ['page', 'module', 'theme'];
         foreach ($langs as $langCode) {
             foreach ($contentFiles as $name) {
                 $path = self::DATA_DIR . $langCode . '/' . $name . '.json';

@@ -128,13 +128,19 @@ $hasErrors = $infos['logs']['errors'] > 0;
             $freeColor = $freePct < 10 ? '#ea4335' : ($freePct < 25 ? '#fbbc04' : '#34a853');
             ?>
             <table class="db-table">
-                <tr><td>Dossier site</td><td><strong style="color:#1a73e8"><?php echo $infos['disk']['siteSize']; ?></strong></td></tr>
+                <tr><td colspan="2" style="padding-top:.4rem"><strong style="font-size:.8rem;color:#555"><?php echo Helper::translate('Applicatif'); ?></strong></td></tr>
                 <tr><td>Core</td><td><strong style="color:#34a853"><?php echo $infos['disk']['coreSize']; ?></strong></td></tr>
                 <tr><td>Modules</td><td><strong style="color:#f9ab00"><?php echo $infos['disk']['moduleSize']; ?></strong></td></tr>
-                <tr><td>Sauvegardes</td><td><?php echo $infos['disk']['backSize']; ?></td></tr>
-                <tr><td>Dossier tmp</td><td><?php echo $infos['disk']['tmpSize']; ?></td></tr>
+                <tr><td colspan="2" style="padding-top:.4rem"><strong style="font-size:.8rem;color:#555"><?php echo Helper::translate('Données du site'); ?></strong></td></tr>
+                <tr><td>site/backup</td><td><?php echo $infos['disk']['backSize']; ?></td></tr>
+                <tr><td>site/file/source</td><td><?php echo $infos['disk']['sourceSize']; ?></td></tr>
+                <tr><td>site/file/thumb</td><td><?php echo $infos['disk']['thumbSize']; ?></td></tr>
+                <tr><td>site/tmp</td><td><?php echo $infos['disk']['tmpSize']; ?></td></tr>
+                <tr><td colspan="2" style="padding-top:.4rem"><strong style="font-size:.8rem;color:#555"><?php echo Helper::translate('Bases de données'); ?></strong></td></tr>
+                <tr><td>site/data</td><td><?php echo $infos['disk']['dataSize']; ?></td></tr>
+                <tr><td colspan="2" style="padding-top:.4rem"><strong style="font-size:.8rem;color:#555"><?php echo Helper::translate('Disque'); ?></strong></td></tr>
                 <tr><td>Espace libre</td><td><strong style="color:<?php echo $freeColor; ?>"><?php echo $infos['disk']['freeGb']; ?> Go (<?php echo $freePct; ?>%)</strong></td></tr>
-                <tr><td>Disque total</td><td><?php echo $infos['disk']['totalGb']; ?> Go</td></tr>
+                <tr><td>Total</td><td><?php echo $infos['disk']['totalGb']; ?> Go</td></tr>
             </table>
         </div>
     </div>
