@@ -1,6 +1,7 @@
 # Notes de mises à jour
 
 ## Version 14.02.00
+**Compatible jusque php 8.4**
 ### 🚀 Améliorations
 - Autoloader unifié moderne :
   - 1 seul fichier : core/class/autoloader.php

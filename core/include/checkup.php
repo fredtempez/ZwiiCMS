@@ -8,7 +8,7 @@ if (version_compare(PHP_VERSION, '7.2.0', '<')) {
 }
 
 if (version_compare(PHP_VERSION, '8.4.999', '>')) {
-    displayErrorPage('PHP 8.5 pas encore supporté, installez PHP 7.n ou PHP 8.1.n - PHP 8.3 not yet supported, install PHP 7.n or PHP 8.1.n');
+    displayErrorPage('PHP 8.5 pas encore supporté, installez PHP 7.n ou PHP 8.1.n - PHP 8.5 not yet supported, install PHP 7.n or PHP 8.1.n');
 }
 
 /**
