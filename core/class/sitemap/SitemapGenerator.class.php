@@ -225,7 +225,7 @@ class SitemapGenerator
      * @param FileSystem|null $fs
      * @param Runtime|null $runtime
      */
-    public function __construct(string $baseURL, string $basePath = "", FileSystem $fs = null, Runtime $runtime = null)
+    public function __construct(string $baseURL, string $basePath = "", ?FileSystem $fs = null, ?Runtime $runtime = null)
     {
         $this->urls = [];
         $this->baseURL = rtrim($baseURL, '/');
@@ -341,10 +341,10 @@ class SitemapGenerator
 
     public function validate(
         string $path,
-        DateTime $lastModified = null,
-        string $changeFrequency = null,
-        float $priority = null,
-        array $alternates = null,
+        ?DateTime $lastModified = null,
+        ?string $changeFrequency = null,
+        ?float $priority = null,
+        ?array $alternates = null,
         array $extensions = [])
     {
         if (!(1 <= mb_strlen($path) && mb_strlen($path) <= self::MAX_URL_LEN)) {
@@ -380,10 +380,10 @@ class SitemapGenerator
      */
     public function addURL(
         string $path,
-        DateTime $lastModified = null,
-        string $changeFrequency = null,
-        float $priority = null,
-        array $alternates = null,
+        ?DateTime $lastModified = null,
+        ?string $changeFrequency = null,
+        ?float $priority = null,
+        ?array $alternates = null,
         array $extensions = []
     ): SitemapGenerator
     {
@@ -624,7 +624,7 @@ class SitemapGenerator
      * @access public
      * @throws BadMethodCallException
      */
-    public function submitSitemap($yahooAppId = null): array
+    public function submitSitemap(?string $yahooAppId = null): array
     {
         if (count($this->generatedFiles) === 0) {
             throw new BadMethodCallException("To update robots.txt, call finalize() first.");

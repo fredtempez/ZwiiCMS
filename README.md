@@ -10,6 +10,7 @@ ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remij
 ## ⚙️ Configuration recommandée
 
 * PHP 7.2 ou plus (recommandé PHP 8.0+ pour de meilleures performances)
+* Compatibilité assurée jusque php 8.4
 * Support de .htaccess (pour la réécriture d'URL et la sécurité)
 * Espace disque : minimum 50 Mo
 * Navigateurs modernes : Chrome, Firefox, Safari, Edge
@@ -169,6 +170,7 @@ ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/).
 ## ⚙️ Recommended configuration
 
 * PHP 7.2 or higher (PHP 8.0+ recommended for better performance)
+* Guaranteed compatibility up to PHP 8.4
 * .htaccess support (for URL rewriting and security)
 * Disk space: minimum 50 MB
 * Modern browsers: Chrome, Firefox, Safari, Edge
