@@ -1,6 +1,3 @@
-
-
-
 /*
 * Affiche/cache les options de la case à cocher du mail
 */

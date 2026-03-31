@@ -19,7 +19,8 @@
  */
 $(".blogCommentDelete").on("click", function() {
 	var _this = $(this);
-	var message = "<?php echo helper::translate('Supprimer le commentaire ?'); ?>";
+	var message = "<?php
+echo helper::translate('Supprimer le commentaire ?'); ?>";
 	return core.confirm(message , function() {
 		$(location).attr("href", _this.attr("href"));
 	});
@@ -30,7 +31,8 @@ $(".blogCommentDelete").on("click", function() {
  */
 $(".blogCommentApproved").on("click", function() {
 	var _this = $(this);
-	var message = "<?php echo helper::translate('Approuver le commentaire ?'); ?>";
+	var message = "<?php
+echo helper::translate('Approuver le commentaire ?'); ?>";
 	return core.confirm(message , function() {
 		$(location).attr("href", _this.attr("href"));
 	});
@@ -41,7 +43,8 @@ $(".blogCommentApproved").on("click", function() {
  */
 $(".blogCommentRejected").on("click", function() {
 	var _this = $(this);
-	var message = "<?php echo helper::translate('Rejeter le commentaire ?'); ?>";
+	var message = "<?php
+echo helper::translate('Rejeter le commentaire ?'); ?>";
 	return core.confirm(message , function() {
 		$(location).attr("href", _this.attr("href"));
 	});
@@ -53,9 +56,11 @@ $(".blogCommentRejected").on("click", function() {
 $(".blogCommentDeleteAll").on("click", function() {
 	var _this = $(this);
 	if( nombre === "1"){
-		var message = "<?php echo helper::translate('Supprimer le commentaire ?'); ?>";
+		var message = "<?php
+echo helper::translate('Supprimer le commentaire ?'); ?>";
 	} else {
-		var message = "<?php echo helper::translate('Supprimer tous les commentairess ?'); ?>";
+		var message = "<?php
+echo helper::translate('Supprimer tous les commentairess ?'); ?>";
 	}
 	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));

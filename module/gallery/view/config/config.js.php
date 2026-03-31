@@ -34,7 +34,8 @@ $(document).ready(function () {
  	* Tri dynamique des galeries
  	*/
 	function sortGalleries() {
-		var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/sortGalleries";
+		var url = "<?php
+echo helper::baseUrl() . $this->getUrl(0); ?>/sortGalleries";
 		var data = $("#galleryConfigFilterResponse").val();
 		$.ajax({
 			type: "POST",
@@ -45,5 +46,3 @@ $(document).ready(function () {
 		});
 	}
 });
-
-

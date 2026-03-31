@@ -18,7 +18,8 @@
  */
 $(".formDataDelete").on("click", function() {
 	var _this = $(this);
-	var message = "<?php echo helper::translate('Supprimer cet enregistrement ?'); ?>";
+	var message = "<?php
+echo helper::translate('Supprimer cet enregistrement ?'); ?>";
 	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
@@ -29,7 +30,8 @@ $(".formDataDelete").on("click", function() {
  */
 $(".formDataDeleteAll").on("click", function() {
 	var _this = $(this);
-	var message = "<?php echo helper::translate('Supprimer tous les enregistrements ?'); ?>";
+	var message = "<?php
+echo helper::translate('Supprimer tous les enregistrements ?'); ?>";
 	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});

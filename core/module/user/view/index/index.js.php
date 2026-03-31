@@ -63,7 +63,8 @@ $(document).ready((function () {
                 e.preventDefault();
                 var _this = $(this);
                 var href = _this.attr('href') || _this.data('href') || _this.closest('a').attr('href');
-                var message = "<?php echo Helper::translate('Confirmer la suppression de cet utilisateur');?>";
+                var message = "<?php
+echo Helper::translate('Confirmer la suppression de cet utilisateur');?>";
                 core.confirm(message, function () {
                     window.location.href = href;
                 });

@@ -20,7 +20,8 @@ $(document).ready(function () {
      */
     $("#configBackupDelButton").on("click", function () {
         var _this = $(this);
-        var message_warning = "<?php echo Helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";
+        var message_warning = "<?php
+echo Helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";
         return core.confirm(message_warning, function () {
             $(location).attr("href", _this.attr("href"));
         });

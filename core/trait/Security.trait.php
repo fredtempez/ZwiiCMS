@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of Zwii.
  * For full copyright and license information, please see the LICENSE
@@ -14,15 +13,4 @@
  * @Licensed under the GNU General Public License v3.0 or later.
  * @link http://zwiicms.fr/
  */
-trait Security
-{
-
-	/**
-	 * Check du token CSRF
-	 */
-	public function checkCSRF()
-	{
-		return ((empty($_POST['csrf']) or hash_equals($_POST['csrf'], $_SESSION['csrf']) === false) === false);
-	}
-
-}
+trait Security { public function checkCSRF() { return ((empty($_POST['csrf']) or hash_equals($_POST['csrf'], $_SESSION['csrf']) === false) === false); } }

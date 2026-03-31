@@ -3,28 +3,21 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo Helper::translate('Paramètres'); ?>
+					<?php
+echo Helper::translate('Paramètres'); ?>
 				</h4>
 				<div class="row">
 					<div class="col2">
-						<?php echo Template::select('configProxyType', config::$proxyType, [
-							'label' => 'Type de proxy',
-							'selected' => $this->getData(['config', 'proxyType'])
-						]); ?>
+						<?php
+echo Template::select('configProxyType', config::$proxyType, [ 'label' => 'Type de proxy', 'selected' => $this->getData(['config', 'proxyType']) ]); ?>
 					</div>
 					<div class="col8">
-						<?php echo Template::text('configProxyUrl', [
-							'label' => 'Adresse du proxy',
-							'placeholder' => 'cache.proxy.fr',
-							'value' => $this->getData(['config', 'proxyUrl'])
-						]); ?>
+						<?php
+echo Template::text('configProxyUrl', [ 'label' => 'Adresse du proxy', 'placeholder' => 'cache.proxy.fr', 'value' => $this->getData(['config', 'proxyUrl']) ]); ?>
 					</div>
 					<div class="col2">
-						<?php echo Template::number('configProxyPort', [
-							'label' => 'Port du proxy',
-							'placeholder' => '6060',
-							'value' => $this->getData(['config', 'proxyPort'])
-						]); ?>
+						<?php
+echo Template::number('configProxyPort', [ 'label' => 'Port du proxy', 'placeholder' => '6060', 'value' => $this->getData(['config', 'proxyPort']) ]); ?>
 					</div>
 				</div>
 			</div>
@@ -34,68 +27,48 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo Helper::translate('SMTP'); ?>
+					<?php
+echo Helper::translate('SMTP'); ?>
 				</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo Template::text('smtpFrom', [
-							'label' => 'Expéditeur',
-							'placeholder' => 'no-reply@host',
-							'value' => $this->getData(['config', 'smtp', 'from']),
-							'help' => 'Le domaine de l\'adresse email doit correspondre au domaine du site pour éviter les problèmes de spam. La correction est automatique.'
-						]); ?>
+						<?php
+echo Template::text('smtpFrom', [ 'label' => 'Expéditeur', 'placeholder' => 'no-reply@host', 'value' => $this->getData(['config', 'smtp', 'from']), 'help' => 'Le domaine de l\'adresse email doit correspondre au domaine du site pour éviter les problèmes de spam. La correction est automatique.' ]); ?>
 					</div>
 					<div class="row">
 						<div class="col12">
-							<?php echo Template::checkbox('smtpEnable', true, 'SMTP personnalisé', [
-								'checked' => $this->getData(['config', 'smtp', 'enable']),
-								'help' => 'Paramètres à utiliser lorsque votre hébergeur ne propose pas la fonctionnalité d\'envoi de mail.'
-							]); ?>
+							<?php
+echo Template::checkbox('smtpEnable', true, 'SMTP personnalisé', [ 'checked' => $this->getData(['config', 'smtp', 'enable']), 'help' => 'Paramètres à utiliser lorsque votre hébergeur ne propose pas la fonctionnalité d\'envoi de mail.' ]); ?>
 						</div>
 					</div>
 					<div id="smtpParam">
 						<div class="row">
 							<div class="col8">
-								<?php echo Template::text('smtpHost', [
-									'label' => 'Adresse SMTP',
-									'placeholder' => 'smtp.fr',
-									'value' => $this->getData(['config', 'smtp', 'host'])
-								]); ?>
+								<?php
+echo Template::text('smtpHost', [ 'label' => 'Adresse SMTP', 'placeholder' => 'smtp.fr', 'value' => $this->getData(['config', 'smtp', 'host']) ]); ?>
 							</div>
 							<div class="col2">
-								<?php echo Template::text('smtpPort', [
-									'label' => 'Port SMTP',
-									'placeholder' => '589',
-									'value' => $this->getData(['config', 'smtp', 'port'])
-								]); ?>
+								<?php
+echo Template::text('smtpPort', [ 'label' => 'Port SMTP', 'placeholder' => '589', 'value' => $this->getData(['config', 'smtp', 'port']) ]); ?>
 							</div>
 							<div class="col2">
-								<?php echo Template::select('smtpAuth', config::$SMTPauth, [
-									'label' => 'Authentification',
-									'selected' => $this->getData(['config', 'smtp', 'auth'])
-								]); ?>
+								<?php
+echo Template::select('smtpAuth', config::$SMTPauth, [ 'label' => 'Authentification', 'selected' => $this->getData(['config', 'smtp', 'auth']) ]); ?>
 							</div>
 						</div>
 						<div id="smtpAuthParam">
 							<div class="row">
 								<div class="col5">
-									<?php echo Template::text('smtpUsername', [
-										'label' => 'Nom utilisateur',
-										'value' => $this->getData(['config', 'smtp', 'username'])
-									]); ?>
+									<?php
+echo Template::text('smtpUsername', [ 'label' => 'Nom utilisateur', 'value' => $this->getData(['config', 'smtp', 'username']) ]); ?>
 								</div>
 								<div class="col5">
-									<?php echo Template::password('smtpPassword', [
-										'label' => 'Mot de passe',
-										'autocomplete' => 'off',
-										'value' => $this->getData(['config', 'smtp', 'password'])
-									]); ?>
+									<?php
+echo Template::password('smtpPassword', [ 'label' => 'Mot de passe', 'autocomplete' => 'off', 'value' => $this->getData(['config', 'smtp', 'password']) ]); ?>
 								</div>
 								<div class="col2">
-									<?php echo Template::select('smtpSecure', config::$SMTPEnc, [
-										'label' => 'Sécurité',
-										'selected' => $this->getData(['config', 'smtp', 'secure'])
-									]); ?>
+									<?php
+echo Template::select('smtpSecure', config::$SMTPEnc, [ 'label' => 'Sécurité', 'selected' => $this->getData(['config', 'smtp', 'secure']) ]); ?>
 								</div>
 							</div>
 						</div>

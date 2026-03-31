@@ -1,1 +1,1 @@
-<?php // Résolument vide
+<?php

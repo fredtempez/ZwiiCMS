@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="<?php echo substr(self::$siteContent, 0, 2); ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<?php
+echo substr(self::$siteContent, 0, 2); ?>">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="x-apple-disable-message-reformatting">
-	<title><?php echo $subject; ?></title>
+	<title><?php
+echo $subject; ?></title>
 	<!--[if mso]>
 		<style>
 			* {
@@ -83,7 +85,8 @@
 <body width="100%" bgcolor="#EBEEF2" style="margin: 0; padding: 10px; mso-line-height-rule: exactly;">
 	<center style="width: 100%; background: #EBEEF2; text-align: left;">
 		<div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">
-			<?php echo $subject; ?>
+			<?php
+echo $subject; ?>
 		</div>
 		<div style="max-width: 500px; margin: auto; margin-top: 30px; border: #aaa 1px solid;" class="email-container">
 			<!--[if mso]>
@@ -97,7 +100,8 @@
 						<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tr>
 								<td style="border-bottom: 1px solid #EBEEF2; padding: 20px; font-family: 'Open Sans', sans-serif; font-size: 19px; line-height: 24px; text-align: center; color: #212223;">
-									<?php echo $this->getData(['locale', 'title']); ?>
+									<?php
+echo $this->getData(['locale', 'title']); ?>
 								</td>
 							</tr>
 						</table>
@@ -110,7 +114,8 @@
 						<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tr>
 								<td style="padding: 30px; font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 19px; color: #212223;">
-									<?php echo nl2br($content); ?>
+									<?php
+echo nl2br($content); ?>
 								</td>
 							</tr>
 						</table>
@@ -123,16 +128,15 @@
 						<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tr>
 								<td style="border-top: 1px solid #EBEEF2; padding: 20px; text-align: center; font-family: 'Open Sans', sans-serif; font-size: 12px; line-height: 17px; color: #212223;">
-									<a href="<?php echo Helper::baseUrl(false); ?>" target="_blank">
+									<a href="<?php
+echo Helper::baseUrl(false); ?>" target="_blank">
 										<?php
-										if ($this->getData(['module', $this->getUrl(0), 'config', 'signature']) === 'logo' && is_file('site/file/source/' . $this->getData(['module', $this->getUrl(0), 'config', 'logoUrl']))) {
-											$imageFile = Helper::baseUrl(false) . 'site/file/source/' . $this->getData(['module', $this->getUrl(0), 'config', 'logoUrl']);
-											$imageBase64 = base64_encode(file_get_contents($imageFile));
-										?><img src=" data:image/<?php echo pathinfo($imageFile, PATHINFO_EXTENSION); ?>;base64,<?php echo $imageBase64; ?>" border="0" width="<?php echo $this->getData(['module', $this->getUrl(0), 'config', 'logoWidth']) ?>%">
+if ($this->getData(['module', $this->getUrl(0), 'config', 'signature']) === 'logo' && is_file('site/file/source/' . $this->getData(['module', $this->getUrl(0), 'config', 'logoUrl']))) { $imageFile = Helper::baseUrl(false) . 'site/file/source/' . $this->getData(['module', $this->getUrl(0), 'config', 'logoUrl']); $imageBase64 = base64_encode(file_get_contents($imageFile)); ?><img src=" data:image/<?php
+echo pathinfo($imageFile, PATHINFO_EXTENSION); ?>;base64,<?php
+echo $imageBase64; ?>" border="0" width="<?php
+echo $this->getData(['module', $this->getUrl(0), 'config', 'logoWidth']) ?>%">
 										<?php
-										} else {
-											echo $this->getData(['locale', 'title']);
-										} ?>
+} else { echo $this->getData(['locale', 'title']); } ?>
 									</a>
 								</td>
 							</tr>

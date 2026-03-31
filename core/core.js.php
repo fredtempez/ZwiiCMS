@@ -73,7 +73,8 @@ core.confirm = function (text, yesCallback, noCallback) {
                 .append(
                     $("<a>")
                     .addClass("button grey")
-                    .text("<?php echo Helper::translate('Non');?>")
+                    .text("<?php
+echo Helper::translate('Non');?>")
                     .on("click", function () {
                         lightbox.options('button', true);
                         lightbox.close();
@@ -83,7 +84,8 @@ core.confirm = function (text, yesCallback, noCallback) {
                     }),
                     $("<a>")
                     .addClass("button")
-                    .text("<?php echo Helper::translate('Oui');?>")
+                    .text("<?php
+echo Helper::translate('Oui');?>")
                     .on("click", function () {
                         lightbox.options('button', true);
                         lightbox.close();
@@ -159,7 +161,8 @@ core.toggleAdminBar = function() {
     if (!bar) return;
 
     // Lecture de la configuration de la barre
-    var timerBarValue = "<?php echo $this->getData(['config','timerBar']); ?>";
+    var timerBarValue = "<?php
+echo $this->getData(['config','timerBar']); ?>";
 
     // Sur mobile (≤767px), forcer le mode fixe (pas de souris pour déclencher l'escamotable)
     if (window.innerWidth <= 767) {
@@ -453,7 +456,8 @@ core.start = function () {
         var fileName = inputFileHiddenDOM.val();
         if (fileName === "") {
             //fileName = "Sélectionner un fichier";
-            fileName = "<?php echo Helper::translate('Sélectionner un fichier');?>";
+            fileName = "<?php
+echo Helper::translate('Sélectionner un fichier');?>";
             $(inputFileHiddenDOM).addClass("disabled");
         } else {
             $(inputFileHiddenDOM).removeClass("disabled");
@@ -470,14 +474,16 @@ core.start = function () {
     });
     // Confirmation de mise à jour
     $("#barUpdate").on("click", function () {
-        message = "<?php echo Helper::translate('Mise à jour') . ' ?';?>";
+        message = "<?php
+echo Helper::translate('Mise à jour') . ' ?';?>";
         return core.confirm(message, function () {
             $(location).attr("href", $("#barUpdate").attr("href"));
         });
     });
     // Confirmation de déconnexion
     $("#barLogout").on("click", function () {
-        message = "<?php echo Helper::translate('Se déconnecter') . ' ?';?>";
+        message = "<?php
+echo Helper::translate('Se déconnecter') . ' ?';?>";
         return core.confirm(message, function () {
             $(location).attr("href", $("#barLogout").attr("href"));
         });
@@ -503,7 +509,8 @@ core.start = function () {
         if (pattern.test(_this.val())) {
             core.noticeRemove(_this.attr("id"));
         } else {
-            message = "<?php echo Helper::translate('Format incorrect');?>";
+            message = "<?php
+echo Helper::translate('Format incorrect');?>";
             core.noticeAdd(_this.attr("id"), message);
         }
     });
@@ -538,11 +545,14 @@ core.start = function () {
      * Header responsive
      */
     $(window).on("resize", function () {
-        var responsive = "<?php echo $this->getdata(['theme','header','imageContainer']);?>";
+        var responsive = "<?php
+echo $this->getdata(['theme','header','imageContainer']);?>";
         if (responsive === "cover" || responsive === "contain") {
-            var widthpx = "<?php echo $this->getdata(['theme','site','width']);?>";
+            var widthpx = "<?php
+echo $this->getdata(['theme','site','width']);?>";
             var width = widthpx.substr(0, widthpx.length - 2);
-            var heightpx = "<?php echo $this->getdata(['theme','header','height']);?>";
+            var heightpx = "<?php
+echo $this->getdata(['theme','header','height']);?>";
             var height = heightpx.substr(0, heightpx.length - 2);
             var ratio = width / height;
             if (($(window).width() / ratio) <= height) {
@@ -569,7 +579,8 @@ core.start();
  */
 $("#pageDelete").on("click", function () {
     var _this = $(this);
-    message = "<?php echo Helper::translate('Confirmez-vous la suppression de cette page ?');?>";
+    message = "<?php
+echo Helper::translate('Confirmez-vous la suppression de cette page ?');?>";
     return core.confirm(message, function () {
         $(location).attr("href", _this.attr("href"));
     });
@@ -771,7 +782,8 @@ $(document).ready(function () {
         var langSelected = $(this).val();
         var langSelected = langSelected.split("/");
         // Lit le cookie de langue
-        var langSession = "<?php echo isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : '';?>";
+        var langSession = "<?php
+echo isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : '';?>";
         // Découpe l'URL pour exclure le changement de page avec le thème
         var url = window.location;
         var currentUrl = url.href.split("/");

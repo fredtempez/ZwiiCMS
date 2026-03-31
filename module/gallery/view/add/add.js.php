@@ -41,7 +41,8 @@
 	 */
 	$(".galleryAddDelete").on("click", function() {
 		var _this = $(this);
-		var message = "<?php echo helper::translate('Supprimer cette galerie ?'); ?>";
+		var message = "<?php
+echo helper::translate('Supprimer cette galerie ?'); ?>";
 		return core.confirm(message, function() {
 			$(location).attr("href", _this.attr("href"));
 		});
@@ -58,7 +59,8 @@ var directoryOldDOM = $("#galleryAddDirectoryOld");
 function dirs() {
     $.ajax({
         type: "POST",
-        url: "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/dirs",
+        url: "<?php
+echo helper::baseUrl() . $this->getUrl(0); ?>/dirs",
         dataType: "json",
         success: function(result) {
             directoryDOM.empty();

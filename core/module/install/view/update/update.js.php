@@ -1,9 +1,13 @@
 function step(i, data) {
     var errors = [
-        "<?php echo Helper::translate('Préparation de la mise à jour'); ?>",
-        "<?php echo Helper::translate('Téléchargement et validation de l\'archive'); ?>",
-        "<?php echo Helper::translate('Installation'); ?>",
-        "<?php echo Helper::translate('Configuration'); ?>"
+        "<?php
+echo Helper::translate('Préparation de la mise à jour'); ?>",
+        "<?php
+echo Helper::translate('Téléchargement et validation de l\'archive'); ?>",
+        "<?php
+echo Helper::translate('Installation'); ?>",
+        "<?php
+echo Helper::translate('Configuration'); ?>"
     ];
     $(".installUpdateProgressText").hide();
     $(".installUpdateProgressText[data-id=" + i + "]").show();
@@ -12,7 +16,8 @@ function step(i, data) {
 
     $.ajax({
         type: "POST",
-        url: "<?php echo Helper::baseUrl(false); ?>?install/steps",
+        url: "<?php
+echo Helper::baseUrl(false); ?>?install/steps",
         data: {
             step: i,
             data: data

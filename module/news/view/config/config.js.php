@@ -18,7 +18,8 @@
  */
 $(".newsConfigDelete").on("click", function() {
 	var _this = $(this);
-	var message = "<?php echo helper::translate('Supprimer cet article ?'); ?>";
+	var message = "<?php
+echo helper::translate('Supprimer cet article ?'); ?>";
 	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});

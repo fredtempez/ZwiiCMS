@@ -37,17 +37,24 @@
 
 $(document).ready(function () {
 
-    var maxwidth = "<?php echo $this->getData(['module', $this->getUrl(0),'theme', 'maxWidth']); ?>";
-    var sort = "<?php echo $this->getData(['module', $this->getUrl(0),'theme', 'sort']); ?>";
+    var maxwidth = "<?php
+echo $this->getData(['module', $this->getUrl(0),'theme', 'maxWidth']); ?>";
+    var sort = "<?php
+echo $this->getData(['module', $this->getUrl(0),'theme', 'sort']); ?>";
     $("#wrapper").css('width', "100%");
     $(function () {
         $("#sliders").responsiveSlides({
-            pager: "<?php echo (bool)$this->getData(['module', $this->getUrl(0),  'theme', 'pager']); ?>",
-            auto: "<?php echo (bool)$this->getData(['module', $this->getUrl(0), 'theme', 'auto']); ?>",
+            pager: "<?php
+echo (bool)$this->getData(['module', $this->getUrl(0), 'theme', 'pager']); ?>",
+            auto: "<?php
+echo (bool)$this->getData(['module', $this->getUrl(0), 'theme', 'auto']); ?>",
             maxwidth: maxwidth,
-            speed: "<?php echo $this->getData(['module', $this->getUrl(0),  'theme', 'speed']); ?>",
-            timeout: "<?php echo $this->getData(['module', $this->getUrl(0), 'theme', 'timeout']); ?>",
-            namespace: "<?php echo $this->getData(['module', $this->getUrl(0), 'theme', 'namespace']); ?>",
+            speed: "<?php
+echo $this->getData(['module', $this->getUrl(0), 'theme', 'speed']); ?>",
+            timeout: "<?php
+echo $this->getData(['module', $this->getUrl(0), 'theme', 'timeout']); ?>",
+            namespace: "<?php
+echo $this->getData(['module', $this->getUrl(0), 'theme', 'namespace']); ?>",
             nav: true,
             random: sort == "random" ? true : false,
         });

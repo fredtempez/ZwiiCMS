@@ -1,14 +1,13 @@
-<?php echo template::formOpen('galleryUpdateForm'); ?>
+<?php
+echo template::formOpen('galleryUpdateForm'); ?>
 <div class="row">
 	<div class="col1">
-		<?php echo template::button('galleryUpdateBack', [
-			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-			'value' => template::ico('left')
-		]); ?>
+		<?php
+echo template::button('galleryUpdateBack', [ 'class' => 'buttonGrey', 'href' => helper::baseUrl() . $this->getUrl(0) . '/config', 'value' => template::ico('left') ]); ?>
 	</div>
 	<div class="col2 offset9">
-		<?php echo template::submit('galleryUpdateSubmit'); ?>
+		<?php
+echo template::submit('galleryUpdateSubmit'); ?>
 	</div>
 </div>
 <div class="row">
@@ -17,20 +16,18 @@
 			<h4>Dossier de la galerie</h4>
 			<div class="row">
 				<div class="col12">
-					<?php echo template::hidden('galleryUpdateDirectoryOld', [
-						'noDirty' => true, // Désactivé à cause des modifications en ajax
-						'value' => $this->getData(['module', $this->getUrl(0), 'directory']),
-					]); ?>
-					<?php echo template::select('galleryUpdateDirectory', [], [ 	 	
-						'label' => 'Dossier cible',
-						'noDirty' => true, // Désactivé à cause des modifications en ajax,							
-					]); ?>
+					<?php
+echo template::hidden('galleryUpdateDirectoryOld', [ 'noDirty' => true, 'value' => $this->getData(['module', $this->getUrl(0), 'directory']), ]); ?>
+					<?php
+echo template::select('galleryUpdateDirectory', [], [ 'label' => 'Dossier cible', 'noDirty' => true, ]); ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<?php echo template::formClose(); ?>
+<?php
+echo template::formClose(); ?>
 <div class="moduleVersion">Module Slider version n°
-	<?php echo slider::VERSION; ?>
+	<?php
+echo slider::VERSION; ?>
 </div>

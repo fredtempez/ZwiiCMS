@@ -37,7 +37,8 @@ $("#galleryOptionShowUniqueGallery").click(function() {
  function dirs() {
      $.ajax({
          type: "POST",
-         url: "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/dirs",
+         url: "<?php
+echo helper::baseUrl() . $this->getUrl(0); ?>/dirs",
          success: function(result) {
             directoryDOM.empty();
             $.each(result, function(index, item) {
@@ -63,4 +64,3 @@ $("#galleryOptionShowUniqueGallery").click(function() {
  directoryDOM.on("change", function() {
      directoryOldDOM.val($(this).val());
  });
- 

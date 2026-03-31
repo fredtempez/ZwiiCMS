@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of Zwii.
  *
@@ -15,65 +14,4 @@
  * @Licensed under the GNU General Public License v3.0 or later.
  * @link http://zwiicms.fr/
  */
-
-/**
- * Initialisation de Zwii
- */
-// Remplace la directive htaccess
-ini_set('session.use_trans_sid', FALSE);
-
-// Crée un identifiant unique pour chaque site en fonction du nom de domaine ou autre
-$siteId = md5($_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_FILENAME']); // Ou utilise un autre identifiant unique pour chaque site
-// Change le nom de la session en fonction de cet identifiant
-session_name('zwii_session_' . $siteId);
-
-// Récupère dynamiquement le chemin du dossier dans lequel le script est exécuté
-$scriptPath = dirname($_SERVER['SCRIPT_NAME']);
-
-// Si le chemin est vide (ce qui peut arriver si le site est à la racine), définis-le comme '/'
-if ($scriptPath === '/' || $scriptPath === '\\' || $scriptPath === '.') {
-    $scriptPath = '/';
-}
-
-// Définissez le chemin du cookie de session dynamiquement
-session_set_cookie_params([
-    'lifetime' => 0,
-    'path' => $scriptPath, // Utilise le chemin du script pour restreindre la session à ce répertoire
-    'domain' => $_SERVER['SERVER_NAME'], // Domaine par défaut
-    'secure' => isset($_SERVER['HTTPS']), // Pour HTTPS, si nécessaire
-    'httponly' => true,
-    'samesite' => 'Lax' // Ou 'Strict' ou 'None' selon tes besoins
-]);
-
-// Démarre la session
-session_start();
-
-// Contrôle des conditions de fonctionnement
-include_once('core/include/checkup.php');
-
-// Mise à jour du système de BDD
-include_once('core/include/pre-update.php');
-
-/*
-*Localisation par défaut 
-
-* Locales :
-* french : free.fr
-* fr_FR : XAMPP Macos
-* fr_FR.utf8 : la majorité
-*/
-date_default_timezone_set('Europe/Paris');
-setlocale (LC_ALL, 'fr_FR.UTF8', 'fr_FR', 'french');
-
-/**
- * NOUVEAU: Chargement unifié des classes avec le nouvel autoloader corrigé
- */
-require 'core/class/autoloader.php';
-Autoloader::register();
-Autoloader::preloadEssentialClasses();
-
-/**
- * Chargement du coeur
- */
-$core = new Router();
-echo $core->router();
+ini_set('session.use_trans_sid', FALSE); $siteId = md5($_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_FILENAME']); session_name('zwii_session_' . $siteId); $scriptPath = dirname($_SERVER['SCRIPT_NAME']); if ($scriptPath === '/' || $scriptPath === '\\' || $scriptPath === '.') { $scriptPath = '/'; } session_set_cookie_params([ 'lifetime' => 0, 'path' => $scriptPath, 'domain' => $_SERVER['SERVER_NAME'], 'secure' => isset($_SERVER['HTTPS']), 'httponly' => true, 'samesite' => 'Lax' ]); session_start(); include_once('core/include/checkup.php'); include_once('core/include/pre-update.php'); date_default_timezone_set('Europe/Paris'); setlocale (LC_ALL, 'fr_FR.UTF8', 'fr_FR', 'french'); require 'core/class/autoloader.php'; Autoloader::register(); Autoloader::preloadEssentialClasses(); $core = new Router(); echo $core->router();

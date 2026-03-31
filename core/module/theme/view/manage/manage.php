@@ -1,38 +1,29 @@
-<?php echo Template::formOpen('themeManageForm'); ?>
+<?php
+echo Template::formOpen('themeManageForm'); ?>
 <div class="row">
 	<div class="col1">
-		<?php echo Template::button('themeManageBack', [
-			'class' => 'buttonGrey',
-			'href' => Helper::baseUrl() . 'theme',
-			'value' => Template::ico('left')
-		]); ?>
+		<?php
+echo Template::button('themeManageBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl() . 'theme', 'value' => Template::ico('left') ]); ?>
 	</div>
 	<div class="col1 offset8">
-		<?php echo Template::button('configManageReset', [
-			'class' => 'buttonRed',
-			'href' => Helper::baseUrl() . 'theme/reset/manage',
-			'value' => Template::ico('cancel'),
-			'help' => 'Réinitialiser avec le thème par défaut'
-		]); ?>
+		<?php
+echo Template::button('configManageReset', [ 'class' => 'buttonRed', 'href' => Helper::baseUrl() . 'theme/reset/manage', 'value' => Template::ico('cancel'), 'help' => 'Réinitialiser avec le thème par défaut' ]); ?>
 	</div>
 	<div class="col2">
-		<?php echo Template::submit('themeImportSubmit', [
-			'value' => 'Appliquer'
-		]); ?>
+		<?php
+echo Template::submit('themeImportSubmit', [ 'value' => 'Appliquer' ]); ?>
 	</div>
 </div>
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4><?php echo Helper::translate('Installer un thème archivé (site ou administration)'); ?>
+			<h4><?php
+echo Helper::translate('Installer un thème archivé (site ou administration)'); ?>
 			</h4>
 			<div class="row">
 				<div class="col6 offset3">
-					<?php echo Template::file('themeManageImport', [
-						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
-						'label' => 'Archive ZIP :',
-						'type' => 2
-					]); ?>
+					<?php
+echo Template::file('themeManageImport', [ 'language' => $this->getData(['user', $this->getUser('id'), 'language']), 'label' => 'Archive ZIP :', 'type' => 2 ]); ?>
 				</div>
 			</div>
 		</div>
@@ -41,25 +32,24 @@
 <div class="row">
 	<div class="col6">
 		<div class="block">
-			<h4><?php echo Helper::translate('Sauvegarde du thème dans le'); ?>
-				<a href="<?php echo Helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=theme&type=0&akey=<?php echo md5_file(self::DATA_DIR . 'core.json');?>&lang=<?php echo $this->getData(['user', $this->getUser('id'), 'language']);?>" data-lity>
-					<?php echo Helper::translate('gestionnaire de fichiers'); ?>
+			<h4><?php
+echo Helper::translate('Sauvegarde du thème dans le'); ?>
+				<a href="<?php
+echo Helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=theme&type=0&akey=<?php
+echo md5_file(self::DATA_DIR . 'core.json');?>&lang=<?php
+echo $this->getData(['user', $this->getUser('id'), 'language']);?>" data-lity>
+					<?php
+echo Helper::translate('gestionnaire de fichiers'); ?>
 				</a>
 			</h4>
 			<div class="row">
 				<div class="col6">
-					<?php echo Template::button('themeSave', [
-						'href' => Helper::baseUrl() . 'theme/save/theme',
-						'ico' => 'download-cloud',
-						'value' => 'Thème du site'
-					]); ?>
+					<?php
+echo Template::button('themeSave', [ 'href' => Helper::baseUrl() . 'theme/save/theme', 'ico' => 'download-cloud', 'value' => 'Thème du site' ]); ?>
 				</div>
 				<div class="col6">
-					<?php echo Template::button('themeSaveAdmin', [
-						'href' => Helper::baseUrl() . 'theme/save/admin',
-						'ico' => 'download-cloud',
-						'value' => 'Thème de l\'administration'
-					]); ?>
+					<?php
+echo Template::button('themeSaveAdmin', [ 'href' => Helper::baseUrl() . 'theme/save/admin', 'ico' => 'download-cloud', 'value' => 'Thème de l\'administration' ]); ?>
 				</div>
 			</div>
 		</div>
@@ -67,25 +57,21 @@
 
 	<div class="col6">
 		<div class="block">
-			<h4><?php echo Helper::translate('Télécharger le thème'); ?>
+			<h4><?php
+echo Helper::translate('Télécharger le thème'); ?>
 			</h4>
 			<div class="row">
 				<div class="col6">
-					<?php echo Template::button('themeExport', [
-						'href' => Helper::baseUrl() . 'theme/export/theme',
-						'ico' => 'download',
-						'value' => 'Thème du site'
-					]); ?>
+					<?php
+echo Template::button('themeExport', [ 'href' => Helper::baseUrl() . 'theme/export/theme', 'ico' => 'download', 'value' => 'Thème du site' ]); ?>
 				</div>
 				<div class="col6">
-					<?php echo Template::button('themeExport', [
-						'href' => Helper::baseUrl() . 'theme/export/admin',
-						'ico' => 'download',
-						'value' => 'Thème de l\'administration'
-					]); ?>
+					<?php
+echo Template::button('themeExport', [ 'href' => Helper::baseUrl() . 'theme/export/admin', 'ico' => 'download', 'value' => 'Thème de l\'administration' ]); ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<?php echo Template::formClose(); ?>
+<?php
+echo Template::formClose(); ?>

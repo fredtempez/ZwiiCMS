@@ -49,4 +49,3 @@ $(document).ready(function() {
     // Au changement de la case à cocher de marge
     $('#themeSiteMargin').on('change', updateWidth);
 });
-

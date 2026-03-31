@@ -1,5 +1,3 @@
-
-
 /**
  * This file is part of Zwii.
  *
@@ -17,18 +15,23 @@
 
  if (document.referrer.indexOf("edit") === -1)
  {
-	var message = "<?php echo helper::translate('OUI : éditer la page | NON : tester la redirection'); ?>";
+	var message = "<?php
+echo helper::translate('OUI : éditer la page | NON : tester la redirection'); ?>";
   	core.confirm(
   		message,
    		function() {
-  			$(location).attr("href", "<?php echo helper::baseUrl(); ?>page/edit/<?php echo $this->getUrl(0); ?>");
+  			$(location).attr("href", "<?php
+echo helper::baseUrl(); ?>page/edit/<?php
+echo $this->getUrl(0); ?>");
   		},
   		function() {
-  			$(location).attr("href", "<?php echo helper::baseUrl() . $this->getUrl(); ?>/force");
+  			$(location).attr("href", "<?php
+echo helper::baseUrl() . $this->getUrl(); ?>/force");
   		}
   	);
   }
   else
   {
-  	$(location).attr("href", "<?php echo helper::baseUrl(); ?>");
+  	$(location).attr("href", "<?php
+echo helper::baseUrl(); ?>");
   }

@@ -1,4 +1,2 @@
 <?php
-echo "<div  id='siteMap'>";
-echo sitemap::$siteMap;
-echo "</div>";
+echo "<div  id='siteMap'>"; echo sitemap::$siteMap; echo "</div>";

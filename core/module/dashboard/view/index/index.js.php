@@ -24,14 +24,13 @@ $(document).ready(function() {
 
     // Mémoire PHP (demi camembert)
     <?php
-    $_jsInfos  = \Zwii\Cms\dashboard::$infos;
-    $_memUsed  = $_jsInfos['php']['memUsedMb'];
-    $_memLimit = $_jsInfos['php']['memLimitMb'];
-    $_memPct   = $_memLimit > 0 ? round($_memUsed / $_memLimit * 100, 1) : 0;
-    ?>
-    var memPct   = <?php echo $_memPct; ?>;
-    var memUsed  = <?php echo $_memUsed; ?>;
-    var memLimit = <?php echo $_memLimit; ?>;
+$_jsInfos = \Zwii\Cms\dashboard::$infos; $_memUsed = $_jsInfos['php']['memUsedMb']; $_memLimit = $_jsInfos['php']['memLimitMb']; $_memPct = $_memLimit > 0 ? round($_memUsed / $_memLimit * 100, 1) : 0; ?>
+    var memPct   = <?php
+echo $_memPct; ?>;
+    var memUsed  = <?php
+echo $_memUsed; ?>;
+    var memLimit = <?php
+echo $_memLimit; ?>;
     var memColor = memPct > 85 ? '#ea4335' : (memPct > 60 ? '#fbbc04' : '#34a853');
     Plotly.newPlot('chartMemory', [{
         type: 'pie',
@@ -69,32 +68,28 @@ $(document).ready(function() {
     }), cfg);
 
     // Tailles des fichiers BD (barres horizontales)
-    <?php if (!empty($_jsInfos['db'])):
-        $dbAll    = $_jsInfos['db'];
-        $dbNames  = array_column($dbAll, 'name');
-        $dbSizes  = array_column($dbAll, 'size');
-        $dbLabels = array_map(function($s) {
-            return $s >= 1048576 ? round($s/1048576, 1).' Mo'
-                                 : ($s >= 1024 ? round($s/1024, 1).' Ko' : $s.' o');
-        }, $dbSizes);
-        $dbColors = array_map(function($f) { return $f['scope'] === 'global' ? '#1a73e8' : '#34a853'; }, $dbAll);
-        $maxLen   = max(array_map('strlen', $dbNames));
-        $marginL  = $maxLen < 15 ? 100 : ($maxLen < 25 ? 140 : 170);
-    ?>
+    <?php
+if (!empty($_jsInfos['db'])): $dbAll = $_jsInfos['db']; $dbNames = array_column($dbAll, 'name'); $dbSizes = array_column($dbAll, 'size'); $dbLabels = array_map(function($s) { return $s >= 1048576 ? round($s/1048576, 1).' Mo' : ($s >= 1024 ? round($s/1024, 1).' Ko' : $s.' o'); }, $dbSizes); $dbColors = array_map(function($f) { return $f['scope'] === 'global' ? '#1a73e8' : '#34a853'; }, $dbAll); $maxLen = max(array_map('strlen', $dbNames)); $marginL = $maxLen < 15 ? 100 : ($maxLen < 25 ? 140 : 170); ?>
     Plotly.newPlot('chartDbSizes', [{
         type: 'bar', orientation: 'h',
-        x: <?php echo json_encode(array_values($dbSizes)); ?>,
-        y: <?php echo json_encode(array_values($dbNames)); ?>,
-        text: <?php echo json_encode(array_values($dbLabels)); ?>,
+        x: <?php
+echo json_encode(array_values($dbSizes)); ?>,
+        y: <?php
+echo json_encode(array_values($dbNames)); ?>,
+        text: <?php
+echo json_encode(array_values($dbLabels)); ?>,
         textposition: 'outside',
         hovertemplate: '%{y}: %{text}<extra></extra>',
-        marker: {color: <?php echo json_encode(array_values($dbColors)); ?>, opacity: 0.85}
+        marker: {color: <?php
+echo json_encode(array_values($dbColors)); ?>, opacity: 0.85}
     }], $.extend({}, layoutBase, {
-        margin: {t: 4, b: 18, l: <?php echo $marginL; ?>, r: 55},
+        margin: {t: 4, b: 18, l: <?php
+echo $marginL; ?>, r: 55},
         xaxis: {visible: false, fixedrange: true},
         yaxis: {fixedrange: true},
         bargap: 0.25
     }), cfg);
-    <?php endif; ?>
+    <?php
+endif; ?>
 
 });

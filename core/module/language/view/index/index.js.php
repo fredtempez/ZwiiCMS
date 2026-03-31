@@ -54,7 +54,8 @@ $("#translateContentButton").on("click", function() {
  */
 $(".translateDelete").on("click", function() {
     var _this = $(this);
-    var message_delete = "<?php echo Helper::translate('Confirmer la suppression de cette langue'); ?>";
+    var message_delete = "<?php
+echo Helper::translate('Confirmer la suppression de cette langue'); ?>";
     return core.confirm(message_delete, function() {
         $(location).attr("href", _this.attr("href"));
     });

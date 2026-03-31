@@ -19,7 +19,8 @@
 */
 $("#pageEditDelete").on("click", function() {
 	var _this = $(this);
-	var message_delete = "<?php echo Helper::translate('Confirmer la suppression de la page'); ?>";
+	var message_delete = "<?php
+echo Helper::translate('Confirmer la suppression de la page'); ?>";
 	return core.confirm(message_delete, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
@@ -36,7 +37,8 @@ function protectModule() {
 	if ( oldModule !== "" &&
 		 oldModule !== newModule) {
 		var _this = $(this);
-		var message_delete = "<?php echo Helper::translate('Confirmer la suppression des données du module'); ?>";
+		var message_delete = "<?php
+echo Helper::translate('Confirmer la suppression des données du module'); ?>";
 		core.confirm(message_delete + " " + oldModuleText,
 				function() {
 					$(location).attr("href", _this.attr("href"));
@@ -54,7 +56,8 @@ function protectModule() {
 /**
  * Initialisation de la variable pageLayout globale
  */
-var pageLayout = "<?php echo $this->getData(['user', $this->getUser('id'), 'view', 'page']);?>";
+var pageLayout = "<?php
+echo $this->getData(['user', $this->getUser('id'), 'view', 'page']);?>";
 
 // Définir une valeur par défaut si pageLayout n'est pas défini
 if (!pageLayout || pageLayout === "") {
@@ -275,7 +278,8 @@ $( document ).ready(function() {
 	 */
 		if ($("#pageEditExtraPosition").val() == 1 ) {
 		var positionDOM = $("#pageEditPosition");
-		var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
+		var positionInitial = <?php
+echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
 		buildPagesList(true);
 		$("#pageEditPosition").val(positionInitial);
 	}
@@ -670,14 +674,20 @@ $("#pageEditParentPageId").on("change", function() {
  */
 
 function buildPagesList(extraPosition) {
-	var hierarchy = <?php echo json_encode($this->getHierarchy()); ?>;
-	var pages = <?php echo $module->getPageInfo(); ?>;
-	var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
+	var hierarchy = <?php
+echo json_encode($this->getHierarchy()); ?>;
+	var pages = <?php
+echo $module->getPageInfo(); ?>;
+	var positionInitial = <?php
+echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
 	var extraPosition = $("#pageEditExtraPosition").val();
 	var positionDOM = $("#pageEditPosition");
-	var message_none = "<?php echo Helper::translate('Ne pas afficher'); ?>";
-	var message_begin = "<?php echo Helper::translate('Au début'); ?>";
-	var message_after = "<?php echo Helper::translate('Après'); ?>";
+	var message_none = "<?php
+echo Helper::translate('Ne pas afficher'); ?>";
+	var message_begin = "<?php
+echo Helper::translate('Au début'); ?>";
+	var message_after = "<?php
+echo Helper::translate('Après'); ?>";
 	positionDOM.empty().append(
 		$("<option>").val(0).text(message_none),
 		$("<option>").val(1).text(message_begin)
@@ -692,7 +702,8 @@ function buildPagesList(extraPosition) {
 		for(var key in hierarchy) {
 			if(hierarchy.hasOwnProperty(key) ) {
 				// Sélectionne la page avant s'il s'agit de la page courante
-				if(key === "<?php echo $this->getUrl(2); ?>") {
+				if(key === "<?php
+echo $this->getUrl(2); ?>") {
 					positionSelected = positionPrevious;
 				}
 				// Sinon ajoute la page à la liste
@@ -718,7 +729,8 @@ function buildPagesList(extraPosition) {
 		// Liste des pages enfants de la page parent
 		for(var i = 0; i < hierarchy[parentSelected].length; i++) {
 			// Pour page courante sélectionne la page précédente (pas de - 1 à positionSelected à cause des options par défaut)
-			if(hierarchy[parentSelected][i] === "<?php echo $this->getUrl(2); ?>") {
+			if(hierarchy[parentSelected][i] === "<?php
+echo $this->getUrl(2); ?>") {
 				positionSelected = positionPrevious;
 			}
 			// Sinon ajoute la page à la liste
@@ -738,7 +750,8 @@ function buildPagesList(extraPosition) {
 
 // Nouvelle fonction pour calculer la profondeur
 function calculatePageDepth(pageId) {
-	var hierarchy = <?php echo json_encode($this->getHierarchy()); ?>;
+	var hierarchy = <?php
+echo json_encode($this->getHierarchy()); ?>;
 
 	function findDepth(currentId, currentDepth) {
 		if (currentId === "") return currentDepth;
@@ -757,7 +770,8 @@ function calculatePageDepth(pageId) {
 // Fonction pour recharger les options du sélecteur parent
 function refreshParentOptions(excludePageId) {
 	$.ajax({
-		url: "<?php echo Helper::baseUrl(); ?>page/getParentOptions",
+		url: "<?php
+echo Helper::baseUrl(); ?>page/getParentOptions",
 		type: "POST",
 		data: {
 			excludePageId: excludePageId || ""

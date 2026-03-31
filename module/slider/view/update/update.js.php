@@ -20,7 +20,8 @@
  function dirs() {
     $.ajax({
         type: "POST",
-        url: "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/dirs",
+        url: "<?php
+echo helper::baseUrl() . $this->getUrl(0); ?>/dirs",
         dataType: "json",
         success: function(result) {
             directoryDOM.empty();

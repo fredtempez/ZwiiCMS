@@ -1,20 +1,20 @@
-<?php echo Template::formOpen('installForm'); ?>
+<?php
+echo Template::formOpen('installForm'); ?>
 <h3>
-	<?php echo Helper::translate('Dans quelle langue utiliserez-vous Zwii ?'); ?>
+	<?php
+echo Helper::translate('Dans quelle langue utiliserez-vous Zwii ?'); ?>
 </h3>
 <div class="row">
     <div class="col6 offset3">
-            <?php echo Template::select('installLanguage', install::$i18nFiles, [
-                'label' =>  'Langues installées',
-				'selected' => isset(self::$i18nUI) ?  self::$i18nUI : 'fr_FR',
-            ]); ?>
+            <?php
+echo Template::select('installLanguage', install::$i18nFiles, [ 'label' => 'Langues installées', 'selected' => isset(self::$i18nUI) ? self::$i18nUI : 'fr_FR', ]); ?>
     </div>
 </div>
 <div class="row">
 	<div class="col3 offset9">
-		<?php echo Template::submit('installSubmit', [
-			'value' => 'Suivant'
-		]); ?>
+		<?php
+echo Template::submit('installSubmit', [ 'value' => 'Suivant' ]); ?>
 	</div>
 </div>
-<?php echo Template::formClose(); ?>
+<?php
+echo Template::formClose(); ?>

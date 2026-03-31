@@ -65,8 +65,10 @@ $("input, select").on("change", function() {
 	// Marge
 	if($("#themeMenuMargin").is(":checked")) {
 		if(
-			<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>
-			|| <?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-second'); ?>
+			<?php
+echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>
+			|| <?php
+echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-second'); ?>
 		) {
 			css += 'nav{padding: 10px 10px 0 10px}';
 		}
@@ -78,7 +80,8 @@ $("input, select").on("change", function() {
 		css += 'nav{margin:0;}';
 	}
     if(
-		<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'top'); ?>
+		<?php
+echo json_encode($this->getData(['theme', 'menu', 'position']) === 'top'); ?>
 	) {
 		css += 'nav{padding:0 10px;}';
 	}
@@ -92,7 +95,8 @@ $("input, select").on("change", function() {
 			$("nav").show().prependTo("#site");
 			break;
 		case 'site-second':
-			if(<?php echo json_encode($this->getData(['theme', 'header', 'position']) === 'site'); ?>) {
+			if(<?php
+echo json_encode($this->getData(['theme', 'header', 'position']) === 'site'); ?>) {
 				$("nav").show().insertAfter("header");
 			}
 			else {
@@ -106,7 +110,8 @@ $("input, select").on("change", function() {
 			$("#menu").addClass('container');
 			break;
 		case 'body-second':
-			if(<?php echo json_encode($this->getData(['theme', 'header', 'position']) === 'body'); ?>) {
+			if(<?php
+echo json_encode($this->getData(['theme', 'header', 'position']) === 'body'); ?>) {
 				$("nav").show().insertAfter("header");
 			}
 			else {

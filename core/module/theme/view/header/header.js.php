@@ -62,7 +62,8 @@ $("input, select").on("change", function() {
 
 			//Modifier la dropdown liste si une image n'est pas sélectionnée
 			if ($("#themeHeaderImage").val() !== "" ) {
-				var message = "<?php echo Helper::translate('Hauteur de l\'image sélectionnée');?>";
+				var message = "<?php
+echo Helper::translate('Hauteur de l\'image sélectionnée');?>";
 				// Une image est ajoutée ou changée
 				if ($("#themeHeaderHeight option").length === 5) {
 					// Pas d'image précédemment on ajoute l'option
@@ -83,7 +84,8 @@ $("input, select").on("change", function() {
 			$("#themeHeaderHeight option:eq(0)").remove();
 		}
 
-		tmpImg.src= "<?php echo Helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
+		tmpImg.src= "<?php
+echo Helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
 
 		// Import des polices de caractères
 		var headerFont = $("#themeHeaderFont :selected").val();
@@ -93,7 +95,8 @@ $("input, select").on("change", function() {
 			css += "header{text-align:" + $("#themeHeaderTextAlign").val() + ";";
 			if ($("#themeHeaderImage").val()) {
 				// Une image est sélectionnée
-				css += "background-image:url('<?php echo Helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
+				css += "background-image:url('<?php
+echo Helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
 				css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
 			// Pas d'image sélectionnée
 			} else {
@@ -120,7 +123,8 @@ $("input, select").on("change", function() {
 
 
 	// Position de la bannière
-	var positionNav = <?php echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
+	var positionNav = <?php
+echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
 	var positionHeader = $("#themeHeaderPosition").val();
 
 	switch(positionHeader) {
@@ -138,7 +142,8 @@ $("input, select").on("change", function() {
 				case "site-first":
 					$("nav").show().prependTo("#site");
 					// Supprime le margin en trop du menu
-					if(<?php echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
+					if(<?php
+echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
 						css += 'nav{margin:0 20px}';
 					}
 					break;
@@ -146,7 +151,8 @@ $("input, select").on("change", function() {
 				case "site-second":
 					$("nav").show().insertAfter("header");
 					// Supprime le margin en trop du menu
-					if(<?php echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
+					if(<?php
+echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
 						css += 'nav{margin:0 20px}';
 					}
 					break;

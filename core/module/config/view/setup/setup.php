@@ -2,58 +2,36 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo Helper::translate('Paramètres'); ?>
+				<h4><?php
+echo Helper::translate('Paramètres'); ?>
 				</h4>
 				<div class="row">
 					<div class="col3">
-						<?php echo Template::file('configFavicon', [
-							'type' => 1,
-							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
-							'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
-							'label' => 'Favicon',
-							'value' => $this->getData(['config', 'favicon']),
-							'folder' => $this->getData(['config', 'favicon']) ? dirname($this->getData(['config', 'favicon'])) : ''
-						]); ?>
+						<?php
+echo Template::file('configFavicon', [ 'type' => 1, 'language' => $this->getData(['user', $this->getUser('id'), 'language']), 'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.', 'label' => 'Favicon', 'value' => $this->getData(['config', 'favicon']), 'folder' => $this->getData(['config', 'favicon']) ? dirname($this->getData(['config', 'favicon'])) : '' ]); ?>
 					</div>
 					<div class="col3">
-						<?php echo Template::file('configFaviconDark', [
-							'type' => 1,
-							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
-							'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
-							'label' => 'Favicon thème sombre',
-							'value' => $this->getData(['config', 'faviconDark']),
-							'folder' => $this->getData(['config', 'faviconDark']) ? dirname($this->getData(['config', 'faviconDark'])) : ''
-						]); ?>
+						<?php
+echo Template::file('configFaviconDark', [ 'type' => 1, 'language' => $this->getData(['user', $this->getUser('id'), 'language']), 'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.', 'label' => 'Favicon thème sombre', 'value' => $this->getData(['config', 'faviconDark']), 'folder' => $this->getData(['config', 'faviconDark']) ? dirname($this->getData(['config', 'faviconDark'])) : '' ]); ?>
 					</div>
 					<div class="col3">
-						<?php echo Template::select('configTimezone', config::$timezones, [
-							'label' => 'Fuseau horaire',
-							'selected' => $this->getData(['config', 'timezone']),
-							'help' => 'Le fuseau horaire est utile au bon référencement'
-						]); ?>
+						<?php
+echo Template::select('configTimezone', config::$timezones, [ 'label' => 'Fuseau horaire', 'selected' => $this->getData(['config', 'timezone']), 'help' => 'Le fuseau horaire est utile au bon référencement' ]); ?>
 					</div>
 					<div class="col3">
-						<?php echo Template::select('configTimerBar', config::$timerBar, [
-							'label' => 'Barre d\'administration',
-							'selected' => $this->getData(['config', 'timerBar']),
-							'help' => 'Ce paramètre définit la permanence de la barre d\'administration en haut de l\'écran',
-						]); ?>
+						<?php
+echo Template::select('configTimerBar', config::$timerBar, [ 'label' => 'Barre d\'administration', 'selected' => $this->getData(['config', 'timerBar']), 'help' => 'Ce paramètre définit la permanence de la barre d\'administration en haut de l\'écran', ]); ?>
 					</div>
 				</div>
 				<div class="row">
 
 					<div class="col6">
-						<?php echo Template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
-							'checked' => $this->getData(['config', 'cookieConsent']),
-							'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
-						]); ?>
+						<?php
+echo Template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [ 'checked' => $this->getData(['config', 'cookieConsent']), 'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.' ]); ?>
 					</div>
 					<div class="col6">
-						<?php echo Template::checkbox('configRewrite', true, 'Apache URL intelligentes', [
-							'checked' => Helper::checkRewrite(),
-							'help' => 'Supprime le point d\'interrogation dans les URL, l\'option est indisponible avec les autres serveurs Web',
-							'disabled' => Helper::checkServerSoftware() === false and config::isModRewriteEnabled()
-						]); ?>
+						<?php
+echo Template::checkbox('configRewrite', true, 'Apache URL intelligentes', [ 'checked' => Helper::checkRewrite(), 'help' => 'Supprime le point d\'interrogation dans les URL, l\'option est indisponible avec les autres serveurs Web', 'disabled' => Helper::checkServerSoftware() === false and config::isModRewriteEnabled() ]); ?>
 					</div>
 				</div>
 			</div>
@@ -62,42 +40,33 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo Helper::translate('Mise à jour automatisée'); ?>
+				<h4><?php
+echo Helper::translate('Mise à jour automatisée'); ?>
 				</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo Template::checkbox('configAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
-							'checked' => $this->getData(['config', 'autoUpdate']),
-							'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.',
-							'disabled' => empty(Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL))
-						]); ?>
+						<?php
+echo Template::checkbox('configAutoUpdate', true, 'Rechercher une mise à jour en ligne', [ 'checked' => $this->getData(['config', 'autoUpdate']), 'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.', 'disabled' => empty(Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL)) ]); ?>
 					</div>
 					<div class="col6">
-						<?php echo Template::checkbox('configAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [
-							'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
-							'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
-							'disabled' => empty(Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL))
-						]); ?>
+						<?php
+echo Template::checkbox('configAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [ 'checked' => $this->getData(['config', 'autoUpdateHtaccess']), 'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.', 'disabled' => empty(Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL)) ]); ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col3">
-						<?php echo Template::select('configAutoUpdateDelay', config::$updateDelay, [
-							'label' => 'Fréquence de recherche',
-							'selected' => $this->getData(['config', 'autoUpdateDelay']),
-						]); ?>
+						<?php
+echo Template::select('configAutoUpdateDelay', config::$updateDelay, [ 'label' => 'Fréquence de recherche', 'selected' => $this->getData(['config', 'autoUpdateDelay']), ]); ?>
 					</div>
 					<div class="col3 offset1 verticalAlignBottom">
-						<pre>Version installée : <strong><?php echo Core::ZWII_VERSION; ?></strong></pre>
-						<pre>Version en ligne  : <strong><?php echo Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL); ?></strong></pre>
+						<pre>Version installée : <strong><?php
+echo Core::ZWII_VERSION; ?></strong></pre>
+						<pre>Version en ligne  : <strong><?php
+echo Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL); ?></strong></pre>
 					</div>
 					<div class="col3 offset2 verticalAlignBottom">
-						<?php echo Template::button('configUpdateForced', [
-							'ico' => 'download-cloud',
-							'href' => Helper::baseUrl() . 'install/update',
-							'value' => config::$updateButtonText,
-							'class' => 'buttonRed',
-						]); ?>
+						<?php
+echo Template::button('configUpdateForced', [ 'ico' => 'download-cloud', 'href' => Helper::baseUrl() . 'install/update', 'value' => config::$updateButtonText, 'class' => 'buttonRed', ]); ?>
 					</div>
 				</div>
 			</div>
@@ -106,52 +75,37 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo Helper::translate('Maintenance'); ?>
+				<h4><?php
+echo Helper::translate('Maintenance'); ?>
 				</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo Template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
-							'checked' => $this->getData(['config', 'autoBackup']),
-							'help' => 'Une archive du dossier /site/data est conservée pendant 30 jours. Activation recommandée'
-						]); ?>
+						<?php
+echo Template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [ 'checked' => $this->getData(['config', 'autoBackup']), 'help' => 'Une archive du dossier /site/data est conservée pendant 30 jours. Activation recommandée' ]); ?>
 					</div>
 					<div class="col6">
-						<?php echo Template::checkbox('configMaintenance', true, 'Site en maintenance', [
-							'checked' => $this->getData(['config', 'maintenance'])
-						]); ?>
+						<?php
+echo Template::checkbox('configMaintenance', true, 'Site en maintenance', [ 'checked' => $this->getData(['config', 'maintenance']) ]); ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col4 offset1">
-						<?php echo Template::button('configBackupButton', [
-							'href' => Helper::baseUrl() . 'config/backup',
-							'value' => 'Sauvegarder les données du site',
-							'ico' => 'download-cloud'
-						]); ?>
+						<?php
+echo Template::button('configBackupButton', [ 'href' => Helper::baseUrl() . 'config/backup', 'value' => 'Sauvegarder les données du site', 'ico' => 'download-cloud' ]); ?>
 					</div>
 					<div class="col4 offset1">
-						<?php echo Template::button('configRestoreButton', [
-							'href' => Helper::baseUrl() . 'config/restore',
-							'value' => 'Restaurer les données du site',
-							'ico' => 'upload-cloud'
-						]); ?>
+						<?php
+echo Template::button('configRestoreButton', [ 'href' => Helper::baseUrl() . 'config/restore', 'value' => 'Restaurer les données du site', 'ico' => 'upload-cloud' ]); ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col4 offset1">
-						<?php echo Template::button('configBackupCopyButton', [
-							'href' => Helper::baseUrl() . 'config/copyBackups',
-							'value' => 'Copier sauvegardes auto',
-							'ico' => 'docs'
-						]); ?>
+						<?php
+echo Template::button('configBackupCopyButton', [ 'href' => Helper::baseUrl() . 'config/copyBackups', 'value' => 'Copier sauvegardes auto', 'ico' => 'docs' ]); ?>
 					</div>
 					<div class="col4 offset1">
-						<?php echo Template::button('configBackupDelButton', [
-							'href' => Helper::baseUrl() . 'config/delBackups',
-							'value' => 'Vider dossier sauvegardes auto',
-							'ico' => 'trash',
-							'class' => 'buttonRed'
-						]); ?>
+						<?php
+echo Template::button('configBackupDelButton', [ 'href' => Helper::baseUrl() . 'config/delBackups', 'value' => 'Vider dossier sauvegardes auto', 'ico' => 'trash', 'class' => 'buttonRed' ]); ?>
 					</div>
 				</div>
 			</div>
@@ -160,22 +114,17 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo Helper::translate('Scripts externes'); ?>
+				<h4><?php
+echo Helper::translate('Scripts externes'); ?>
 				</h4>
 				<div class="row">
 					<div class="col4 offset1 verticalAlignBottom">
-						<?php echo Template::button('socialScriptHead', [
-							'href' => Helper::baseUrl() . 'config/script/head',
-							'value' => 'Script dans head',
-							'ico' => 'pencil'
-						]); ?>
+						<?php
+echo Template::button('socialScriptHead', [ 'href' => Helper::baseUrl() . 'config/script/head', 'value' => 'Script dans head', 'ico' => 'pencil' ]); ?>
 					</div>
 					<div class="col4 offset1 verticalAlignBottom">
-						<?php echo Template::button('socialScriptBody', [
-							'href' => Helper::baseUrl() . 'config/script/body',
-							'value' => 'Script dans body',
-							'ico' => 'pencil'
-						]); ?>
+						<?php
+echo Template::button('socialScriptBody', [ 'href' => Helper::baseUrl() . 'config/script/body', 'value' => 'Script dans body', 'ico' => 'pencil' ]); ?>
 					</div>
 				</div>
 			</div>
