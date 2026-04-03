@@ -1,5 +1,19 @@
 # Notes de mises à jour
 
+## Version 14.02.01
+### 🛠️ Corrections
+- Corrige un problème empêchant l'écriture de la nouvelle feuille de style du thème.
+- Corrige le positionnement des boutons sur les tablettes (tailles comprises entre 768 et 1097 pixels).
+- Mise à jour de : 
+    - Jquery 3.6.0 → 3.7.1
+    - Datatables 	2.2.2	vers 2.3.7
+      - Buttons / Colvis / HTML5 / Print	3.2.2 →	3.2.6
+      - DateTime	1.5.5 →	1.6.3
+      - Responsive	3.0.4 →	3.0.8
+    - Plotly 3.1.0 → 3.4.0
+    - Tippy 3.3.0 → 6.3.7
+    - Phpmailer sans changement de numéro de version.
+
 ## Version 14.02.00
 **Compatible jusque php 8.4**
 ### 🚀 Améliorations

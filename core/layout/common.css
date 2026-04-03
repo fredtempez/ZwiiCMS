@@ -1835,6 +1835,19 @@ th.col12 {
     .col10 { width: 83.33333333%; }
     .col11 { width: 91.66666667%; }
     .col12 { width: 100%; }
+
+    /* Offsets pour tablette */
+    .offset1 { margin-left: 8.33333333%; }
+    .offset2 { margin-left: 16.66666667%; }
+    .offset3 { margin-left: 25%; }
+    .offset4 { margin-left: 33.33333333%; }
+    .offset5 { margin-left: 41.66666667%; }
+    .offset6 { margin-left: 50%; }
+    .offset7 { margin-left: 58.33333333%; }
+    .offset8 { margin-left: 66.66666667%; }
+    .offset9 { margin-left: 75%; }
+    .offset10 { margin-left: 83.33333333%; }
+    .offset11 { margin-left: 91.66666667%; }
 }
 
 /* --- 3. MOBILE : Écrans <= 767px --- */

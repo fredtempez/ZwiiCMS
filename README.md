@@ -1,4 +1,4 @@
-# 🚀 ZwiiCMS 14.2.00
+# 🚀 ZwiiCMS 14.2.01
 # Français 🇫🇷
 
 Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation. Conçu pour la simplicité et la performance, ZwiiCMS offre une solution complète pour la gestion de contenu web moderne.
@@ -9,7 +9,7 @@ ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remij
 
 ## ⚙️ Configuration recommandée
 
-* PHP 7.2 ou plus (recommandé PHP 8.0+ pour de meilleures performances)
+* PHP 7.3 ou plus (recommandé PHP 8.0+ pour de meilleures performances)
 * Compatibilité assurée jusque php 8.4
 * Support de .htaccess (pour la réécriture d'URL et la sécurité)
 * Espace disque : minimum 50 Mo
@@ -169,7 +169,7 @@ ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/).
 
 ## ⚙️ Recommended configuration
 
-* PHP 7.2 or higher (PHP 8.0+ recommended for better performance)
+* PHP 7.3 or higher (PHP 8.0+ recommended for better performance)
 * Guaranteed compatibility up to PHP 8.4
 * .htaccess support (for URL rewriting and security)
 * Disk space: minimum 50 MB

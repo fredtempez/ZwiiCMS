@@ -34,16 +34,13 @@ $(document).ready(function () {
     delay: [1000,250],
     placement: "bottom",
     followCursor: false,
-    arrow: true,
-    animateFill: true,
-    arrowType: "round",
+    arrow: true
   });
 
   // Pour les images map, pas de flèche, bulle haut suivant le curseur
   tippy("#image-map", {
     placement: "top",
     followCursor: true,
-    animation: "fade",
-    animateFill: true
+    animation: "fade"
   });
 });

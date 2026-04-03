@@ -1,4 +1,5 @@
 [
-	"jqColorPicker.min.js",
-	"init.js"
+ "../coloris/coloris.min.css",
+ "../coloris/coloris.min.js",
+ "../coloris/init.js"
 ]
