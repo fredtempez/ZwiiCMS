@@ -1,3 +1,5 @@
+# Version 4.8
+- Remplacement de la librairie html-sortable par SortableJS.
 # Version 4.7
 - Mise en conformité de nom de variable (Group en Role)
 # Version 4.6

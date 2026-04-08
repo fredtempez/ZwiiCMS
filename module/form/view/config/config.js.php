@@ -108,16 +108,13 @@ $("a#formConfigAdd.button").click(function () {
 });
 
 // Tri entre les champs
-sortable("#formConfigInputs", {
-	forcePlaceholderSize: true,
-	containment: "#formConfigInputs",
-	handle: ".formConfigMove"
+Sortable.create(document.getElementById("formConfigInputs"), {
+	animation:     150,
+	forceFallback: true,
+	handle:        ".formConfigMove",
+	onEnd:         function () { position(); }
 });
 $("#formConfigInputs")
-	// Actualise les positions
-	.on("sortupdate", function() {
-		position();
-	})
 	// Suppression du champ
 	.on("click", ".formConfigDelete", function() {
 		var inputDOM = $(this).parents(".formConfigInput");

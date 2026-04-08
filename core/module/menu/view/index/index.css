@@ -1,0 +1,124 @@
+/**
+ * This file is part of Zwii.
+ *
+ * For full copyright and license information, please see the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @copyright Copyright (C) 2018-2025, Frédéric Tempez
+ * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
+ * @Copyright (C) 2026, Frédéric Tempez
+ * @Licensed under the GNU General Public License v3.0 or later.
+ * @link http://zwiicms.fr/
+ */
+
+/** NE PAS EFFACER
+* admin.css
+*/
+
+/* ---- Listes de l'éditeur de menu ---- */
+.menuEditNested {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menuEditNested .menuEditNested {
+    padding-left: 24px;
+    border-left: 2px solid #e0e0e0;
+    margin-left: 12px;
+    min-height: 6px;
+}
+
+/* Item — display block pour que le <ul> enfant passe en dessous */
+.menuEditItem {
+    display: block;
+    padding: 0;
+    margin: 3px 0;
+    background: transparent;
+    border: none;
+    cursor: default;
+    user-select: none;
+}
+
+/* Ligne visible de l'item (handle + titre + id) */
+.menuEditItemRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    background: #fff;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+}
+
+.menuEditItemRow:hover {
+    border-color: #00BFFF;
+    background: #f5fbff;
+}
+
+/* Item orphelin – teinte légèrement différente */
+.menuEditOrphan > .menuEditItemRow {
+    background: #fafafa;
+    border-style: dashed;
+}
+
+/* La poignée de drag */
+.menuEditHandle {
+    cursor: grab;
+    font-size: 1.1em;
+    color: #999;
+    flex-shrink: 0;
+}
+
+.menuEditHandle:active {
+    cursor: grabbing;
+}
+
+.menuEditTitle {
+    flex: 1;
+    font-weight: bold;
+}
+
+.menuEditId {
+    color: #999;
+    font-size: 0.85em;
+}
+
+/* Élément fantôme SortableJS — position réservée dans la liste */
+.sortable-ghost {
+    opacity: 0.4;
+    background: #e8f7ff;
+}
+
+/* Élément choisi */
+.sortable-chosen {
+    box-shadow: 0 2px 8px rgba(0, 191, 255, 0.35);
+}
+
+/* Clone du drag en mode forceFallback */
+.sortable-fallback {
+    opacity: 0.8;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Placeholder "liste vide" */
+.menuEditEmpty {
+    color: #aaa;
+    font-style: italic;
+    padding: 4px 8px;
+}
+
+/* Notice d'aide */
+.notice {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 12px;
+}
+
+/* Zone de dépôt : mise en évidence du seul UL que le fantôme occupe */
+.menuEditNested:has(> .sortable-ghost) {
+    border: 2px dashed #b0d8f0;
+    border-radius: 4px;
+    background: rgba(0, 191, 255, 0.04);
+}

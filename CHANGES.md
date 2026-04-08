@@ -1,5 +1,16 @@
 # Notes de mises à jour
 
+## Version 14.03.00
+### 🚀 Améliorations
+- Nouvelle fonction de gestion de la structure des pages du site.
+- Lors de l'installation d'une mise à jour automatique, les fichiers et les dossiers inutiles dans le dossier core sont effacés.
+
+### 🛠️ Corrections
+- Version PHP minimale requise portée à 7.3 (nécessaire pour `setcookie()` avec tableau d'options).
+- Corrige le bug de `PharData::decompress()` dont la valeur de retour était ignorée, entraînant une extraction depuis l'archive `.gz` au lieu du `.tar`.
+- Corrige le non-rétablissement du mode maintenance en cas d'erreur lors de l'installation (étape 3).
+- Supprime des avertissements lors de la lecture des fichiers CSV.
+
 ## Version 14.02.01
 ### 🛠️ Corrections
 - Corrige un problème empêchant l'écriture de la nouvelle feuille de style du thème.
