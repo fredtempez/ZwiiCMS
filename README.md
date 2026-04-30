@@ -29,7 +29,7 @@ Pour plus d'informations sur la GPL v3, consultez le fichier [LICENSE](LICENSE) 
 ## 📥 Téléchargement de ZwiiCMS
 
 Pour télécharger la dernière version publiée, rendez-vous :
-* sur [la page des mises à jour](https://codeberg.org/fredtempez/ZwiiCMS/releasesreleases) pour accéder à toutes les versions
+* sur [la page des mises à jour](https://codeberg.org/fredtempez/ZwiiCMS/releases) pour accéder à toutes les versions
 * ou sur [la page de téléchargement du site](https://zwiicms.fr/telechargements) pour la version stable
 * Mises à jour automatiques intégrées depuis le panneau d'administration
 
@@ -201,7 +201,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 ## 📥 Downloading ZwiiCMS
 
 To download the latest released version, go to:
-* [the Updates page](https://codeberg.org/fredtempez/ZwiiCMS/releasesreleases) to access all versions
+* [the Updates page](https://codeberg.org/fredtempez/ZwiiCMS/releases) to access all versions
 * or at [the site download page](https://zwiicms.fr/download) for stable version
 * Automatic updates integrated in administration panel
 
