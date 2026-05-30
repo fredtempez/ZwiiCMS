@@ -5,11 +5,7 @@ echo Template::formOpen('themeSiteForm'); ?>
 		<?php
 echo Template::button('themeSiteBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl() . 'theme', 'value' => Template::ico('left') ]); ?>
 	</div>
-	<div class="col1">
-		<?php
-?>
-	</div>
-	<div class="col2 offset8">
+	<div class="col2 offset9">
 		<?php
 echo Template::submit('themeSiteSubmit'); ?>
 	</div>

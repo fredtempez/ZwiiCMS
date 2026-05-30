@@ -3,11 +3,7 @@
 		<?php
 echo Template::button('userAddBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl(false), 'value' => Template::ico('home') ]); ?>
 	</div>
-	<div class="col1">
-		<?php
-?>
-	</div>
-	<div class="col1 offset7">
+	<div class="col1 offset8">
 		<?php
 echo Template::button('userImport', [ 'href' => Helper::baseUrl() . 'user/import', 'value' => Template::ico('upload'), 'help' => 'Importer des utilisateurs en masse' ]); ?>
 	</div>

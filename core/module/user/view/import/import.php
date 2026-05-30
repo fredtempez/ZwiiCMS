@@ -5,10 +5,7 @@ echo Template::formOpen('userImportForm'); ?>
         <?php
 echo Template::button('userImportBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl() . 'user', 'value' => Template::ico('left') ]); ?>
     </div>
-
-    <?php
-?>
-    <div class="col1 offset8">
+    <div class="col1 offset9">
         <?php
 echo Template::button('userImporTemplate', [ 'href' => Helper::baseUrl() . 'user/template', 'value' => Template::ico('table'), 'help' => 'Télécharger un modèle' ]); ?>
     </div>

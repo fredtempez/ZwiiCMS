@@ -11,22 +11,22 @@
  * @Copyright (C) 2026, Frédéric Tempez
  * @Licensed under the GNU General Public License v3.0 or later.
  * @link http://zwiicms.fr/
- */
-?>
-
-<?php
+*/
 echo Template::formOpen('menuIndexForm'); ?>
-<div class="row">
-	<div class="col2 offset10">
-		<?php
-echo Template::submit('menuIndexSubmit', [ 'uniqueSubmission' => true ]); ?>
-	</div>
-</div>
-
 <!-- Champ caché transportant l'ordre sérialisé -->
 <?php
 echo Template::hidden('menuEditOrder', ['id' => 'menuEditOrder', 'noDirty' => true]); ?>
 
+<div class="row">
+	    <div class="col1">
+        <?php
+echo Template::button('menuBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl(false), 'value' => Template::ico('home') ]); ?>
+    </div>
+	<div class="col2 offset9">
+		<?php
+echo Template::submit('menuIndexSubmit', [ 'uniqueSubmission' => true ]); ?>
+	</div>
+</div>
 
 <div class="row">
 

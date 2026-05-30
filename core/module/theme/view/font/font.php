@@ -3,11 +3,7 @@
 		<?php
 echo Template::button('themeFontBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl() . 'theme', 'value' => Template::ico('left') ]); ?>
 	</div>
-	<div class="col1">
-		<?php
-?>
-	</div>
-	<div class="col1 offset9">
+	<div class="col1 offset10">
 		<?php
 echo Template::button('themeFontAdd', [ 'href' => Helper::baseUrl() . $this->getUrl(0) . '/fontAdd', 'value' => Template::ico('plus'), 'class' => 'buttonGreen', 'help' => 'Ajouter une fonte' ]); ?>
 	</div>

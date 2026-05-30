@@ -5,11 +5,7 @@ echo Template::formOpen('configModulesUpload'); ?>
         <?php
 echo Template::button('configModulesBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl() . 'plugin', 'value' => Template::ico('left') ]); ?>
     </div>
-    <div class="col1">
-        <?php
-?>
-    </div>
-    <div class="col2 offset8">
+    <div class="col2 offset9">
         <?php
 echo Template::submit('configModulesSubmit', [ 'value' => 'Valider', 'ico' => 'check' ]); ?>
     </div>

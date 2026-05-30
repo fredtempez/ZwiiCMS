@@ -45,17 +45,8 @@ var themeFontSizePx = 10; // Valeur par défaut
 	}
 })();
 
-// Génération des tailles autour de la conversion px->pt (4 avant, 4 après)
-var defaultSizePt = Math.round(themeFontSizePx * 0.75);
-var themeFontSizeFormats = [];
-for (var i = -4; i <= 4; i++) {
-	var size = defaultSizePt + i;
-	if (size >= 6 && size <= 72) {
-		themeFontSizeFormats.push(size + 'pt');
-	}
-}
-themeFontSizeFormats = themeFontSizeFormats.join(' ');
-var defaultSizePtStr = defaultSizePt + 'pt';
+// Génération des tailles en px (liste fixe)
+var themeFontSizeFormats = "8px 9px 10px 11px 12px 13px 14px 16px 18px 20px 24px 28px 32px 36px 48px 64px 72px";
 
 tinymce.init({
 	// Classe où appliquer l'éditeur
@@ -94,8 +85,6 @@ tinymce.init({
 	toolbar_sticky: true,
 	font_formats: getSortedFontFormats(),
 	fontsize_formats: themeFontSizeFormats,
-	fontsize_default: defaultSizePtStr,
-	content_style: 'body { font-size: ' + themeFontSizePx + 'px; }',
 	max_height: 600,
 	// CodeMirror
 		// CodeMirror
@@ -345,8 +334,6 @@ tinymce.init({
 	toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist",
 	font_formats: getSortedFontFormats(),
 	fontsize_formats: themeFontSizeFormats,
-	fontsize_default: defaultSizePtStr,
-	content_style: 'body { font-size: ' + themeFontSizePx + 'px; }',
 	// Titre des images
 	image_title: true,
 	// Pages internes
@@ -405,6 +392,16 @@ tinymce.init({
 		{ start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } },
 		{ start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } }
 	]
+});
+
+
+// Rechargement du CSS du thème dans les éditeurs ouverts au retour sur l'onglet
+document.addEventListener('visibilitychange', function () {
+	if (document.visibilityState === 'visible' && typeof tinymce !== 'undefined') {
+		tinymce.editors.forEach(function (editor) {
+			editor.dom.loadCSS(baseUrl + 'site/data/theme.css?nocache=' + Date.now());
+		});
+	}
 });
 
 

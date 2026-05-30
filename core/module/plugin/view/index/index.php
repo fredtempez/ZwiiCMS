@@ -3,11 +3,7 @@
 		<?php
 echo Template::button('configModulesBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl(), 'value' => Template::ico('home') ]); ?>
 	</div>
-	<div class="col1">
-		<?php
-?>
-	</div>
-	<div class="col1 offset8">
+	<div class="col1 offset9">
 		<?php
 echo Template::button('pluginModulesStore', [ 'href' => Helper::baseUrl() . 'plugin/store', 'value' => Template::ico('shopping-basket'), 'help' => 'Installer depuis le catalogue en ligne' ]); ?>
 	</div>

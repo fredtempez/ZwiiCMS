@@ -5,10 +5,6 @@ echo Template::formOpen('translateForm'); ?>
 		<?php
 echo Template::button('translateFormBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl(), 'value' => Template::ico('home') ]); ?>
 	</div>
-	<div class="col1">
-		<?php
-?>
-	</div>
 </div>
 
 <div class="tab">

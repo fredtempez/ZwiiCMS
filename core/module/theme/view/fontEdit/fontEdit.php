@@ -5,11 +5,7 @@ echo Template::formOpen('fontEditForm'); ?>
 		<?php
 echo Template::button('fontEditBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl() . 'theme/font', 'value' => Template::ico('left') ]); ?>
 	</div>
-	<div class="col1">
-		<?php
-?>
-	</div>
-	<div class="col2 offset8">
+	<div class="col2 offset9">
 		<?php
 echo Template::submit('fontEditPublish', [ 'value' => 'Valider', 'uniqueSubmission' => true ]); ?>
 	</div>
