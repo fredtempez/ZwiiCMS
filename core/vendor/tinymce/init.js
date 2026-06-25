@@ -85,6 +85,7 @@ tinymce.init({
 	toolbar_sticky: true,
 	font_formats: getSortedFontFormats(),
 	fontsize_formats: themeFontSizeFormats,
+	content_style: 'body { font-size: ' + themeFontSizePx + 'px; }',
 	max_height: 600,
 	// CodeMirror
 		// CodeMirror

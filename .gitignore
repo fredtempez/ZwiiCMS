@@ -23,6 +23,8 @@ core/module/config/tool/data.key
 # ============================================
 robots.txt
 sitemap.xml
+sitemap-*.xml
+sitemap-*-index.xml
 core/vendor/tinymce/link_list.json
 
 # ============================================
