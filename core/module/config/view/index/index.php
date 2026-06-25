@@ -5,11 +5,7 @@ echo Template::formOpen('configForm'); ?>
         <?php
 echo Template::button('configBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl(false), 'value' => Template::ico('home') ]); ?>
     </div>
-    <div class="col2 offset5">
-        <?php
-echo Template::button('configLocaleButton', [ 'value' => 'Identité', 'href' => Helper::baseUrl() . 'language/site' ]); ?>
-    </div>
-    <div class="col2">
+    <div class="col2 offset7">
         <?php
 echo Template::button('configDashBoardButton', [ 'value' => 'Tableau de bord', 'href' => Helper::baseUrl() . 'dashboard', 'ico' => 'chart-line' ]); ?>
     </div>
@@ -20,6 +16,8 @@ echo Template::submit('Submit'); ?>
 </div>
 
 <div class="tab">
+    <?php
+echo Template::button('configLocaleButton', [ 'value' => 'Identité', 'class' => 'buttonTab', ]); ?>
     <?php
 echo Template::button('configSetupButton', [ 'value' => 'Configuration', 'class' => 'buttonTab', ]); ?>
     <?php
@@ -36,6 +34,8 @@ echo Template::hidden( 'containerSelected', ['value' => $this->getData(['user', 
 
 
 <!-- Pages de formulaires -->
+<?php
+include('core/module/config/view/locale/locale.php') ?>
 <?php
 include('core/module/config/view/setup/setup.php') ?>
 <?php
