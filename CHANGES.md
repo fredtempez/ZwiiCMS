@@ -1,13 +1,13 @@
 # Notes de mises à jour
 
 ## Version 15.0.00
-### � Améliorations
+### 🚀 Améliorations
 - L'identité du site (titre, description, pages spéciales, étiquettes, cookies) est désormais accessible directement depuis un onglet **Identité** dans la configuration, sans passer par le module Langues.
 - Vue Langues modernisée : boutons d'action en icônes, bascule de langue active directement dans le tableau.
 - Modernisation de la vue de gestion des langues.
 - Mise à jour des fichiers de langues livrés.
-### �🔍 SEO multilingue
-- Référencement amélioré pour les sites multlingues : chaque version linguistique dispose désormais de son propre sitemap (`sitemap-{lang}.xml`), indexé dans un `sitemap.xml` central.
+### 🔍 SEO multilingue
+- Référencement amélioré pour les sites multilangues : chaque version linguistique dispose désormais de son propre sitemap (`sitemap-{lang}.xml`), indexé dans un `sitemap.xml` central.
 - Les robots des moteurs de recherche peuvent accéder à n'importe quelle version linguistique via le paramètre `?l={lang}` sans nécessiter de session active.
 - Les liens canoniques, les menus et le plan du site HTML intègrent le paramètre de langue pour les versions non-défaut.
 - Seuls Google et Bing reçoivent la notification du sitemap index.
