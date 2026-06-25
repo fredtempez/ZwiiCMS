@@ -1,12 +1,13 @@
 # Notes de mises à jour
 
+## Version 14.3.02
+Automatisation de l'installation de la version 15.0.00
+
 ## Version 14.3.01
 ###  🛠️ Corrections
 - Corrige un bug d'affichage d'une page portant le même nom qu'un dossier créé par l'utilisateur à la racine de l'hébergement.
 - La gestion de la structure du site (menu) dispose d'un bouton de retour à l'accueil.
 - Adéquation entre la hauteur de police spécifié dans le thème avec celle sélectionnée dans l'éditeur TinyMCE.
-
-
 
 ## Version 14.03.00
 ### 🚀 Améliorations
