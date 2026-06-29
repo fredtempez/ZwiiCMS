@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 15.0.01
+###  🛠️ Corrections
+- Corrige un problème avec la génération des sitemaps.
+
 ## Version 15.0.00
 ### 🚀 Améliorations
 - L'identité du site (titre, description, pages spéciales, étiquettes, cookies) est désormais accessible directement depuis un onglet **Identité** dans la configuration, sans passer par le module Langues.
