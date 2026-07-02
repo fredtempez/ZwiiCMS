@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 15.0.02
+###  🛠️ Corrections
+- Corrige un problème de sélection des pages du site dans l'éditeur TinyMCE.
+
 ## Version 15.0.01
 ###  🛠️ Corrections
 - Corrige un problème avec la génération des sitemaps.
