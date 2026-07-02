@@ -444,7 +444,7 @@ Copie récursivement des dossiers.
 **Exemple :**
 ```php
 // Copier un dossier
-$success = $this->copyDir('core/module/install/resource', 'site/data');
+$success = $this->copyDir('core/module/install/ressource', 'site/data');
 ```
 
 ### `makeZip($fileName, $folder, $filter = [])`

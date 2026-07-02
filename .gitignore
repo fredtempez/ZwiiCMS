@@ -22,7 +22,7 @@ core/module/config/tool/data.key
 # Fichiers générés automatiquement
 # ============================================
 robots.txt
-sitemap*.xml
+sitemap.xml
 core/vendor/tinymce/link_list.json
 
 # ============================================
