@@ -3,8 +3,6 @@
 ## Version 15.0.01
 ###  🛠️ Corrections
 - Corrige un problème avec la génération des sitemaps.
-- Corrige une rétro compatibilité concernant le renommage des dossiers ressource en resource.
-- Adéquation entre la hauteur de police spécifié dans le thème avec celle sélectionnée dans l'éditeur TinyMCE, correctif non appliqué dans la version précédente.
 
 ## Version 15.0.00
 ### 🚀 Améliorations
