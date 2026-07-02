@@ -6,7 +6,7 @@ Ce guide décrit le fonctionnement des bases JSON et la procédure recommandée 
 - Chaque base est un fichier JSON (ex: `theme.json`, `page.json`, `locale.json`) chargé via JsonDb avec options de compression/chiffrement.
 - Le cache partagé (`$this->dataFiles`) stocke les instances JsonDb pour les accès courants.
 - Les bases de contenu sont rangées par langue dans `site/data/<langue>/`; les bases globales sont dans `site/data/`.
-- La configuration est lue en priorité dans `site/data/config.json` (`config.database`), sinon dans les valeurs par défaut fournies par `core/module/install/ressource/defaultdata.php`.
+- La configuration est lue en priorité dans `site/data/config.json` (`config.database`), sinon dans les valeurs par défaut fournies par `core/module/install/resource/defaultdata.php`.
 
 ## Méthodes clés (classe `common`)
 - `loadDataFile($dataFile, $lang)` (privée) : instancie une JsonDb dans le cache partagé en appliquant la config globale + spécifique, pour la langue cible.
