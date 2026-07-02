@@ -2,6 +2,8 @@
 
 ## Version 14.3.02
 Automatisation de l'installation de la version 15.0.00
+###  🛠️ Corrections
+- Adéquation entre la hauteur de police spécifié dans le thème avec celle sélectionnée dans l'éditeur TinyMCE, correctif non appliqué dans la version précédente.
 
 ## Version 14.3.01
 ###  🛠️ Corrections

@@ -85,6 +85,7 @@ tinymce.init({
 	toolbar_sticky: true,
 	font_formats: getSortedFontFormats(),
 	fontsize_formats: themeFontSizeFormats,
+	content_style: 'body { font-size: ' + themeFontSizePx + 'px !important; }',
 	max_height: 600,
 	// CodeMirror
 		// CodeMirror
@@ -334,6 +335,7 @@ tinymce.init({
 	toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist",
 	font_formats: getSortedFontFormats(),
 	fontsize_formats: themeFontSizeFormats,
+	content_style: 'body { font-size: ' + themeFontSizePx + 'px !important; }',
 	// Titre des images
 	image_title: true,
 	// Pages internes
