@@ -29,9 +29,13 @@ function getSortedFontFormats() {
 
 // Lecture de la taille de police du thème depuis theme.css via AJAX
 var themeFontSizePx = 10; // Valeur par défaut
+// Evite les valeurs obsolètes après modification du thème.
+var themeCssVersion = Date.now();
+var themeCssUrl = baseUrl + 'site/data/theme.css?v=' + themeCssVersion;
+var customCssUrl = baseUrl + 'site/data/custom.css?v=' + themeCssVersion;
 (function() {
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', baseUrl + 'site/data/theme.css', false); // Synchrone pour disponibilité immédiate
+	xhr.open('GET', themeCssUrl, false); // Synchrone pour disponibilité immédiate
 	xhr.send();
 	if (xhr.status === 200) {
 		var cssContent = xhr.responseText;
@@ -140,8 +144,8 @@ tinymce.init({
 		baseUrl + "core/layout/common.css",
 		baseUrl + "core/vendor/tinymce/content.css",
 		baseUrl + "site/data/font/font.css",
-		baseUrl + "site/data/theme.css",
-		baseUrl + "site/data/custom.css"
+		themeCssUrl,
+		customCssUrl
 	],
 	// Classe à ajouter à la balise body dans l'iframe
 	body_class: "editorWysiwyg",
@@ -347,8 +351,8 @@ tinymce.init({
 		baseUrl + "core/layout/common.css",
 		baseUrl + "core/vendor/tinymce/content.css",
 		baseUrl + "site/data/font/font.css",
-		baseUrl + "site/data/theme.css",
-		baseUrl + "site/data/custom.css"
+		themeCssUrl,
+		customCssUrl
 	],
 	// Classe à ajouter à la balise body dans l'iframe
 	body_class: "editorWysiwyg",
@@ -401,7 +405,8 @@ tinymce.init({
 document.addEventListener('visibilitychange', function () {
 	if (document.visibilityState === 'visible' && typeof tinymce !== 'undefined') {
 		tinymce.editors.forEach(function (editor) {
-			editor.dom.loadCSS(baseUrl + 'site/data/theme.css?nocache=' + Date.now());
+			editor.dom.loadCSS(baseUrl + 'site/data/theme.css?v=' + Date.now());
+			editor.dom.loadCSS(baseUrl + 'site/data/custom.css?v=' + Date.now());
 		});
 	}
 });
