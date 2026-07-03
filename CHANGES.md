@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 15.0.04
+###  🛠️ Corrections
+- Corrige la génération des fichiers sitemap et robots.txt pour qu'ils soient écrits à la racine du site.
+
 ## Version 15.0.03
 ###  🛠️ Corrections
 - Corrige la suppression d'une langue depuis la vue de configuration des langues.
