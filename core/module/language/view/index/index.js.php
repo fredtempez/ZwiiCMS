@@ -54,10 +54,17 @@ $("#translateContentButton").on("click", function() {
  */
 $(".translateDelete").on("click", function() {
     var _this = $(this);
+    if (_this.hasClass("disabled") || _this.prop("disabled")) {
+        return false;
+    }
     var message_delete = "<?php
 echo Helper::translate('Confirmer la suppression de cette langue'); ?>";
     return core.confirm(message_delete, function() {
-        $(location).attr("href", _this.attr("href"));
+        var href = _this.closest('a').attr('href') || _this.attr('href');
+        if (!href) {
+            return false;
+        }
+        $(location).attr("href", href);
     });
 });
 

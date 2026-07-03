@@ -1,5 +1,10 @@
 # Notes de mises à jour
 
+## Version 15.0.03
+###  🛠️ Corrections
+- Corrige la suppression d'une langue depuis la vue de configuration des langues.
+- Améliore la compatibilité des migrations avec les anciens dossiers `ressource` et les nouveaux dossiers `resource`.
+
 ## Version 15.0.02
 ###  🛠️ Corrections
 - Corrige un problème de sélection des pages du site dans l'éditeur TinyMCE.
