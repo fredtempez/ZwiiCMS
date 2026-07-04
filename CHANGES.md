@@ -1,5 +1,12 @@
 # Notes de mises à jour
 
+## Version 15.0.05
+### 🚀 Améliorations
+- Génération automatique des métas de page :
+  - Remplissage automatique du méta-titre et de la méta-description quand les champs sont vides.
+  - Génération améliorée de la méta-description avec sélection de phrases pertinentes (au lieu du simple début du HTML).
+- Catégories d'onglets dans l'édition de page précisées **Gabarits et navigation** et **Permission & SEO**.
+
 ## Version 15.0.04
 ###  🛠️ Corrections
 - Corrige la génération des fichiers sitemap et robots.txt pour qu'ils soient écrits à la racine du site.

@@ -32,7 +32,7 @@ echo Template::button('pageEditExtensionButton', [ 'value' => 'Extension', 'clas
 	<?php
 echo Template::button('pageEditLayoutButton', [ 'value' => 'Mise en page', 'class' => 'buttonTab', ]); ?>
 	<?php
-echo Template::button('pageEditPermissionButton', [ 'value' => 'Permission', 'class' => 'buttonTab', ]); ?>
+echo Template::button('pageEditPermissionButton', [ 'value' => 'Permission & SEO', 'class' => 'buttonTab', ]); ?>
 </div>
 
 <!-- Champ caché pour transmettre l'onglet-->
@@ -215,7 +215,7 @@ echo Template::button('pageEditJsEditor', [ 'href' => Helper::baseUrl() . 'page/
 			<div class="block">
 				<h4>
 					<?php
-echo Helper::translate('Mise en page'); ?>
+echo Helper::translate('Gabarits et navigation'); ?>
 				</h4>
 				<div class="blockContainer">
 					<div class="row">
