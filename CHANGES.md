@@ -1,5 +1,10 @@
 # Notes de mises à jour
 
+## Version 15.0.07
+###  🛠️ Corrections
+- Corrige la génération des liens du module recherche quand les URL intelligentes sont désactivées (suppression du double `?`).
+- Restaure la compatibilité PHP 7.3 dans la génération du sitemap (remplacement de `str_contains` par une alternative compatible).
+
 ## Version 15.0.06
 ###  🛠️ Corrections
 - Corrige l'indexation du sitemap pour ne référencer que les langues réellement installées.

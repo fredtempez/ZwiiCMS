@@ -1,3 +1,5 @@
+# Version 4.2
+- Supprime les double points d'interrogation dans les liens de la page des résultats lorsque les URL intelligentes ne sont pas activées.
 # Version 4.1
 - Exclut les articles de blog et de news de la recherche.
 # Version 4.0
