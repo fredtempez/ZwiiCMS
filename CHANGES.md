@@ -1,5 +1,11 @@
 # Notes de mises à jour
 
+## Version 15.0.06
+###  🛠️ Corrections
+- Corrige l'indexation du sitemap pour ne référencer que les langues réellement installées.
+- Supprime les sous-sitemaps orphelins lors d'une régénération complète.
+- Déclenche automatiquement la régénération du sitemap après suppression d'une langue de contenu et après changement de langue par défaut.
+
 ## Version 15.0.05
 ### 🚀 Améliorations
 - Génération automatique des métas de page :
