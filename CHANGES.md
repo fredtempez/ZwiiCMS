@@ -1,5 +1,10 @@
 # Notes de mises à jour
 
+## Version 15.0.08
+###  🛠️ Corrections
+- Corrige la gestion de la langue par défaut : le marqueur `.default` est désormais toujours recréé lors du changement de langue par défaut, même si aucun marqueur n'existait auparavant.
+- Fiabilise la mise à jour du marqueur de langue par défaut : suppression des anciens marqueurs résiduels et conservation d'un seul marqueur actif.
+
 ## Version 15.0.07
 ###  🛠️ Corrections
 - Corrige la génération des liens du module recherche quand les URL intelligentes sont désactivées (suppression du double `?`).
