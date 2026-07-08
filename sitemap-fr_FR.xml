@@ -1,82 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--generator-class="Icamys\SitemapGenerator\SitemapGenerator"-->
 <!--generator-version="4.3.1"-->
-<!--generated-on="2026-06-28T14:57:39+02:00"-->
+<!--generated-on="2026-07-08T17:05:40+02:00"-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
-  <loc>http://zwiicms-private.test/?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/mise-en-page?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/mentions-legales?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/contact?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/site-de-zwii?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/recherche?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/mise-en-page?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/galeries?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/enfant?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/menu-lateral?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/galeries?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/enfant?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/menu-lateral?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/galeries?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/enfant?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/menu-lateral?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/galeries?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/enfant?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
- </url>
- <url>
-  <loc>http://zwiicms-private.test/menu-lateral?l=fr_FR</loc>
-  <lastmod>2026-06-28T14:57:39+02:00</lastmod>
+  <loc>http://zwiicms-private.test/accueil?l=fr_FR</loc>
+  <lastmod>2026-07-08T15:05:40+00:00</lastmod>
  </url>
 </urlset>

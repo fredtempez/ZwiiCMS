@@ -4,6 +4,7 @@
 ###  🛠️ Corrections
 - Corrige la gestion de la langue par défaut : le marqueur `.default` est désormais toujours recréé lors du changement de langue par défaut, même si aucun marqueur n'existait auparavant.
 - Fiabilise la mise à jour du marqueur de langue par défaut : suppression des anciens marqueurs résiduels et conservation d'un seul marqueur actif.
+- Corrige l'installateur : le marqueur `.default` est maintenant créé même si le dossier de langue existe déjà.
 
 ## Version 15.0.07
 ###  🛠️ Corrections
