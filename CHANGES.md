@@ -1,5 +1,13 @@
 # Notes de mises à jour
 
+## Version 15.1.00
+### 🚀 Améliorations
+- Déplacement du bouton de gestion de la structure du menu.
+###  🛠️ Corrections
+- Sécurise la langue de contenu : impossible d'injecter une valeur invalide en session (`ZWII_SITE_CONTENT`).
+- Migration des actions page/menu vers le paramètre `l` (fin du 3e segment d'URL), avec compatibilité rewrite et non-rewrite.
+- Le paramètre `l` n'est ajouté que si nécessaire (site multilingue, langue non par défaut) et les liens admin sont fiabilisés (dont l'accueil).
+
 ## Version 15.0.08
 ###  🛠️ Corrections
 - Corrige la gestion de la langue par défaut : le marqueur `.default` est désormais toujours recréé lors du changement de langue par défaut, même si aucun marqueur n'existait auparavant.

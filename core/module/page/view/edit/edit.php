@@ -3,6 +3,8 @@ echo Template::formOpen('pageEditForm'); ?>
 	<!-- Variable transmise à TinyMCE -->
 <div id="zwii_site_content" data-variable="<?php
 echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : 'home'); ?>"></div>
+<?php
+$langCount = 0; foreach (self::$languages as $key => $value) { if (is_dir(self::DATA_DIR . $key)) { $langCount++; if ($langCount > 1) { break; } } } $separator = Helper::checkRewrite() ? '?' : '&'; $langParam = ($langCount > 1 && file_exists(self::DATA_DIR . self::$siteContent . '/.default') === false) ? $separator . 'l=' . self::$siteContent : ''; ?>
 <div class="row">
 	<div class="col1">
 		<?php
@@ -10,11 +12,11 @@ echo Template::button('configModulesBack', [ 'class' => 'buttonGrey', 'href' => 
 	</div>
 	<div class="col1 offset7">
 		<?php
-echo Template::button('pageEditDelete', [ 'class' => 'buttonRed', 'href' => Helper::baseUrl() . 'page/delete/' . $this->getUrl(2) . '/' . self::$siteContent, 'value' => Template::ico('trash'), 'help' => 'Effacer la page' ]); ?>
+echo Template::button('pageEditDelete', [ 'class' => 'buttonRed', 'href' => Helper::baseUrl() . 'page/delete/' . $this->getUrl(2) . $langParam, 'value' => Template::ico('trash'), 'help' => 'Effacer la page' ]); ?>
 	</div>
 	<div class="col1">
 		<?php
-echo Template::button('pageEditDuplicate', [ 'href' => Helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . '/' . self::$siteContent, 'value' => Template::ico('clone'), 'help' => 'Dupliquer la page' ]); ?>
+echo Template::button('pageEditDuplicate', [ 'href' => Helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . $langParam, 'value' => Template::ico('clone'), 'help' => 'Dupliquer la page' ]); ?>
 	</div>
 	<div class="col2">
 		<?php

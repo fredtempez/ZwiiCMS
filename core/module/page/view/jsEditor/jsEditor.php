@@ -1,11 +1,13 @@
 <?php
 echo Template::formOpen('pageJsEditorForm'); ?>
+<?php
+$langCount = 0; foreach (self::$languages as $key => $value) { if (is_dir(self::DATA_DIR . $key)) { $langCount++; if ($langCount > 1) { break; } } } $separator = Helper::checkRewrite() ? '?' : '&'; $langParam = ($langCount > 1 && file_exists(self::DATA_DIR . self::$siteContent . '/.default') === false) ? $separator . 'l=' . self::$siteContent : ''; ?>
 <input type="hidden" name="returnUrl" value="<?php
-echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : Helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent; ?>">
+echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : Helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . $langParam; ?>">
 <div class="row">
 	<div class="col1">
 		<?php
-echo Template::button('pageJsEditorBack', [ 'class' => 'buttonGrey', 'href' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : Helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent, 'value' => Template::ico('left') ]); ?>
+echo Template::button('pageJsEditorBack', [ 'class' => 'buttonGrey', 'href' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : Helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . $langParam, 'value' => Template::ico('left') ]); ?>
 	</div>
 	<div class="col2 offset9">
 		<?php

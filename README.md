@@ -1,4 +1,4 @@
-# 🚀 ZwiiCMS 15.0.08
+# 🚀 ZwiiCMS 15.1.00
 # Français 🇫🇷
 
 Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation. Conçu pour la simplicité et la performance, ZwiiCMS offre une solution complète pour la gestion de contenu web moderne.
