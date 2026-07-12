@@ -3,13 +3,13 @@
 		<?php
 echo Template::button('configModulesBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl(), 'value' => Template::ico('home') ]); ?>
 	</div>
-	<div class="col1 offset9">
+	<div class="col3 offset5">
 		<?php
-echo Template::button('pluginModulesStore', [ 'href' => Helper::baseUrl() . 'plugin/store', 'value' => Template::ico('shopping-basket'), 'help' => 'Installer depuis le catalogue en ligne' ]); ?>
+echo Template::button('pluginModulesStore', [ 'href' => Helper::baseUrl() . 'plugin/store', 'value' => 'Installer depuis le catalogue en ligne', 'ico' => 'shopping-basket', ]); ?>
 	</div>
-	<div class="col1">
+	<div class="col3">
 		<?php
-echo Template::button('pluginStoreUpload', [ 'href' => Helper::baseUrl() . 'plugin/upload', 'value' => Template::ico('file-archive'), 'help' => 'Installer depuis une archive' ]); ?>
+echo Template::button('pluginStoreUpload', [ 'href' => Helper::baseUrl() . 'plugin/upload', 'value' => 'Installer depuis une archive', 'ico' => 'file-archive', ]); ?>
 	</div>
 </div>
 <?php
