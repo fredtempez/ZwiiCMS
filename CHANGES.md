@@ -3,6 +3,7 @@
 ## Version 15.1.00
 ### 🚀 Améliorations
 - Déplacement du bouton de gestion de la structure du menu.
+- Refactorisarion classe Layout.
 ###  🛠️ Corrections
 - Sécurise la langue de contenu : impossible d'injecter une valeur invalide en session (`ZWII_SITE_CONTENT`).
 - Migration des actions page/menu vers le paramètre `l` (fin du 3e segment d'URL), avec compatibilité rewrite et non-rewrite.
