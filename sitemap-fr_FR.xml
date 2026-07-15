@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--generator-class="Icamys\SitemapGenerator\SitemapGenerator"-->
 <!--generator-version="4.3.1"-->
-<!--generated-on="2026-07-12T09:15:38+02:00"-->
+<!--generated-on="2026-07-13T12:55:47+02:00"-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://localhost/ZwiiCMS-private/accueil</loc>
-  <lastmod>2026-07-12T07:15:38+00:00</lastmod>
+  <lastmod>2026-07-13T10:55:47+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/ZwiiCMS-private/enfant</loc>
-  <lastmod>2026-07-12T07:15:38+00:00</lastmod>
+  <lastmod>2026-07-13T10:55:47+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/ZwiiCMS-private/mise-en-page</loc>
-  <lastmod>2026-07-12T07:15:38+00:00</lastmod>
+  <lastmod>2026-07-13T10:55:47+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/ZwiiCMS-private/menu-lateral</loc>
-  <lastmod>2026-07-12T07:15:38+00:00</lastmod>
+  <lastmod>2026-07-13T10:55:47+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/ZwiiCMS-private/blog</loc>
-  <lastmod>2026-07-12T07:15:38+00:00</lastmod>
+  <lastmod>2026-07-13T10:55:47+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/ZwiiCMS-private/blog/mon-premier-article</loc>
@@ -37,18 +37,18 @@
  </url>
  <url>
   <loc>http://localhost/ZwiiCMS-private/galeries</loc>
-  <lastmod>2026-07-12T07:15:38+00:00</lastmod>
+  <lastmod>2026-07-13T10:55:47+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/ZwiiCMS-private/site-de-zwii</loc>
-  <lastmod>2026-07-12T07:15:38+00:00</lastmod>
+  <lastmod>2026-07-13T10:55:47+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/ZwiiCMS-private/contact</loc>
-  <lastmod>2026-07-12T07:15:38+00:00</lastmod>
+  <lastmod>2026-07-13T10:55:47+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/ZwiiCMS-private/recherche</loc>
-  <lastmod>2026-07-12T07:15:38+00:00</lastmod>
+  <lastmod>2026-07-13T10:55:47+00:00</lastmod>
  </url>
 </urlset>

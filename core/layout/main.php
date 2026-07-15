@@ -7,19 +7,19 @@ echo substr(self::$siteContent, 0, 2); ?>">
 	<meta name="generator" content="ZiiCMS https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php
-$layout->showMetaTitle(); ?>
+echo $layout->showMetaTitle(); ?>
 	<?php
-$layout->showMetaDescription(); ?>
+echo $layout->showMetaDescription(); ?>
 	<?php
-$layout->showMetaType(); ?>
+echo $layout->showMetaType(); ?>
 	<?php
-$layout->showMetaImage(); ?>
+echo $layout->showMetaImage(); ?>
 	<?php
-$layout->showFavicon(); ?>
+echo $layout->showFavicon(); ?>
 	<?php
-$layout->showVendor(); ?>
+echo $layout->showVendor(); ?>
 	<?php
-$layout->showFonts(); ?>
+echo $layout->showFonts(); ?>
 	<?php
 if (file_exists(self::DATA_DIR . 'font/font.css')): $fontCssPath = Helper::baseUrl(false) . self::DATA_DIR . 'font/font.css?' . md5_file(self::DATA_DIR . 'font/font.css'); ?>
 		<link rel="preload" href="<?php
@@ -66,9 +66,9 @@ echo Helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" title="fLUX rss">
 	<?php
 endif; ?>
 	<?php
-$layout->showStyle(); ?>
+echo $layout->showStyle(); ?>
 	<?php
-$layout->showInlineStyle(); ?>
+echo $layout->showInlineStyle(); ?>
 	<!-- Script perso dans le header -->
 	<?php
 if (file_exists(self::DATA_DIR . 'head.inc.html')) { include(self::DATA_DIR . 'head.inc.html'); } ?>
@@ -79,12 +79,12 @@ if (file_exists(self::DATA_DIR . 'head.inc.html')) { include(self::DATA_DIR . 'h
 	<?php
 if ($this->getUser('role') > self::ROLE_MEMBER): ?>
 		<?php
-$layout->showBar(); ?>
+echo $layout->showBar(); ?>
 	<?php
 endif; ?>
 	<!-- Notifications -->
 	<?php
-$layout->showNotification(); ?>
+echo $layout->showNotification(); ?>
 	<!-- Menu dans le fond du site avant la bannière -->
 	<?php
 if ($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top'): ?>
@@ -107,7 +107,7 @@ $menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="c
 		<div id="menu" <?php
 echo $menuClass; ?>>
 			<?php
-$layout->showMenu(); ?>
+echo $layout->showMenu(); ?>
 		</div> <!--fin menu -->
 		</nav>
 	<?php
@@ -167,7 +167,7 @@ $menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="cont
 			<div id="menu" <?php
 echo $menuClass; ?>>
 				<?php
-$layout->showMenu(); ?>
+echo $layout->showMenu(); ?>
 			</div>
 		</nav>
 	<?php
@@ -189,7 +189,7 @@ echo Template::ico('menu', ['fontSize' => '2em']); ?>
 				</label>
 				<div id="menu" class="container">
 					<?php
-$layout->showMenu(); ?>
+echo $layout->showMenu(); ?>
 				</div>
 			</nav>
 		<?php
@@ -246,17 +246,17 @@ echo Template::ico('menu', ['fontSize' => '2em']); ?>
 				</label>
 				<div id="menu" class="container">
 					<?php
-$layout->showMenu(); ?>
+echo $layout->showMenu(); ?>
 				</div>
 			</nav>
 		<?php
 endif; ?>
 		<!-- Corps de page -->
 		<?php
-$layout->showMain(); ?>
+echo $layout->showMain(); ?>
 		<!-- footer -->
 		<?php
-$layout->showFooter(); ?>
+echo $layout->showFooter(); ?>
 		<!-- Fin du site -->
 		<?php
 echo $this->getData(['theme', 'footer', 'position']) === 'site' ? '</div>' : ''; ?>
@@ -267,10 +267,10 @@ echo Template::ico('up'); ?>
 		</div>
 		<!-- Affichage du consentement aux cookies-->
 		<?php
-$layout->showCookies(); ?>
+echo $layout->showCookies(); ?>
 		<!-- Les scripts -->
 		<?php
-$layout->showScript(); ?>
+echo $layout->showScript(); ?>
 		<!-- Script perso dans body -->
 		<?php
 if (file_exists(self::DATA_DIR . 'body.inc.html')) { include(self::DATA_DIR . 'body.inc.html'); } ?>

@@ -6,21 +6,21 @@ echo substr(self::$siteContent, 0, 2); ?>">
 	<meta http-equiv="content-type" content="text/html;">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php
-$layout->showMetaTitle(); ?>
+echo $layout->showMetaTitle(); ?>
 	<?php
-$layout->showMetaDescription(); ?>
+echo $layout->showMetaDescription(); ?>
 	<?php
-$layout->showMetaType(); ?>
+echo $layout->showMetaType(); ?>
 	<?php
-$layout->showMetaImage(); ?>
+echo $layout->showMetaImage(); ?>
 	<?php
-$layout->showFavicon(); ?>
+echo $layout->showFavicon(); ?>
 	<?php
-$layout->showVendor(); ?>
+echo $layout->showVendor(); ?>
 	<?php
-$layout->showStyle(); ?>
+echo $layout->showStyle(); ?>
 	<?php
-$layout->showFonts(); ?>
+echo $layout->showFonts(); ?>
 	<?php
 if (file_exists(self::DATA_DIR . 'font/font.css')): $fontCssPath = Helper::baseUrl(false) . self::DATA_DIR . 'font/font.css?' . md5_file(self::DATA_DIR . 'font/font.css'); ?>
 		<link rel="preload" href="<?php
@@ -64,8 +64,8 @@ endif; ?>
 </head>
 <body>
 <?php
-$layout->showContent(); ?>
+echo $layout->showContent(); ?>
 <?php
-$layout->showScript(); ?>
+echo $layout->showScript(); ?>
 </body>
 </html>
