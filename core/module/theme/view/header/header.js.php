@@ -14,7 +14,7 @@
  * @link http://zwiicms.fr/
  */
 
- $(document).ready(function(){
+$(document).ready(function() {
 	$("header").css("line-height", "");
 	$("header").css("height", "");
 });
@@ -22,7 +22,7 @@
 /**
  * Aperçu en direct
  */
-$("input, select").on("change", function() {
+$("input, select").on("change", function(e) {
 	
 	e.stopPropagation(); // Empêche ZwiiCMS d'entendre ce "change"
 
@@ -86,26 +86,26 @@ echo Helper::translate('Hauteur de l\'image sélectionnée');?>";
 			$("#themeHeaderHeight option:eq(0)").remove();
 		}
 
-		tmpImg.src= "<?php
-echo Helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
+		tmpImg.src = "<?php
+echo Helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val();
 
 		// Import des polices de caractères
 		var headerFont = $("#themeHeaderFont :selected").val();
 		var headerFontText = $("#themeHeaderFont :selected").text();
-		var css = "@import url('https://fonts.cdnfonts.com/css/" + headerFont + "');";
+		css = "@import url('https://fonts.cdnfonts.com/css/" + headerFont + "');";
 
-			css += "header{text-align:" + $("#themeHeaderTextAlign").val() + ";";
-			if ($("#themeHeaderImage").val()) {
-				// Une image est sélectionnée
-				css += "background-image:url('<?php
+		css += "header{text-align:" + $("#themeHeaderTextAlign").val() + ";";
+		if ($("#themeHeaderImage").val()) {
+			// Une image est sélectionnée
+			css += "background-image:url('<?php
 echo Helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
-				css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
-			// Pas d'image sélectionnée
-			} else {
-				// Désactiver l'option responsive
-				css += "background-image:none;";
-			}
-			css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
+			css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
+		// Pas d'image sélectionnée
+		} else {
+			// Désactiver l'option responsive
+			css += "background-image:none;";
+		}
+		css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
 
 
         // Taille, couleur, épaisseur et capitalisation du titre de la bannière
@@ -216,7 +216,7 @@ echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
 		.attr("id", "themePreview")
 		.text(css)
 		.appendTo("head");
-}).trigger("change");
+}).triggerHandler("change");
 
 // Affiche / Cache les options de l'image du fond
 $("#themeHeaderImage").on("change", function() {
