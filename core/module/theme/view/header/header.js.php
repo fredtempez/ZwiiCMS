@@ -10,7 +10,7 @@
  * @Copyright (C) 2026, Frédéric Tempez
  * @Licensed under the GNU General Public License v3.0 or later.
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2025, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2026, Frédéric Tempez
  * @link http://zwiicms.fr/
  */
 
@@ -23,6 +23,8 @@
  * Aperçu en direct
  */
 $("input, select").on("change", function() {
+	
+	e.stopPropagation(); // Empêche ZwiiCMS d'entendre ce "change"
 
 	var css = "";
 

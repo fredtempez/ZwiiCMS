@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 15.1.01
+###  🛠️ Corrections
+- Edition de la bannière impossible depuis le thème.
+
 ## Version 15.1.00
 ### 🚀 Améliorations
 - Déplacement du bouton de gestion de la structure du menu.

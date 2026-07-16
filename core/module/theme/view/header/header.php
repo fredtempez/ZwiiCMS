@@ -1,7 +1,7 @@
 <?php
-echo Template::formOpen('themeHeaderForm'); ?>
+echo Template::formOpen('themeHeaderForm');?>
 <div id="zwii_site_content" data-variable="<?php
-echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : 'home'); ?>"></div>
+echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : \Zwii\Cms\core::$siteContent); ?>"></div>
 <div class="row">
     <div class="col1">
         <?php
@@ -106,7 +106,6 @@ echo Template::select('themeHeaderTextTransform', theme::$textTransforms, [ 'lab
                     <?php
 echo Template::select('themeHeaderTextAlign', theme::$aligns, [ 'label' => 'Alignement', 'selected' => $this->getData(['theme', 'header', 'textAlign']) ]); ?>
                 </div>
-
             </div>
         </div>
     </div>
@@ -175,7 +174,7 @@ echo Template::textarea('themeHeaderText', [ 'label' => '<div class="titleWysiwy
 </div>
 <div id="featureContent" class="displayNone">
     <?php
-echo $this->getData(['theme', 'header', 'featureContent']); ?>
+echo $this->getData(['theme', 'header', 'featureContent']);?>
 </div>
 <?php
 echo Template::formClose(); ?>

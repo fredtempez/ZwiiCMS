@@ -1,7 +1,7 @@
 <?php
 echo Template::formOpen('themeFooterForm'); ?>
 <div id="zwii_site_content" data-variable="<?php
-echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : 'home'); ?>"></div>
+echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : \Zwii\Cms\core::$siteContent); ?>"></div>
 <div class="row">
     <div class="col1">
         <?php
