@@ -1,5 +1,10 @@
 # Notes de mises à jour
 
+## Version 15.1.02
+### 🚀 Améliorations
+- Mise à jour de la langue espagnole.
+- La balise méta permet l'autopromotion.
+
 ## Version 15.1.01
 ###  🛠️ Corrections
 - Edition de la bannière impossible depuis le thème.
