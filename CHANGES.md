@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 15.1.03
+###  🛠️ Corrections
+- Corrige l'absence d'affichage du pied de page personnalisé.
+
 ## Version 15.1.02
 ### 🚀 Améliorations
 - Mise à jour de la langue espagnole.
