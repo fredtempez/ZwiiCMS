@@ -17,9 +17,7 @@ echo template::submit('galleryUpdateSubmit'); ?>
 			<div class="row">
 				<div class="col12">
 					<?php
-echo template::hidden('galleryUpdateDirectoryOld', [ 'noDirty' => true, 'value' => $this->getData(['module', $this->getUrl(0), 'directory']), ]); ?>
-					<?php
-echo template::select('galleryUpdateDirectory', [], [ 'label' => 'Dossier cible', 'noDirty' => true, ]); ?>
+echo template::select('galleryUpdateDirectory', slider::$directories, [ 'label' => 'Dossier cible', 'selected' => $this->getData(['module', $this->getUrl(0), 'directory']), ]); ?>
 				</div>
 			</div>
 		</div>

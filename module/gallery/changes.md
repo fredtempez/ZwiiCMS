@@ -1,3 +1,5 @@
+# Version 7.0
+- La liste des dossiers des champs de sélection est désormais générée côté serveur, suppression de l'appel Ajax et de son rafraîchissement automatique.
 # Version 6.0
 - Réécriture de la méthode générant l'index des galeries et l'affichage d'une galerie.
 # Version 5.2

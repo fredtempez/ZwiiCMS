@@ -1,3 +1,5 @@
+# Version 9.0
+- La liste des dossiers du champ de sélection est désormais générée côté serveur, suppression de l'appel Ajax et de son rafraîchissement automatique.
 # Version 8.1
 - Corrige le chemin des ressources insérés par des membres éditeurs.
 - Initialise un thème absent.

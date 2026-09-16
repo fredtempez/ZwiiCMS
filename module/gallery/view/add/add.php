@@ -21,12 +21,8 @@ echo helper::translate('Paramètres');?></h4>
 echo template::text('galleryAddName', [ 'label' => 'Nom' ]); ?>
 					</div>
 					<div class="col6">
-						<div class="displayNone">
-							<?php
-echo template::hidden('galleryAddDirectoryOld', [ 'noDirty' => true ]); ?>
-						</div>
 						<?php
-echo template::select('galleryAddDirectory', [], [ 'label' => 'Dossier cible', 'noDirty' => true ]); ?>
+echo template::select('galleryAddDirectory', gallery::$directories, [ 'label' => 'Dossier cible' ]); ?>
 					</div>
 				</div>
 				<div class="row">

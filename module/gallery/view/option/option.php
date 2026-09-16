@@ -49,12 +49,8 @@ echo helper::translate('Paramètres');?></h4>
 echo template::text('galleryEditName', [ 'label' => 'Nom', 'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'name']) ]); ?>
 				</div>
 				<div class="col6">
-                    <div class="displayNone">
                     <?php
-echo template::hidden('galleryEditDirectoryOld', [ 'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'directory']), 'noDirty' => true ]); ?>
-					</div>
-                    <?php
-echo template::select('galleryEditDirectory', [], [ 'label' => 'Dossier cible', 'noDirty' => true ]); ?>
+echo template::select('galleryEditDirectory', gallery::$directories, [ 'label' => 'Dossier cible', 'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'directory']) ]); ?>
 				</div>
 			</div>
 			<div class="row">
