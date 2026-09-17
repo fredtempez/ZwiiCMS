@@ -1,5 +1,11 @@
 # Notes de mises à jour
 
+## Version 15.1.04
+###  🛠️ Corrections
+- Correctif des modules slider et gallery :
+    - Méthode de découverte des dossiers,
+    - Miniature des images dans le slider.
+
 ## Version 15.1.03
 ###  🛠️ Corrections
 - Corrige l'absence d'affichage du pied de page personnalisé.
