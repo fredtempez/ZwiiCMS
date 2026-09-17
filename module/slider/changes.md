@@ -1,3 +1,6 @@
+# Version 9.1
+- Ajoute des options de dimensions : mode de hauteur (automatique, hauteur fixe ou ratio), choix de la hauteur fixe, du ratio et du mode d'ajustement de l'image (remplir ou contenir).
+- Corrige le rendu des miniatures dans la vue de configuration : repli sur l'image originale si la miniature est indisponible (GIF animés, échec de génération).
 # Version 9.0
 - La liste des dossiers du champ de sélection est désormais générée côté serveur, suppression de l'appel Ajax et de son rafraîchissement automatique.
 - Corrige l'absence d'affichage des miniatures dans la vue de configuration : la miniature est désormais générée si manquante.

@@ -1,5 +1,11 @@
 # Notes de mises à jour
 
+## Version 15.1.05
+### 🚀 Améliorations
+- Module slider : ajout d'options de dimensions (rapport de dimensions automatique, hauteur fixe ou ratio fixe, avec choix de la hauteur et du mode d'ajustement de l'image).
+### 🛠️ Corrections
+- Module slider : affichage des miniatures dans la configuration, repli sur l'image originale si la miniature est indisponible (GIF animés, échec de génération).
+
 ## Version 15.1.04
 ###  🛠️ Corrections
 - Correctif des modules slider et gallery :
