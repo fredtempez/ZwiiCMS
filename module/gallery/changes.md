@@ -1,3 +1,5 @@
+# Version 7.1
+- Corrige un warning après ajout d'une galerie.
 # Version 7.0
 - La liste des dossiers des champs de sélection est désormais générée côté serveur, suppression de l'appel Ajax et de son rafraîchissement automatique.
 # Version 6.0

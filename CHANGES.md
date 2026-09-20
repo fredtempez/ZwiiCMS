@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 15.2.01
+### 🛠️ Corrections
+- Module Gallery, corrige un bug après l'ajout d'une galerie (version 7.1).
+
 ## Version 15.2.00
 ### 🚀 Améliorations
 - Module slider : ajout d'options de dimensions (rapport de dimensions automatique, hauteur fixe ou ratio fixe, avec choix de la hauteur et du mode d'ajustement de l'image).
