@@ -1,3 +1,8 @@
+# Version 4.10
+- Compatibilité php 8.5
+- Ajoute la constante MULTIMODULE pour autoriser la présence de plusiers modules dans une même page.
+# Version 4.9
+- Sécurité : le résultat du captcha du formulaire n'est plus renvoyé au client. Il est stocké en session côté serveur et vérifié par `hash_equals`, avec usage unique. Nécessite Zwii 16.0.00c.
 # Version 4.8
 - Remplacement de la librairie html-sortable par SortableJS.
 # Version 4.7

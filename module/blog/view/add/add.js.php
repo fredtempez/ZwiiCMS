@@ -7,9 +7,7 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2026, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @Copyright (C) 2026, Frédéric Tempez
- * @Licensed under the GNU General Public License v3.0 or later.
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
@@ -34,25 +32,25 @@ $("#blogAddCommentClose").on("change", function() {
 
 $("#blogAddCommentNotification").on("change", function() {
 	if ($(this).is(':checked') ) {
-		$("#blogAddCommentGroupNotification").slideDown();
+		$("#blogAddCommentGroupNotificationWrapper").slideDown();
 	} else {
-		$("#blogAddCommentGroupNotification").slideUp();
+		$("#blogAddCommentGroupNotificationWrapper").slideUp();
 	}
 });
 
 
 $( document).ready(function() {
 
-	if ($("#blogAddCloseComment").is(':checked') ) {
+	if ($("#blogAddCommentClose").is(':checked') ) {
 		$(".commentOptionsWrapper").slideUp();
 	} else {
 		$(".commentOptionsWrapper").slideDown();
 	}
 
 	if ($("#blogAddCommentNotification").is(':checked') ) {
-		$("#blogAddCommentGroupNotification").slideDown();
+		$("#blogAddCommentGroupNotificationWrapper").slideDown();
 	} else {
-		$("#blogAddCommentGroupNotification").slideUp();
+		$("#blogAddCommentGroupNotificationWrapper").slideUp();
 	}
 
 	// Permalink

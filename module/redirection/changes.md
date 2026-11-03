@@ -1,3 +1,6 @@
+
+# Version 2.3
+- Ajoute la constante MULTIMODULE pour autoriser la présence de plusiers modules dans une même page.
 # Version 2.2
 - Contrôle de la variable de session liée au contenu. Evite des erreurs lorsque plusieurs onglets sont ouverts.
 # Version 2.1

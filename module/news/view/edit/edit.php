@@ -22,12 +22,12 @@ echo template::submit('newsEditSubmit', [ 'value' => 'Publier', 'uniqueSubmissio
 				<h4><?php
 echo helper::translate('Informations générales');?></h4>
 				<?php
-echo template::text('newsEditTitle', [ 'label' => 'Titre', 'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'title']) ]); ?>
+echo template::text('newsEditTitle', [ 'label' => 'Titre', 'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrlArg(0), 'title']) ]); ?>
 			</div>
 		</div>
 	</div>
 	<?php
-echo template::textarea('newsEditContent', [ 'class' => 'editorWysiwyg', 'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'content']) ]); ?>
+echo template::textarea('newsEditContent', [ 'class' => 'editorWysiwyg', 'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrlArg(0), 'content']) ]); ?>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
@@ -40,11 +40,11 @@ echo template::select('newsEditUserId', news::$users, [ 'label' => 'Auteur', 'se
 					</div>
 					<div class="col4">
 						<?php
-echo template::date('newsEditPublishedOn', [ 'help' => 'La news est consultable à partir du moment où la date de publication est passée.', 'label' => 'Date de publication', 'type' => 'datetime-local', 'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOn']) ]); ?>
+echo template::date('newsEditPublishedOn', [ 'help' => 'La news est consultable à partir du moment où la date de publication est passée.', 'label' => 'Date de publication', 'type' => 'datetime-local', 'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrlArg(0), 'publishedOn']) ]); ?>
 					</div>
 					<div class="col4">
 						<?php
-echo template::date('newsEditPublishedOff', [ 'help' => 'La news est consultable Jusqu\'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.', 'label' => 'Date de dépublication', 'type' => 'datetime-local', 'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOff']) ]); ?>
+echo template::date('newsEditPublishedOff', [ 'help' => 'La news est consultable Jusqu\'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.', 'label' => 'Date de dépublication', 'type' => 'datetime-local', 'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrlArg(0), 'publishedOff']) ]); ?>
 					</div>
 				</div>
 			</div>

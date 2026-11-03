@@ -8,9 +8,7 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2026, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @Copyright (C) 2026, Frédéric Tempez
- * @Licensed under the GNU General Public License v3.0 or later.
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
@@ -50,3 +48,93 @@
 #pageEditProfil2Wrapper {
     padding: 0;
 }
+
+/* MULTI-MODULE : liste ordonnable des modules de la page */
+.pageModulesList .pageModuleRow {
+    border-bottom: 1px solid #eee;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.pageModulesList .pageModuleRow:last-child {
+    border-bottom: none;
+}
+
+.pageModulesList .pageModuleHandle {
+    text-align: center;
+    color: #999;
+    font-size: 1.2em;
+}
+
+.pageModulesList .pageModuleRow select {
+    margin-bottom: 0;
+}
+
+/* Décalage de la ligne pendant le glisser-déposer */
+.pageModuleRow.sortable-ghost {
+    opacity: 0.4;
+}
+
+/* MULTI-MODULE : panneau d'aide des shortcodes dans l'onglet Contenu */
+#pageModuleShortcutList {
+    margin-top: 8px;
+}
+
+.pageModuleShortcut {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.pageModuleShortcut:last-child {
+    border-bottom: none;
+}
+
+.pageModuleShortcutName {
+    flex: 0 0 auto;
+    font-weight: bold;
+}
+
+.pageModuleShortcutCode {
+    flex: 1 1 auto;
+    /* min-width:0 indispensable en flexbox : sinon la largeur intrinsèque du code
+       [MODULE:instanceId] empêche l'élément de rétrécir et pousse les boutons
+       hors de la ligne (débordement). */
+    min-width: 0;
+    overflow-wrap: anywhere;
+    padding: 3px 6px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    /* Sélection au clic pour faciliter la copie manuelle */
+    user-select: all;
+}
+
+/* Boutons du panneau des shortcodes (clones de Template::button → <a class="button">).
+   Scope limité au panneau #pageModuleShortcutList pour ne PAS affecter les autres
+   éléments .button de l'interface. On neutralise width:100% hérité de common.css. */
+#pageModuleShortcutList .pageModuleShortcutCopy,
+#pageModuleShortcutList .pageModuleShortcutInsert,
+#pageModuleShortcutList .pageModuleShortcutConfig {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 0;
+    margin: 0 0 0 auto;
+    padding: 6px 12px;
+    white-space: nowrap;
+}
+
+/* Le bouton « Configurer » (engrenage) suit les boutons Insérer/Copier : on annule
+   la marge automatique à gauche pour qu'il reste collé au groupe de boutons. */
+#pageModuleShortcutList .pageModuleShortcutConfig {
+    margin-left: 0;
+}
+
+/* Bouton « Édition en plein écran » : jaune, propre à cet écran */
+#pageEditFullScreen.button.buttonYellow { background-color: #f4c430; color: #2b2b2b; }
+#pageEditFullScreen.button.buttonYellow:hover { background-color: #e0b020; color: #2b2b2b; }
+#pageEditFullScreen.button.buttonYellow:active { background-color: #c99a10; color: #2b2b2b; }

@@ -22,7 +22,7 @@ if (plugin::$modulesInstalled): ?>
 echo Helper::translate('Sauvegarde'); ?>
 				</h4>
 				<?php
-echo Template::table([2, 2, 1, 5, 1, 1], plugin::$modulesInstalled, ['Module', 'Identifiant', 'Version', '', '', '']); ?>
+echo Template::table([2, 2, 1, 6, 1], plugin::$modulesInstalled, ['Module', 'Identifiant', 'Version', 'Pages', '']); ?>
 			</div>
 		</div>
 	</div>

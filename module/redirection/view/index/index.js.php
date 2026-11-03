@@ -6,9 +6,7 @@
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @Copyright (C) 2026, Frédéric Tempez
- * @Licensed under the GNU General Public License v3.0 or later.
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  *
  **/ 
@@ -21,8 +19,7 @@ echo helper::translate('OUI : éditer la page | NON : tester la redirection'); ?
   		message,
    		function() {
   			$(location).attr("href", "<?php
-echo helper::baseUrl(); ?>page/edit/<?php
-echo $this->getUrl(0); ?>");
+echo $this->getPageEditUrl(); ?>");
   		},
   		function() {
   			$(location).attr("href", "<?php

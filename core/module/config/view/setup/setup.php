@@ -25,13 +25,17 @@ echo Template::select('configTimerBar', config::$timerBar, [ 'label' => 'Barre d
 				</div>
 				<div class="row">
 
-					<div class="col6">
+					<div class="col4 verticalAlignBottom">
 						<?php
 echo Template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [ 'checked' => $this->getData(['config', 'cookieConsent']), 'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.' ]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4 verticalAlignBottom">
 						<?php
 echo Template::checkbox('configRewrite', true, 'Apache URL intelligentes', [ 'checked' => Helper::checkRewrite(), 'help' => 'Supprime le point d\'interrogation dans les URL, l\'option est indisponible avec les autres serveurs Web', 'disabled' => Helper::checkServerSoftware() === false and config::isModRewriteEnabled() ]); ?>
+					</div>
+					<div class="col4 verticalAlignBottom">
+						<?php
+echo Template::checkbox('configPageEditFullScreen', true, 'Édition des pages en plein écran', [ 'checked' => $this->getData(['config', 'editFullScreen']), 'help' => 'La bannière, le menu, le fond du site et le pied de page sont temporairement masqués.' ]); ?>
 					</div>
 				</div>
 			</div>
@@ -44,13 +48,17 @@ echo Template::checkbox('configRewrite', true, 'Apache URL intelligentes', [ 'ch
 echo Helper::translate('Mise à jour automatisée'); ?>
 				</h4>
 				<div class="row">
-					<div class="col6">
+					<div class="col4">
 						<?php
 echo Template::checkbox('configAutoUpdate', true, 'Rechercher une mise à jour en ligne', [ 'checked' => $this->getData(['config', 'autoUpdate']), 'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.', 'disabled' => empty(Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL)) ]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
 						<?php
 echo Template::checkbox('configAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [ 'checked' => $this->getData(['config', 'autoUpdateHtaccess']), 'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.', 'disabled' => empty(Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL)) ]); ?>
+					</div>
+					<div class="col4">
+						<?php
+echo Template::text('configCanonicalUrl', [ 'label' => 'URL de base du site', 'value' => Helper::canonicalBaseUrl(), 'disabled' => true, 'noDirty' => true, 'help' => 'Déterminée automatiquement à partir du domaine du site et de l’option URL intelligente. Elle est utilisée pour les liens de réinitialisation de mot de passe.' ]); ?>
 					</div>
 				</div>
 				<div class="row">

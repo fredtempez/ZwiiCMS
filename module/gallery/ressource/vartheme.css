@@ -1,12 +1,15 @@
-.galleryRow {
+/* Variables du thème : chaque règle est limitée au conteneur de l'instance (#scope#) */
+#scope# .galleryRow {
 	--thumbAlign: #thumbAlign#;
 }
-.colPicture {
+
+#scope# .colPicture {
 	--thumbWidth: #thumbWidth#;
 	--thumbMargin: #thumbMargin#;
 }
-.galleryPicture,
-.galleryGalleryPicture {
+
+#scope# .galleryPicture,
+#scope# .galleryGalleryPicture {
 	--thumbHeight: #thumbHeight#;
 	--thumbBorder: #thumbBorder#;
 	--thumbBorderColor: #thumbBorderColor#;
@@ -14,14 +17,17 @@
 	--thumbShadows: #thumbShadows#;
 	--thumbShadowsColor: #thumbShadowsColor#;
 }
-.galleryName,
-.galleryGalleryName {
+
+#scope# .galleryName,
+#scope# .galleryGalleryName {
 	--legendHeight: #legendHeight#;
 	--legendAlign: #legendAlign#;
 	--legendTextColor: #legendTextColor#;
 	--legendBgColor: #legendBgColor#;
-}	
-.galleryPicture:hover,
-.galleryGalleryPicture:hover {
+}
+
+#scope# .galleryPicture:hover,
+#scope# .galleryGalleryPicture:hover {
 	--thumbOpacity: #thumbOpacity#;
 }
+

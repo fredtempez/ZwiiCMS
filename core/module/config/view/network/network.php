@@ -31,14 +31,19 @@ echo Template::number('configProxyPort', [ 'label' => 'Port du proxy', 'placehol
 echo Helper::translate('SMTP'); ?>
 				</h4>
 				<div class="row">
-					<div class="col6">
+					<div class="col9">
 						<?php
-echo Template::text('smtpFrom', [ 'label' => 'Expéditeur', 'placeholder' => 'no-reply@host', 'value' => $this->getData(['config', 'smtp', 'from']), 'help' => 'Le domaine de l\'adresse email doit correspondre au domaine du site pour éviter les problèmes de spam. La correction est automatique.' ]); ?>
+echo Template::text('smtpFrom', [ 'label' => 'Expéditeur', 'placeholder' => 'no-reply@host', 'value' => $this->getData(['config', 'smtp', 'from']), 'help' => "Le domaine de l'adresse email doit correspondre au domaine du site pour éviter les problèmes de spam. La correction est automatique." ]); ?>
 					</div>
+					<div class="col3 verticalAlignBottom">
+						<?php
+echo Template::button('ConfigSendMail', [ 'href' => Helper::baseUrl() . 'config/testmail', 'value' => 'Message de test', 'ico' => 'mail' ]); ?>
+					</div>
+				</div>
 					<div class="row">
 						<div class="col12">
 							<?php
-echo Template::checkbox('smtpEnable', true, 'SMTP personnalisé', [ 'checked' => $this->getData(['config', 'smtp', 'enable']), 'help' => 'Paramètres à utiliser lorsque votre hébergeur ne propose pas la fonctionnalité d\'envoi de mail.' ]); ?>
+echo Template::checkbox('smtpEnable', true, 'SMTP personnalisé', [ 'checked' => $this->getData(['config', 'smtp', 'enable']), 'help' => "Paramètres à utiliser lorsque votre hébergeur ne propose pas la fonctionnalité d'envoi de mail." ]); ?>
 						</div>
 					</div>
 					<div id="smtpParam">
@@ -77,4 +82,3 @@ echo Template::select('smtpSecure', config::$SMTPEnc, [ 'label' => 'Sécurité',
 			</div>
 		</div>
 	</div>
-</div>

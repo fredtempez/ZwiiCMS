@@ -7,9 +7,7 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2026, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @Copyright (C) 2026, Frédéric Tempez
- * @Licensed under the GNU General Public License v3.0 or later.
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
@@ -1921,14 +1919,82 @@ th.col12 {
     .table thead {
         display: none;
     }
-    .table tr {
+    /* Une ligne = une carte : titre en gras, une ligne par information, boutons côte à côte */
+    .table,
+    .table tbody {
         display: block;
+        width: 100%;
+    }
+    .table tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+        width: 100%;
+        align-items: center;
+        gap: 4px 8px;
         margin-bottom: 10px;
+        padding: 8px 12px;
+        border: 1px solid rgba(0, 0, 0, .12);
+        border-radius: 4px;
     }
     .table td {
         display: block;
-        text-align: right;
+        flex: 1 0 100%;
         width: auto;
+        padding: 0 !important;
+        border: 0 !important;
+        text-align: left;
+        word-break: break-word;
+    }
+    .table td:first-child {
+        font-weight: bold;
+    }
+    /* En-tête de colonne affiché comme l'étiquette d'un champ, sur la même ligne que la valeur */
+    .table td:not(:first-child):not([data-label=""]) {
+        position: relative;
+        padding-left: 9.5em !important;
+    }
+    .table td:not(:first-child):not([data-label=""])::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 9em;
+        font-weight: bold;
+        opacity: .65;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .table td:has(.button) {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+    .table td .button {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 10px;
+        text-align: center;
+    }
+    /* Icônes d'action (liens sans bouton) : zones larges, réparties sur la largeur et centrées */
+    .table td:has(> a:not(.button) > [class*="zwiico-"]) {
+        display: flex;
+        gap: 8px;
+        margin-top: 4px;
+    }
+    .table td:has(> a:not(.button) > [class*="zwiico-"]) > a {
+        flex: 1 1 0;
+        padding: 10px 0;
+        text-align: center;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, .05);
+    }
+    .table td:has(> a:not(.button) > [class*="zwiico-"]) > a > [class*="zwiico-"] {
+        margin: 0 !important;
+        font-size: 24px !important;
+    }
+    .table td:empty {
+        display: none;
     }
 
     /* Menu / Navigation */

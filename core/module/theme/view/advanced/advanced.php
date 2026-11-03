@@ -17,7 +17,7 @@ echo Template::submit('themeAdvancedSubmit'); ?>
 <div class="row">
 	<div class="col12">
 		<?php
-echo Template::textarea('themeAdvancedCss', [ 'value' => file_get_contents(self::DATA_DIR . 'custom.css'), 'class' => 'editor' ]); ?>
+echo Template::textarea('themeAdvancedCss', [ 'value' => file_exists(self::DATA_DIR . 'custom.css') ? file_get_contents(self::DATA_DIR . 'custom.css') : '', 'class' => 'editor' ]); ?>
 	</div>
 </div>
 <?php

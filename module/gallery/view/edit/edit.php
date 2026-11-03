@@ -7,7 +7,7 @@ echo template::button('galleryEditBack', [ 'class' => 'buttonGrey', 'href' => he
 		</div>
 		<div class="col1 offset8">
 			<?php
-echo template::button('galleryConfigOption', [ 'href' => helper::baseUrl() . $this->getUrl(0) . '/option/gallery/' . $this->getUrl(2), 'value' => template::ico('sliders') ]); ?>
+echo template::button('galleryConfigOption', [ 'href' => helper::baseUrl() . $this->getUrl(0) . '/option/gallery/' . $this->getUrlArg(0), 'value' => template::ico('sliders') ]); ?>
 		</div>
 		<div class="col2">
 			<?php
@@ -23,9 +23,9 @@ echo template::table([1, 4, 1, 5, 1], gallery::$pictures, ['Position','Image', '
 				<?php
 echo template::hidden('galleryEditFormResponse'); ?>
 				<?php
-echo template::hidden('galleryEditSort',['value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'sort' ])]);?>
+echo template::hidden('galleryEditSort',['value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrlArg(0), 'config', 'sort' ])]);?>
 				<?php
-echo template::hidden('galleryEditFormGalleryName',['value' => $this->getUrl(2)]); ?>
+echo template::hidden('galleryEditFormGalleryName',['value' => $this->getUrlArg(0)]); ?>
 			<?php
 else: ?>
 				<?php

@@ -104,7 +104,7 @@ echo template::checkbox('blogAddCommentNotification', true, 'Notification par em
 					</div>
 					<div class="col4 commentOptionsWrapper">
 						<?php
-echo template::select('blogAddCommentGroupNotification', blog::$roleNews); ?>
+echo template::select('blogAddCommentGroupNotification', blog::$roleNews, [ 'label' => 'Destinataires de la notification', 'help' => 'Utilisateurs dont le rôle est supérieur ou égal au rôle choisi' ]); ?>
 					</div>
 				</div>
 			</div>

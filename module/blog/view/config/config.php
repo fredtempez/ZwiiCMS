@@ -3,7 +3,7 @@ echo template::formOpen('blogConfig'); ?>
 	<div class="row">
 		<div class="col1">
 			<?php
-echo template::button('blogConfigBack', [ 'class' => 'buttonGrey', 'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '/' . self::$siteContent, 'value' => template::ico('left') ]); ?>
+echo template::button('blogConfigBack', [ 'class' => 'buttonGrey', 'href' => $this->getPageEditUrl(), 'value' => template::ico('left') ]); ?>
 		</div>
 		<div class="col1 offset9">
 			<?php

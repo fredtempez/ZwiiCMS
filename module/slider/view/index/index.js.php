@@ -8,9 +8,7 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2026, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @Copyright (C) 2026, Frédéric Tempez
- * @Licensed under the GNU General Public License v3.0 or later.
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
@@ -37,13 +35,20 @@
 
 $(document).ready(function () {
 
+    // Identifiant unique de CETTE occurrence du carrousel sur la page.
+    // Permet à plusieurs sliders de coexister sans collision d'id HTML.
+    var sliderId = "<?php
+echo $this->getUrl(0); ?>";
+    var wrapperSelector = "#wrapper-" + sliderId;
+    var sliderSelector = "#sliders-" + sliderId;
+
     var maxwidth = "<?php
 echo $this->getData(['module', $this->getUrl(0),'theme', 'maxWidth']); ?>";
     var sort = "<?php
 echo $this->getData(['module', $this->getUrl(0),'theme', 'sort']); ?>";
-    $("#wrapper").css('width', "100%");
+    $(wrapperSelector).css('width', "100%");
     $(function () {
-        $("#sliders").responsiveSlides({
+        $(sliderSelector).responsiveSlides({
             pager: "<?php
 echo (bool)$this->getData(['module', $this->getUrl(0), 'theme', 'pager']); ?>",
             auto: "<?php

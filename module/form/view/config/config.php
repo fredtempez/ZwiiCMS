@@ -41,7 +41,7 @@ echo template::formOpen('formConfigForm'); ?>
 <div class="row">
     <div class="col1">
         <?php
-echo template::button('formConfigBack', [ 'class' => 'buttonGrey', 'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '/' . self::$siteContent, 'value' => template::ico('left') ]); ?>
+echo template::button('formConfigBack', [ 'class' => 'buttonGrey', 'href' => $this->getPageEditUrl(), 'value' => template::ico('left') ]); ?>
 	</div>
 	<div class="col1 offset7">
 		<?php

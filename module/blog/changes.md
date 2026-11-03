@@ -1,3 +1,19 @@
+# Version 8.10
+- Compatibilité php 8.5
+- Corrige l'alerte de fermeture de page affichée à tort lors de la rédaction d'un commentaire (retrait du plugin `autosave` de l'éditeur de commentaire).
+- Corrige les identifiants erronés des champs de commentaire dans la vue article (focus, vidage et ancrage).
+- Corrige une erreur JavaScript (`nombre` non défini) à la suppression de tous les commentaires.
+- Corrige un identifiant `id="article"` dupliqué dans l'index.
+- Corrige l'initialisation des options de commentaire dans les vues add et edit.
+- Uniformise le sélecteur des destinataires de notification entre les vues add et edit.
+# Version 8.9
+- Corrige le lien de l'article dans le mail de notification de commentaire (tabulation parasite).
+- Corrige la redirection et le contrôle d'existence de l'article dans la suppression de tous les commentaires.
+- La langue du flux RSS suit la langue de l'interface.
+# Version 8.8
+- Ajoute la constante MULTIMODULE pour autoriser la présence de plusiers modules dans une même page.
+# Version 8.7
+- Sécurité : le résultat du captcha des commentaires n'est plus renvoyé au client. Il est stocké en session côté serveur et vérifié par `hash_equals`, avec usage unique. Nécessite Zwii 16.0.00c.
 # Version 8.6
 - Corrige la génération du flux RSS, nettoyage des liens contenus dans la description.
 # Version 8.5

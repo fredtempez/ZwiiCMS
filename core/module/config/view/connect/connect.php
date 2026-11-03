@@ -20,21 +20,17 @@ echo Template::checkbox('connectRedirectLogin', true, 'Redirection vers la conne
 					</div>
 				</div>
 				<div class="row">
-					<div class="col3">
+					<div class="col4">
 						<?php
 echo Template::select('connectAttempt', config::$connectAttempt, [ 'label' => 'Limitation des tentatives', 'selected' => $this->getData(['config', 'connect', 'attempt']) ]); ?>
 					</div>
-					<div class="col3">
+					<div class="col4">
 						<?php
 echo Template::select('connectTimeout', config::$connectTimeout, [ 'label' => 'Blocage après échecs', 'selected' => $this->getData(['config', 'connect', 'timeout']) ]); ?>
 					</div>
-					<div class="col3">
+					<div class="col4">
 						<?php
 echo Template::select('connectAuthMail', array_merge([0 => 'Aucune'], self::$roleNews), [ 'label' => 'Code de sécurité', 'selected' => $this->getData(['config', 'connect', 'mailAuth']), 'help' => 'La connexion est confirmée à l\'aide d\'une clé transmise par messagerie. Depuis le rôle sélectionné et les rôles supérieurs.' ]); ?>
-					</div>
-					<div class="col3 verticalAlignBottom">
-						<?php
-echo Template::button('ConfigSendMail', [ 'href' => Helper::baseUrl() . 'config/testmail', 'value' => 'Message de test', 'ico' => 'mail' ]); ?>
 					</div>
 				</div>
 			</div>

@@ -46,29 +46,29 @@ echo helper::translate('Paramètres');?></h4>
 			<div class="row">
 				<div class="col6">
 					<?php
-echo template::text('galleryEditName', [ 'label' => 'Nom', 'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'name']) ]); ?>
+echo template::text('galleryEditName', [ 'label' => 'Nom', 'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrlArg(1), 'config', 'name']) ]); ?>
 				</div>
 				<div class="col6">
                     <?php
-echo template::select('galleryEditDirectory', gallery::$directories, [ 'label' => 'Dossier cible', 'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'directory']) ]); ?>
+echo template::select('galleryEditDirectory', gallery::$directories, [ 'label' => 'Dossier cible', 'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrlArg(1), 'config', 'directory']) ]); ?>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col3">
 					<?php
-echo template::select('galleryEditSort', gallery::$sort, [ 'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'sort']), 'label' => 'Tri des images', 'help' => 'Tri manuel : déplacez le images dans le tableau ci-dessous. L\'ordre est sauvegardé automatiquement.' ]); ?>
+echo template::select('galleryEditSort', gallery::$sort, [ 'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrlArg(1), 'config', 'sort']), 'label' => 'Tri des images', 'help' => 'Tri manuel : déplacez le images dans le tableau ci-dessous. L\'ordre est sauvegardé automatiquement.' ]); ?>
 				</div>
 				<div class="col7 verticalAlignBottom">
 					<div class="row">
 						<div class="col12">
 								<?php
-echo template::checkbox('galleryEditFullscreen', true, 'Mode plein écran automatique' , [ 'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'fullScreen']), 'help' => 'A l\'ouverture de la galerie, la première image est affichée en plein écran.' ]); ?>
+echo template::checkbox('galleryEditFullscreen', true, 'Mode plein écran automatique' , [ 'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrlArg(1), 'config', 'fullScreen']), 'help' => 'A l\'ouverture de la galerie, la première image est affichée en plein écran.' ]); ?>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col12">
 								<?php
-echo template::checkbox('galleryEditShowPageContent', true, 'Afficher le contenu de la page avec la galerie' , [ 'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'showPageContent']), 'help' => 'Le contenu de la page est toujours affiché dans la liste des galeries. Quand une seule galerie est disponible, il est possible de l\'afficher directement, cette option est utile dans ce cas précis.' ]); ?>
+echo template::checkbox('galleryEditShowPageContent', true, 'Afficher le contenu de la page avec la galerie' , [ 'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrlArg(1), 'config', 'showPageContent']), 'help' => 'Le contenu de la page est toujours affiché dans la liste des galeries. Quand une seule galerie est disponible, il est possible de l\'afficher directement, cette option est utile dans ce cas précis.' ]); ?>
 							</div>
 						</div>
 					</div>

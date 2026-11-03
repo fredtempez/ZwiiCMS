@@ -8,9 +8,7 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2026, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @Copyright (C) 2026, Frédéric Tempez
- * @Licensed under the GNU General Public License v3.0 or later.
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 trait Security { public function checkCSRF() { return ((empty($_POST['csrf']) or hash_equals($_POST['csrf'], $_SESSION['csrf']) === false) === false); } }

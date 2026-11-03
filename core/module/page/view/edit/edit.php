@@ -1,22 +1,36 @@
 <?php
+use Zwii\Cms\page; ?>
+<?php
 echo Template::formOpen('pageEditForm'); ?>
 	<!-- Variable transmise à TinyMCE -->
 <div id="zwii_site_content" data-variable="<?php
 echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : 'home'); ?>"></div>
-<?php
-$langCount = 0; foreach (self::$languages as $key => $value) { if (is_dir(self::DATA_DIR . $key)) { $langCount++; if ($langCount > 1) { break; } } } $separator = Helper::checkRewrite() ? '?' : '&'; $langParam = ($langCount > 1 && file_exists(self::DATA_DIR . self::$siteContent . '/.default') === false) ? $separator . 'l=' . self::$siteContent : ''; ?>
+
 <div class="row">
 	<div class="col1">
 		<?php
 echo Template::button('configModulesBack', [ 'class' => 'buttonGrey', 'href' => Helper::baseUrl() . $this->getUrl(2), 'value' => Template::ico('left') ]); ?>
 	</div>
-	<div class="col1 offset7">
+	<?php
+if (page::$canToggleEditFullScreen): ?>
+	<div class="col3 offset4">
 		<?php
-echo Template::button('pageEditDelete', [ 'class' => 'buttonRed', 'href' => Helper::baseUrl() . 'page/delete/' . $this->getUrl(2) . $langParam, 'value' => Template::ico('trash'), 'help' => 'Effacer la page' ]); ?>
+echo Template::button('pageEditFullScreen', [ 'class' => 'buttonYellow', 'href' => page::$fullScreenHref, 'ico' => page::$editFullScreen ? 'eye' : 'eye-off', 'value' => page::$editFullScreen ? 'Quitter le plein écran' : 'Édition en plein écran', 'help' => page::$editFullScreen ? "Rétablit l'affichage habituel du site autour de l'éditeur." : "Masque la bannière, le menu, le fond du site et le pied de page pendant l'édition." ]); ?>
+	</div>
+	<?php
+else: ?>
+	<?php
+$nextOffset = "offset7"; ?>
+	<?php
+endif; ?>
+	<div class="col1 <?php
+echo $nextOffset; ?>" >
+		<?php
+echo Template::button('pageEditDelete', [ 'class' => 'buttonRed', 'href' => Helper::baseUrl() . 'page/delete/' . $this->getUrl(2) . page::$langParam, 'value' => Template::ico('trash'), 'help' => 'Effacer la page' ]); ?>
 	</div>
 	<div class="col1">
 		<?php
-echo Template::button('pageEditDuplicate', [ 'href' => Helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . $langParam, 'value' => Template::ico('clone'), 'help' => 'Dupliquer la page' ]); ?>
+echo Template::button('pageEditDuplicate', [ 'href' => Helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . page::$langParam, 'value' => Template::ico('clone'), 'help' => 'Dupliquer la page' ]); ?>
 	</div>
 	<div class="col2">
 		<?php
@@ -66,11 +80,47 @@ echo Template::checkbox('pageEditHideTitle', true, 'Titre masqué dans la page',
 					</div>
 					<div class="col6">
 						<?php
-echo Template::checkbox('pageEditbreadCrumb', true, 'Fil d\'Ariane dans le titre', [ 'checked' => $this->getData(['page', $this->getUrl(2), 'breadCrumb']), 'help' => 'Affiche le nom de la page parente suivi du nom de la page, le titre ne doit pas être masqué.' ]); ?>
+echo Template::checkbox('pageEditbreadCrumb', true, "Fil d'Ariane dans le titre", [ 'checked' => $this->getData(['page', $this->getUrl(2), 'breadCrumb']), 'help' => 'Affiche le nom de la page parente suivi du nom de la page, le titre ne doit pas être masqué.' ]); ?>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	<?php
+?>
+	<div class="row" id="pageModuleShortcutHelp">
+		<div class="col12">
+			<div class="block">
+				<h4>
+					<?php
+echo Helper::translate('Modules à insérer dans le contenu'); ?>
+				</h4>
+				<div class="blockContainer">
+					<span class="helpBlock">
+						<?php
+echo Helper::translate("Copiez le code d'un module puis collez-le dans le contenu, à l'endroit où il doit s'afficher."); ?>
+					</span>
+					<div id="pageModuleShortcutList">
+						<!-- Rempli par edit.js.php à partir des lignes de la zone centrale -->
+					</div>
+					<span class="helpBlock displayNone" id="pageModuleShortcutEmpty">
+						<?php
+echo Helper::translate("Aucun module en position libre pour l'instant."); ?>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modèles de boutons (Template::button) clonés par edit.js.php pour chaque
+	     module libre du panneau des shortcodes. L'usage de Template::button garantit
+	     le style .button du thème (un <button> brut serait trop grand). -->
+	<div id="pageModuleShortcutButtonTemplates" class="displayNone">
+		<?php
+echo Template::button('pageModuleShortcutInsertTpl', [ 'class' => 'pageModuleShortcutInsert', 'value' => 'Insérer', 'help' => 'Insérer le code du module au curseur dans le contenu de la page' ]); ?>
+		<?php
+echo Template::button('pageModuleShortcutCopyTpl', [ 'class' => 'pageModuleShortcutCopy', 'value' => 'Copier', 'help' => 'Copier le code du module dans le presse-papiers' ]); ?>
+		<?php
+echo Template::button('pageModuleShortcutConfigTpl', [ 'class' => 'pageModuleShortcutConfig', 'value' => Template::ico('gear'), 'help' => 'Configurer ce module' ]); ?>
 	</div>
 	<div class="row">
 		<div class="col12">
@@ -92,7 +142,7 @@ echo Helper::translate('Emplacement dans le menu'); ?>
 					<div class="row">
 						<div class="col4">
 							<?php
-echo Template::select('pageEditPosition', [], [ 'label' => 'Position', 'help' => '\'Ne pas afficher\' crée une page orpheline non accessible par le biais des menus.' ]); ?>
+echo Template::select('pageEditPosition', [], [ 'label' => 'Position', 'help' => "'Ne pas afficher' crée une page orpheline non accessible par le biais des menus." ]); ?>
 						</div>
 						<div class="col4">
 							<?php
@@ -100,7 +150,7 @@ echo Template::select('pageEditParentPageId', page::$hierarchicalPageOptions, [ 
 						</div>
 						<div class="col4">
 							<?php
-echo Template::select('pageEditExtraPosition', page::$extraPosition, [ 'label' => 'Emplacement', 'selected' => $this->getData(['page', $this->getUrl(2), 'extraPosition']), 'help' => 'Le menu accessoire est aligné à droite de la barre de menu, c\'est un emplacement réservé aux drapeaux et au bouton de connexion.' ]); ?>
+echo Template::select('pageEditExtraPosition', page::$extraPosition, [ 'label' => 'Emplacement', 'selected' => $this->getData(['page', $this->getUrl(2), 'extraPosition']), 'help' => "Le menu accessoire est aligné à droite de la barre de menu, c'est un emplacement réservé aux drapeaux et au bouton de connexion." ]); ?>
 						</div>
 					</div>
 					<div class="row">
@@ -110,7 +160,7 @@ echo Template::checkbox('pageEditDisable', true, 'Page non cliquable', [ 'checke
 						</div>
 						<div class="col6">
 							<?php
-echo Template::checkbox('pageEditTargetBlank', true, 'S\'ouvre dans un nouvel onglet', [ 'checked' => $this->getData(['page', $this->getUrl(2), 'targetBlank']) ]); ?>
+echo Template::checkbox('pageEditTargetBlank', true, "S'ouvre dans un nouvel onglet", [ 'checked' => $this->getData(['page', $this->getUrl(2), 'targetBlank']) ]); ?>
 						</div>
 					</div>
 				</div>
@@ -142,7 +192,7 @@ echo Template::checkbox('pageEditHideMenuChildren', true, 'Masquer les pages enf
 						</div>
 						<div class="col6">
 							<?php
-echo Template::checkbox('pageEditHideMenuSide', true, 'Masquer la page et les pages enfants dans le menu d\'une barre latérale', [ 'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuSide']), 'help' => 'La page est affichée dans un menu horizontal mais pas dans le menu vertical d\'une barre latérale.' ]); ?>
+echo Template::checkbox('pageEditHideMenuSide', true, "Masquer la page et les pages enfants dans le menu d'une barre latérale", [ 'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuSide']), 'help' => "La page est affichée dans un menu horizontal mais pas dans le menu vertical d'une barre latérale." ]); ?>
 						</div>
 					</div>
 				</div>
@@ -157,34 +207,121 @@ echo Template::checkbox('pageEditHideMenuSide', true, 'Masquer la page et les pa
 			<div class="block">
 				<h4>
 					<?php
-echo Helper::translate('Module'); ?>
+echo Helper::translate('Modules de la page'); ?>
 				</h4>
-				<div class="row">
-					<div class="col10">
-						<?php
+				<?php
+?>
+				<?php
 echo Template::hidden('pageEditModuleRedirect'); ?>
-						<?php
-echo Template::select('pageEditModuleId', page::$moduleIds, [ 'help' => 'En cas de changement de module, les données du module précédent seront supprimées.', 'label' => 'Module', 'selected' => $this->getData(['page', $this->getUrl(2), 'moduleId']) ]); ?>
-						<?php
-echo Template::hidden('pageEditModuleIdOld', ['value' => $this->getData(['page', $this->getUrl(2), 'moduleId'])]); ?>
-						<?php
-echo Template::hidden('pageEditModuleIdOldText', [ 'value' => array_key_exists($this->getData(['page', $this->getUrl(2), 'moduleId']), page::$moduleIds) ? page::$moduleIds[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ucfirst($this->getData(['page', $this->getUrl(2), 'moduleId'])) ]); ?>
-					</div>
-					<?php
-if ($this->getUser('permission',$this->getData(['page', $this->getUrl(2), 'moduleId']), 'config')):?>
-					<div class="col2 verticalAlignBottom">
-						<?php
-echo Template::button('pageEditModuleConfig', [ 'uniqueSubmission' => true, 'value' => Template::ico('gear'), 'disabled' => empty($this->getData(['page', $this->getUrl(2), 'moduleId'])) , ]); ?>
-					</div> 
-					<?php
-endif;?>
-				</div>
-				<div class="row">
-					<div class="col12">
-						<?php
-echo Template::select('pageModulePosition', page::$modulePosition, [ 'help' => 'En position libre ajoutez le module en plaçant [MODULE] à l\'endroit voulu dans votre page.', 'label' => 'Position du module', 'selected' => $this->getData(['page', $this->getUrl(2), 'modulePosition']) ]); ?>
-					</div>
+				<?php
+echo Template::hidden('pageModuleConfigRow'); ?>
 
+				<!-- Zone supérieure : un seul module, position implicite "avant le contenu" -->
+				<div class="blockContainer pageModuleFixedZone">
+					<div class="row">
+						<div class="col12">
+							<strong><?php
+echo Helper::translate('Avant le contenu de la page'); ?></strong>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col10">
+							<?php
+echo Template::select('pageModulesTopModuleId', page::$moduleIds, [ 'label' => 'Module', 'selected' => page::$topModuleId, 'class' => 'pageModuleSelect pageModuleFixedSelect' ]); ?>
+						</div>
+						<div class="col2 verticalAlignBottom">
+							<?php
+echo Template::button('pageModuleTopConfig', [ 'class' => 'pageModuleConfig pageModuleFixedConfig', 'value' => Template::ico('gear'), 'help' => 'Configurer ce module', 'disabled' => page::$topModuleId === '' ]); ?>
+						</div>
+					</div>
+					<?php
+echo Template::hidden('pageModulesTopInstanceId', ['value' => page::$topInstanceId]); ?>
+					<?php
+echo Template::hidden('pageModulesTopModuleIdOld', ['value' => page::$topModuleId]); ?>
+				</div>
+
+				<!-- Zone centrale : modules multiples, position implicite "libre" (à insérer via [MODULE:instance]) -->
+				<div class="blockContainer pageModuleFreeZone">
+					<div class="row">
+						<div class="col12">
+							<strong><?php
+echo Helper::translate('Dans le contenu de la page'); ?></strong>
+							<span class="helpBlock"><?php
+echo Helper::translate('Positionnez chaque module en insérant son code dans le contenu.'); ?></span>
+						</div>
+					</div>
+					<div id="pageModulesListContainer" class="pageModulesList">
+						<?php
+$rowIndex = 0; ?>
+						<?php
+foreach (page::$freeInstances as $instanceId => $instanceConfig): ?>
+							<?php
+$rowModuleId = $instanceConfig['moduleId'] ?? ''; ?>
+							<?php
+$rowInstanceCode = substr((string) $instanceId, (int) strrpos((string) $instanceId, '-') + 1); ?>
+							<div class="pageModuleRow blockContainer" data-row="<?php
+echo $rowIndex; ?>" data-instance="<?php
+echo $instanceId; ?>">
+								<div class="row">
+									<div class="col1 verticalAlignMiddle pageModuleHandle">
+										<?php
+echo Template::ico('move', ['help' => 'Glisser pour réordonner']); ?>
+									</div>
+									<div class="col7">
+										<?php
+echo Template::select('pageModulesFreeModuleId' . $rowIndex, page::$moduleIds, [ 'label' => 'Module', 'selected' => $rowModuleId, 'class' => 'pageModuleSelect' ]); ?>
+									</div>
+									<div class="col2 verticalAlignBottom">
+										<?php
+echo Template::button('pageModuleConfig' . $rowIndex, [ 'class' => 'pageModuleConfig', 'value' => Template::ico('gear'), 'help' => 'Configurer le module ' . $rowInstanceCode, 'disabled' => $rowModuleId === '' ]); ?>
+									</div>
+									<div class="col2 verticalAlignBottom">
+										<?php
+echo Template::button('pageModuleDelete' . $rowIndex, [ 'class' => 'buttonRed pageModuleDelete', 'value' => Template::ico('trash'), 'help' => 'Effacer le module ' . $rowInstanceCode ]); ?>
+									</div>
+								</div>
+								<?php
+echo Template::hidden('pageModulesFreeInstanceId' . $rowIndex, [ 'value' => $instanceId ]); ?>
+								<?php
+echo Template::hidden('pageModulesFreeModuleIdOld' . $rowIndex, [ 'value' => $rowModuleId ]); ?>
+							</div>
+							<?php
+$rowIndex++; ?>
+						<?php
+endforeach; ?>
+					</div>
+					<!-- Reçoit au submit un input pageModulesLevel[] par ligne (ordre courant) -->
+					<div id="pageModulesListInputs"></div>
+					<div class="row">
+						<div class="col12">
+							<?php
+echo Template::button('pageModuleAdd', [ 'value' => Helper::translate('Ajouter un module'), 'help' => 'Ajoute un module à insérer dans le contenu de la page.' ]); ?>
+						</div>
+					</div>
+				</div>
+
+				<!-- Zone inférieure : un seul module, position implicite "après le contenu" -->
+				<div class="blockContainer pageModuleFixedZone">
+					<div class="row">
+						<div class="col12">
+							<strong><?php
+echo Helper::translate('Après le contenu de la page'); ?></strong>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col10">
+							<?php
+echo Template::select('pageModulesBottomModuleId', page::$moduleIds, [ 'label' => 'Module', 'selected' => page::$bottomModuleId, 'class' => 'pageModuleSelect pageModuleFixedSelect' ]); ?>
+						</div>
+						<div class="col2 verticalAlignBottom">
+							<?php
+echo Template::button('pageModuleBottomConfig', [ 'class' => 'pageModuleConfig pageModuleFixedConfig', 'value' => Template::ico('gear'), 'help' => 'Configurer ce module', 'disabled' => page::$bottomModuleId === '' ]); ?>
+						</div>
+					</div>
+					<?php
+echo Template::hidden('pageModulesBottomInstanceId', ['value' => page::$bottomInstanceId]); ?>
+					<?php
+echo Template::hidden('pageModulesBottomModuleIdOld', ['value' => page::$bottomModuleId]); ?>
 				</div>
 			</div>
 		</div>
@@ -209,6 +346,33 @@ echo Template::button('pageEditJsEditor', [ 'href' => Helper::baseUrl() . 'page/
 			</div>
 		</div>
 	</div>
+	<!-- Modèle de ligne pour l'ajout dynamique d'un module (rempli par edit.js.php) -->
+	<div id="pageModuleTemplate" class="displayNone">
+		<div class="pageModuleRow blockContainer" data-row="__ROW__" data-instance="">
+			<div class="row">
+				<div class="col1 verticalAlignMiddle pageModuleHandle">
+					<?php
+echo Template::ico('move', ['help' => 'Glisser pour réordonner']); ?>
+				</div>
+				<div class="col7">
+					<?php
+echo Template::select('pageModulesFreeModuleId__ROW__', page::$moduleIds, [ 'label' => 'Module', 'class' => 'pageModuleSelect' ]); ?>
+				</div>
+				<div class="col2 verticalAlignBottom">
+					<?php
+echo Template::button('pageModuleConfig__ROW__', [ 'class' => 'pageModuleConfig', 'value' => Template::ico('gear'), 'help' => 'Configurer ce module', 'disabled' => true ]); ?>
+				</div>
+				<div class="col2 verticalAlignBottom">
+					<?php
+echo Template::button('pageModuleDelete__ROW__', [ 'class' => 'buttonRed pageModuleDelete', 'value' => Template::ico('trash'), 'help' => 'Retirer ce module de la page', 'disabled' => true ]); ?>
+				</div>
+			</div>
+			<?php
+echo Template::hidden('pageModulesFreeInstanceId__ROW__'); ?>
+			<?php
+echo Template::hidden('pageModulesFreeModuleIdOld__ROW__'); ?>
+		</div>
+	</div>
 </div>
 
 <div id="pageEditLayoutContainer" class="tabContent">
@@ -225,7 +389,7 @@ echo Helper::translate('Gabarits et navigation'); ?>
 							<div class="row">
 								<div class="col12">
 									<?php
-echo Template::select('pageEditBlock', page::$pageBlocks, [ 'label' => 'Gabarits de page - Barre latérale', 'help' => 'Pour définir la page comme barre latérale, choisissez l\'option dans la liste.', 'selected' => $this->getData(['page', $this->getUrl(2), 'block']) ]); ?>
+echo Template::select('pageEditBlock', page::$pageBlocks, [ 'label' => 'Gabarits de page - Barre latérale', 'help' => "Pour définir la page comme barre latérale, choisissez l'option dans la liste.", 'selected' => $this->getData(['page', $this->getUrl(2), 'block']) ]); ?>
 								</div>
 							</div>
 						</div>

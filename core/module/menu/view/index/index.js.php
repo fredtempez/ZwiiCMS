@@ -6,7 +6,7 @@
  *
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2026, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
+ * @license GNU General Public License, version 3
  */
 
 (function () {

@@ -7,9 +7,7 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2026, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @Copyright (C) 2026, Frédéric Tempez
- * @Licensed under the GNU General Public License v3.0 or later.
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
@@ -20,7 +18,7 @@ var commentShowDOM = $("#blogArticleCommentShow");
 commentShowDOM.on("click focus", function() {
 	$("#blogArticleCommentShowWrapper").fadeOut(function() {
 		$("#blogArticleCommentWrapper").fadeIn();
-		$("#blogArticleCommentContent").trigger("focus");
+		$("#blogArticleContent").trigger("focus");
 	});
 });
 if($("#blogArticleCommentWrapper").find("textarea.notice,input.notice").length) {
@@ -33,14 +31,14 @@ if($("#blogArticleCommentWrapper").find("textarea.notice,input.notice").length) 
 $("#blogArticleCommentHide").on("click focus", function() {
 	$("#blogArticleCommentWrapper").fadeOut(function() {
 		$("#blogArticleCommentShowWrapper").fadeIn();
-		$("#blogArticleCommentContent").val("");
-		$("#blogArticleCommentAuthor").val("");
+		$("#blogArticleContent").val("");
+		$("#blogArticleAuthor").val("");
 	});
 });
 
 /**
  * Force le scroll vers les commentaires en cas d'erreur
  */
-$("#blogArticleCommentForm").on("submit", function() {
+$("#blogArticleForm").on("submit", function() {
 	$(location).attr("href", "#comment");
 });

@@ -85,7 +85,7 @@ echo template::select('formOptionRole', $roleMembers, [ 'label' => 'A tous les r
                     </div>
                     <div class="col4">
                         <?php
-echo template::select('formOptionUser', form::$listUsers, [ 'label' => 'A un membre', 'selected' => array_search($this->getData(['module', $this->getUrl(0), 'config', 'user']), form::$listUsers) ]); ?>
+echo template::select('formOptionUser', form::$listUsers, [ 'label' => 'A un membre', 'selected' => ($found = array_search($this->getData(['module', $this->getUrl(0), 'config', 'user']), form::$listUsers)) === false ? 0 : $found ]); ?>
                     </div>
                     <div class="col4">
                         <?php

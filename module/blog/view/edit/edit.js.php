@@ -7,23 +7,9 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2026, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @Copyright (C) 2026, Frédéric Tempez
- * @Licensed under the GNU General Public License v3.0 or later.
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-
-
-// Lien de connexion
-$("#blogEditMailNotification").on("change", function() {
-	if($(this).is(":checked")) {
-		$("#formConfigGroup").show();
-	}
-	else {
-		$("#formConfigGroup").hide();
-	}
-}).trigger("change");
-
 
 /**
  * Soumission du formulaire pour enregistrer en brouillon
@@ -46,25 +32,25 @@ $("#blogEditCommentClose").on("change", function() {
 
 $("#blogEditCommentNotification").on("change", function() {
 	if ($(this).is(':checked') ) {
-		$("#blogEditCommentGroupNotification").slideDown();
+		$("#blogEditCommentGroupNotificationWrapper").slideDown();
 	} else {
-		$("#blogEditCommentGroupNotification").slideUp();
+		$("#blogEditCommentGroupNotificationWrapper").slideUp();
 	}
 });
 
 
 $( document).ready(function() {
 
-	if ($("#blogEditCloseComment").is(':checked') ) {
+	if ($("#blogEditCommentClose").is(':checked') ) {
 		$(".commentOptionsWrapper").slideUp();
 	} else {
 		$(".commentOptionsWrapper").slideDown();
 	}
 
 	if ($("#blogEditCommentNotification").is(':checked') ) {
-		$("#blogEditCommentGroupNotification").slideDown();
+		$("#blogEditCommentGroupNotificationWrapper").slideDown();
 	} else {
-		$("#blogEditCommentGroupNotification").slideUp();
+		$("#blogEditCommentGroupNotificationWrapper").slideUp();
 	}
 
 	// Permalink

@@ -1,23 +1,23 @@
-# 🚀 ZwiiCMS 15.1.03
+# 🚀 ZwiiCMS 16.0.00
 # Français 🇫🇷
 
 Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation. Conçu pour la simplicité et la performance, ZwiiCMS offre une solution complète pour la gestion de contenu web moderne.
 
-ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remijean.fr/). Il est désormais maintenu par Frédéric Tempez, qui continue à faire évoluer le projet avec de nouvelles fonctionnalités et améliorations constantes.
+ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remijean.fr/). Il est désormais maintenu par Frédéric Tempez et Michel Tubeouf, qui continuent à faire évoluer le projet avec de nouvelles fonctionnalités et améliorations constantes.
 
 [Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Version initiale](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS) - [Notes de version](CHANGES.md) - [Release Notes](CHANGELOG.md)
 
 ## ⚙️ Configuration recommandée
 
-* PHP 7.3 ou plus (recommandé PHP 8.0+ pour de meilleures performances)
-* Compatibilité assurée jusque php 8.4
+* PHP 8.1 ou plus
+* Compatibilité assurée jusque php 8.5
 * Support de .htaccess (pour la réécriture d'URL et la sécurité)
 * Espace disque : minimum 50 Mo
 * Navigateurs modernes : Chrome, Firefox, Safari, Edge
 
 ## 📄 Licence
 
-Ce programme est distribué sous licence GNU General Public License version 3 (GPL v3).
+Ce programme est distribué sous licence GNU General Public License version 3 (GPL v3) Frédéric Tempez et Michel Tuboeuf. 
 
 Pour plus d'informations sur la GPL v3, consultez le fichier [LICENSE](LICENSE) ou visitez <https://www.gnu.org/licenses/gpl-3.0.html>.
 
@@ -48,14 +48,6 @@ Vous trouverez de plus amples explications, en particulier pour une installation
 ## 🔄 Procédures de mise à jour
 
 A l'occasion de l'installation d'une version majeure, il est recommandé de réaliser une copie de sauvegarde.
-
-**Nouveautés de la version 14 :**
-* Interface d'administration modernisée
-* Amélioration des performances
-* Renforcement de la sécurité
-* Statistiques détaillées du site
-* Gestion avancée des profils utilisateurs
-* Support multilingue étendu
 
 ### 🤖 Automatique
 
@@ -154,6 +146,7 @@ A l'occasion de l'installation d'une version majeure, il est recommandé de réa
 [F] robots.txt             Filtrage des répertoires accessibles aux robots des moteurs de recherche
 [F] sitemap.xml            Plan du site (généré automatiquement)
 [F] sitemap.xml.gz         Version compressée
+[F] llms.txt               Description du site et de ses pages pour les modèles de langage (IA, généré automatiquement)
 
 🔒 Le fichiers .htaccess contribuent à la sécurité en filtrant l'accès aux répertoires sensibles.
 
@@ -163,35 +156,23 @@ A l'occasion de l'installation d'une version majeure, il est recommandé de réa
 
 Zwii is a database-less (flat-file) CMS that allows you to easily create and manage a web site without any programming knowledge. Designed for simplicity and performance, ZwiiCMS offers a complete solution for modern web content management.
 
-ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/). It is now maintained by Frédéric Tempez, who continues to evolve the project with new features and constant improvements.
+ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/). It is now maintained by Frédéric Tempez and Michel Tuboeuf, who continue to evolve the project with new features and constant improvements.
 
-[Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Initial version](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS) - [Release Notes](CHANGELOG.md) - [Notes de version](CHANGES.md)
+[Website](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Initial version](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS) - [Release Notes](CHANGELOG.md) - [Notes de version](CHANGES.md)
 
 ## ⚙️ Recommended configuration
 
-* PHP 7.3 or higher (PHP 8.0+ recommended for better performance)
-* Guaranteed compatibility up to PHP 8.4
+* PHP 8.1 or higher
+* Guaranteed compatibility up to PHP 8.5
 * .htaccess support (for URL rewriting and security)
 * Disk space: minimum 50 MB
 * Modern browsers: Chrome, Firefox, Safari, Edge
 
 ## 📄 License
 
-Zwiicms - CMS open source
-Copyright (C) 2026 Frederic Tempez
+This program is distributed under the GNU General Public License version 3 (GPL v3), Frédéric Tempez and Michel Tuboeuf.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
+For more information about GPL v3, see the [LICENSE](LICENSE) file or visit <https://www.gnu.org/licenses/gpl-3.0.html>.
 
 ## 📋 Release Notes
 
@@ -202,55 +183,46 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 To download the latest released version, go to:
 * [the Updates page](https://codeberg.org/fredtempez/ZwiiCMS/releases) to access all versions
-* or at [the site download page](https://zwiicms.fr/download) for stable version
-* Automatic updates integrated in administration panel
+* or on [the site download page](https://zwiicms.fr/download) for the stable version
+* Automatic updates integrated into the administration panel
 
 ## 🛠️ Installation
 
 Unzip the Zwii archive and upload its contents to the root of your server or to a subdirectory. That's all!
 
-You will find more explanations, in particular for an installation at Free, in the "Downloads" section of the forum.
+You will find more explanations, in particular for installing on Free hosting, in the "Downloads" section of the forum.
 
 **Installation highlights:**
 * Installation in less than 5 minutes
 * No database required
 * Automatic security configuration
-* Responsive design from installation
+* Responsive design out of the box
 
 ## 🔄 Update procedures
 
 When installing a major version, it is recommended to make a backup copy.
 
-**Version 14 new features:**
-* Modernized administration interface
-* Performance improvements
-* Enhanced security
-* Detailed site statistics
-* Advanced user profile management
-* Extended multilingual support
-
 ### 🤖 Automatic
 
 * Connect to your site as administrator.
 * If an update is available, a notification appears in the administration bar.
-* Click on "Update" button and follow the instructions.
+* Click the "Update" button and follow the instructions.
 * The system automatically checks for updates every 24 hours.
 
 ### ✋ Manual
 
 * Save your entire site, especially the "site" directory containing all your data.
 * Unzip the new version on your computer.
-* Transfer its content to your server by activating the file replacement (except the "site" folder).
+* Transfer its contents to your server, activating file replacement (except for the "site" folder).
 * Check that file permissions are correct (755 for folders, 644 for files).
 
 ## 🌳 General tree structure
 
-*Legend: [D] Directory - [FILE] File*
+*Legend: [DIR] Directory - [FILE] File*
 
 **Optimized structure for version 14.2:**
 
-````
-text
+```text
 [DIR] core                   Core of the system
   [DIR] class                PHP framework classes (namespace Zwii\Cms)
     [FILE] autoloader.php    Unified PSR-4 autoloader
@@ -295,28 +267,28 @@ text
     [DIR] en                  Localized folder
       [FILE] page.json        Page data (hierarchical structure)
       [FILE] module.json      Page module data
-      [FILE] local.json       Language-specific site data
+            [FILE] local.json       Language-specific site data
       [FILE] .default         Default site language indicator
       [DIR] content           Page content folder
         [FILE] home.html      Sample home page content
-    [DIR] fonts               Folder containing installed fonts
-      [FILE] fonts.html       File containing font calls to load on cdnFonts
-      [FILE] fonts.css        File containing style sheet linked to local fonts
-      [FILE] fonts.woff       Local font files (woff, etc..)
+    [DIR] font               Folder containing installed fonts
+      [FILE] font.html       File containing font calls to load on cdnFonts
+      [FILE] font.css        File containing the stylesheet linked to local fonts
+      [FILE] fontes.woff     Local font files (woff, etc..)
     [DIR] modules             Module customization or own data
     [FILE] admin.css          Administration pages theme (new v14 design)
     [FILE] admin.json         Administration pages theme data
     [FILE] blacklist.json     Logging of login attempts with unknown accounts
-    [FILE] config.json        Site configuration
+        [FILE] config.json        Site configuration
     [FILE] core.json          Core configuration
     [FILE] custom.css         Advanced customization stylesheet
     [FILE] font.json          Custom font descriptor
     [FILE] journal.log        Activities logging (automatic rotation)
-    [FILE] language.json      Interface languages database
+    [FILE] language.json      Interface languages
     [FILE] profil.json        User profiles (extended v14 system)
     [FILE] theme.css          Site theme
-    [FILE] theme.json         Site database
-    [FILE] user.json          User database
+    [FILE] theme.json         Site data
+    [FILE] user.json          User data
     [FILE] .backup            Marker for file backup if present
   [DIR] file                  File manager upload directory
     [DIR] source              Various resources
@@ -327,5 +299,7 @@ text
 [FILE] robots.txt             Filtering of directories accessible to search engine robots
 [FILE] sitemap.xml            Sitemap (automatically generated)
 [FILE] sitemap.xml.gz         Compressed version
+[FILE] llms.txt               Site and pages description for language models (AI, automatically generated)
 
 🔒 The .htaccess files contribute to security by filtering access to sensitive directories.
+```

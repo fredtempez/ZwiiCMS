@@ -11,21 +11,21 @@ echo Template::button('themeBack', [ 'href' => Helper::baseUrl(false), 'ico' => 
 	<div class="row">
 		<div class="col2 offset4">
 			<?php
-echo Template::button('themeFonts', [ 'ico' => 'font', 'href' => Helper::baseUrl() . $this->getUrl(0) . '/font', 'value' => 'Fontes' ]); ?>
+echo Template::button('themeFonts', [ 'ico' => 'font', 'href' => Helper::baseUrl() . $this->getPageId() . '/font', 'value' => 'Fontes' ]); ?>
 		</div>
 		<div class="col2">
 			<?php
-echo Template::button('themeAdvanced', [ 'ico' => 'code', 'href' => Helper::baseUrl() . $this->getUrl(0) . '/advanced', 'value' => 'Éditeur CSS' ]); ?>
+echo Template::button('themeAdvanced', [ 'ico' => 'code', 'href' => Helper::baseUrl() . $this->getPageId() . '/advanced', 'value' => 'Éditeur CSS' ]); ?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col2 offset4">
 			<?php
-echo Template::button('themeAdmin', [ 'ico' => 'brush', 'href' => Helper::baseUrl() . $this->getUrl(0) . '/admin', 'value' => 'Administration' ]); ?>
+echo Template::button('themeAdmin', [ 'ico' => 'brush', 'href' => Helper::baseUrl() . $this->getPageId() . '/admin', 'value' => 'Administration' ]); ?>
 		</div>
 		<div class="col2">
 			<?php
-echo Template::button('themeManage', [ 'ico' => 'sliders', 'href' => Helper::baseUrl() . $this->getUrl(0) . '/manage', 'value' => 'Gestion' ]); ?>
+echo Template::button('themeManage', [ 'ico' => 'sliders', 'href' => Helper::baseUrl() . $this->getPageId() . '/manage', 'value' => 'Gestion' ]); ?>
 		</div>
 	</div>
 	<div class="row">
@@ -47,21 +47,21 @@ echo Template::button('themeBack', [ 'href' => Helper::baseUrl(false), 'ico' => 
 	<div class="row">
 		<div class="col2 offset4">
 			<?php
-echo Template::button('themeFonts', [ 'ico' => 'font', 'href' => Helper::baseUrl() . $this->getUrl(0) . '/font', 'value' => 'Fontes' ]); ?>
+echo Template::button('themeFonts', [ 'ico' => 'font', 'href' => Helper::baseUrl() . $this->getPageId() . '/font', 'value' => 'Fontes' ]); ?>
 		</div>
 		<div class="col2">
 			<?php
-echo Template::button('themeAdvanced', [ 'ico' => 'code', 'href' => Helper::baseUrl() . $this->getUrl(0) . '/advanced', 'value' => 'Éditeur CSS' ]); ?>
+echo Template::button('themeAdvanced', [ 'ico' => 'code', 'href' => Helper::baseUrl() . $this->getPageId() . '/advanced', 'value' => 'Éditeur CSS' ]); ?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col2 offset4">
 			<?php
-echo Template::button('themeAdmin', [ 'ico' => 'brush', 'href' => Helper::baseUrl() . $this->getUrl(0) . '/admin', 'value' => 'Administration' ]); ?>
+echo Template::button('themeAdmin', [ 'ico' => 'brush', 'href' => Helper::baseUrl() . $this->getPageId() . '/admin', 'value' => 'Administration' ]); ?>
 		</div>
 		<div class="col2">
 			<?php
-echo Template::button('themeManage', [ 'ico' => 'sliders', 'href' => Helper::baseUrl() . $this->getUrl(0) . '/manage', 'value' => 'Gestion' ]); ?>
+echo Template::button('themeManage', [ 'ico' => 'sliders', 'href' => Helper::baseUrl() . $this->getPageId() . '/manage', 'value' => 'Gestion' ]); ?>
 		</div>
 	</div>
 <?php

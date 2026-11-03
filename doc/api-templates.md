@@ -22,6 +22,10 @@ core/layout/
 ├── blank.php          # Template vide
 ├── blank.css          # Styles du template vide
 ├── common.css         # Styles communs
+├── edit.php           # Template d'édition (barre d'admin + contenu)
+├── edit.css           # Styles du template d'édition
+├── light.php          # Template léger (connexion, installation…)
+├── light.css          # Styles du template léger
 ├── main.php           # Template principal
 └── mail.php           # Template pour emails
 
@@ -160,115 +164,14 @@ $layout = ob_get_clean();
 
 ## Templates de modules
 
-### Structure standard d'un module
+Pour créer un module complet, suivre le guide [`guide-ecriture-modules.md`](./guide-ecriture-modules.md).
+Il décrit la structure des dossiers, les actions et leurs droits, le rendu via `addOutput()`,
+les formulaires, les données JSON et le routage multi-module.
 
-```php
-<?php
-// module/monModule/monModule.php
-class monModule extends common {
-    public static $actions = [
-        'index' => self::ROLE_MEMBER,
-        'add' => self::ROLE_EDITOR,
-        'edit' => self::ROLE_EDITOR,
-        'delete' => self::ROLE_ADMIN,
-        'config' => self::ROLE_ADMIN
-    ];
-
-    public function index() {
-        // Vérifier si l'utilisateur est connecté et a le bon rôle
-        if (!$this->isConnected() || $this->getUser('role') < common::ROLE_MEMBER) {
-            return 'Accès refusé';
-        }
-
-        // Récupérer les données
-        $items = $this->getData(['module', $this->getUrl(0), 'items']);
-
-        // Préparer la vue
-        return $this->getLayout();
-    }
-
-    public function add() {
-        // Traitement du formulaire
-        if ($this->isPost()) {
-            $itemId = uniqid();
-            $this->setData([
-                'module',
-                $this->getUrl(0),
-                'items',
-                $itemId
-            ], [
-                'title' => $this->getInput('title', helper::FILTER_STRING_SHORT, true),
-                'content' => $this->getInput('content', helper::FILTER_STRING_LONG),
-                'createdOn' => time(),
-                'userId' => $this->getUser('id')
-            ]);
-            
-            $this->addOutput([
-                'notification' => 'Élément ajouté avec succès',
-                'redirect' => helper::baseUrl() . $this->getUrl(0)
-            ]);
-        }
-
-        // Afficher le formulaire
-        return $this->getLayout();
-    }
-
-    private function getLayout() {
-        // Inclure le template approprié
-        if (file_exists('module/' . $this->getUrl(0) . '/view/' . $this->getUrl(1) . '/' . $this->getUrl(1) . '.php')) {
-            return file_get_contents('module/' . $this->getUrl(0) . '/view/' . $this->getUrl(1) . '/' . $this->getUrl(1) . '.php');
-        } else {
-            return file_get_contents('module/' . $this->getUrl(0) . '/view/index/index.php');
-        }
-    }
-}
-```
-
-### Template d'index
-
-```php
-<?php
-// module/monModule/view/index/index.php
-echo '<div class="row">';
-echo '<div class="col12">';
-echo '<h2>Liste des éléments</h2>';
-
-if (empty($items)) {
-    echo '<p>Aucun élément trouvé.</p>';
-} else {
-    echo '<div class="tableWrapper">';
-    echo '<table class="table">';
-    echo '<thead><tr>';
-    echo '<th>Titre</th>';
-    echo '<th>Date</th>';
-    echo '<th>Actions</th>';
-    echo '</tr></thead>';
-    echo '<tbody>';
-    
-    foreach ($items as $id => $item) {
-        echo '<tr>';
-        echo '<td>' . $item['title'] . '</td>';
-        echo '<td>' . helper::dateUTF8('%d/%m/%Y', $item['createdOn']) . '</td>';
-        echo '<td>';
-        if ($this->isConnected() && $this->getUser('role') >= common::ROLE_EDITOR) {
-            echo '<a href="' . helper::baseUrl() . $this->getUrl(0) . '/edit/' . $id . '" class="button">Éditer</a> ';
-        }
-        if ($this->isConnected() && $this->getUser('role') >= common::ROLE_ADMIN) {
-            echo '<a href="' . helper::baseUrl() . $this->getUrl(0) . '/delete/' . $id . '" class="button buttonRed">Supprimer</a>';
-        }
-        echo '</td>';
-        echo '</tr>';
-    }
-    
-    echo '</tbody></table></div>';
-}
-
-if ($this->isConnected() && $this->getUser('role') >= common::ROLE_EDITOR) {
-    echo '<a href="' . helper::baseUrl() . $this->getUrl(0) . '/add" class="button">Ajouter un élément</a>';
-}
-
-echo '</div></div>';
-```
+Une action ne retourne pas sa vue : elle sélectionne le fichier à rendre avec
+`$this->addOutput(['view' => 'index']);`. Le routeur inclut alors
+`module/<id>/view/index/index.php` et charge les fichiers CSS/JavaScript associés s'ils
+existent. Les assistants HTML ci-dessous s'utilisent dans ces vues.
 
 ---
 

@@ -1,30 +1,34 @@
+<?php
+$instanceId = $this->getUrl(0); $uid = preg_replace('/[^A-Za-z0-9_-]/', '', (string) $instanceId); $scope = gallery::scopeClass($instanceId); $config = isset(gallery::$configByInstance[$instanceId]) ? gallery::$configByInstance[$instanceId] : []; $pictures = isset(gallery::$picturesByInstance[$instanceId]) ? gallery::$picturesByInstance[$instanceId] : []; $thumbs = isset(gallery::$thumbsByInstance[$instanceId]) ? gallery::$thumbsByInstance[$instanceId] : []; ?>
+<div class="<?php
+echo $scope; ?>">
 <div class="row <?php
-echo gallery::$config['backAlign'] . ' ' . gallery::$config['backPositionTop'];?>">
+echo $config['backAlign'] . ' ' . $config['backPositionTop']; ?>">
 	<div class="col1">
 		<?php
-echo template::button('galleryGalleryBack', [ 'href' => helper::baseUrl() . $this->getUrl(0), 'value' => template::ico('left') ]); ?>
+echo template::button('galleryGalleryBackTop-' . $uid, [ 'href' => helper::baseUrl() . $instanceId, 'value' => template::ico('left') ]); ?>
 	</div>
 </div>
-<div id="pictureContainer" class="row galleryRow  <?php
-echo (gallery::$config['fullScreen']);?> ">
+<div id="pictureContainer-<?php
+echo $uid; ?>" class="row galleryRow <?php
+echo $config['fullScreen']; ?>">
 <?php
-foreach(gallery::$pictures as $picture => $legend): ?>
+foreach ($pictures as $picture => $legend): ?>
 	<div class="colPicture">
 		<?php
-$thumbPath = isset(gallery::$thumbs[$picture]) ? gallery::$thumbs[$picture] : $this->getThumb($picture); $thumbPath = $thumbPath ?: $this->getThumb($picture); $imageUrl = helper::baseUrl(false) . ltrim($picture, '/'); $thumbUrl = helper::baseUrl(false) . ltrim($thumbPath, '/'); ?>
+$thumbPath = isset($thumbs[$picture]) ? $thumbs[$picture] : gallery::thumbPath($picture); $thumbPath = $thumbPath ?: gallery::thumbPath($picture); $imageUrl = helper::baseUrl(false) . ltrim($picture, '/'); $thumbUrl = helper::baseUrl(false) . ltrim($thumbPath, '/'); $isHome = $config['homePicture'] !== '' && $config['homePicture'] !== null && basename($picture) === $config['homePicture']; ?>
 		<a
 			href="<?php
 echo $picture; ?>"
-			<?php
-if (strpos($picture, gallery::$config['homePicture']) !== false) { echo 'id="homePicture"'; } ?>
-			class="galleryGalleryPicture"
+			class="galleryGalleryPicture<?php
+echo $isHome ? ' galleryHomePicture' : ''; ?>"
 			style="background-image:url('<?php
 echo $thumbUrl; ?>')"
 			data-caption="<?php
 echo $legend; ?>"
 		>
 			<?php
-if($legend): ?>
+if ($legend): ?>
 				<div class="galleryGalleryName"><?php
 echo $legend; ?></div>
 			<?php
@@ -35,9 +39,10 @@ endif; ?>
 endforeach; ?>
 </div>
 <div class="row <?php
-echo gallery::$config['backAlign'] . ' ' . gallery::$config['backPositionBottom'];?>">
+echo $config['backAlign'] . ' ' . $config['backPositionBottom']; ?>">
 	<div class="col1">
 		<?php
-echo template::button('galleryGalleryBack', [ 'href' => helper::baseUrl() . $this->getUrl(0), 'value' => template::ico('left') ]); ?>
+echo template::button('galleryGalleryBackBottom-' . $uid, [ 'href' => helper::baseUrl() . $instanceId, 'value' => template::ico('left') ]); ?>
 	</div>
+</div>
 </div>

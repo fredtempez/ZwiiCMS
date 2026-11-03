@@ -508,6 +508,26 @@ $firstSegment = $this->getUrl(0);
 $secondSegment = $this->getUrl(1);
 ```
 
+### `getUrlArg($index)`
+
+Retourne un argument positionnel situé après l'action, en tenant compte du segment
+`instanceId` ajouté au routage multi-module. À utiliser dans les modules qui lisent un
+identifiant d'objet après une action, au lieu de coder en dur `getUrl(2)` ou `getUrl(3)`.
+
+**Paramètres :**
+- `$index` (int) : indice logique de l'argument après l'action (`0` pour le premier).
+
+**Retour :** string|null
+
+**Exemple :**
+```php
+// URL mono-module /page/delete/42 ou instance ciblée /page/delete/instance-2/42
+$itemId = $this->getUrlArg(0);
+```
+
+Pour les détails du routage, voir [`guide-ecriture-modules.md`](./guide-ecriture-modules.md)
+et [`guide-multimodule-data.md`](./guide-multimodule-data.md).
+
 ### `getRelativePath($path)`
 
 Retourne un chemin relatif depuis la racine du site sans la baseUrl.
@@ -639,7 +659,13 @@ common::DISPLAY_RSS = 2;          // Affichage RSS
 common::DISPLAY_LAYOUT_BLANK = 3;  // Layout vide
 common::DISPLAY_LAYOUT_MAIN = 4;   // Layout principal
 common::DISPLAY_LAYOUT_LIGHT = 5;  // Layout léger
+common::DISPLAY_LAYOUT_EDIT = 6;   // Layout d'édition (éditeur de page)
 ```
+
+> `DISPLAY_LAYOUT_EDIT` utilise le gabarit `core/layout/edit.php` : barre
+> d'administration, notifications et contenu sans habillage du thème (bannière,
+> menu, pied de page). Il est conçu pour les vues d'administration plein cadre
+> telles que `page/edit`.
 
 ### Rôles utilisateurs
 ```php

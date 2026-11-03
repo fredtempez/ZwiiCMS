@@ -12,9 +12,10 @@ echo $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel']) ? '<p>
 endif; ?>
 <?php
 if (blog::$articles): ?>
+	<div id="article">
 		<?php
 foreach (blog::$articles as $articleId => $article): ?>
-			<article id="article">
+			<article class="blogArticle">
 			<?php
 if ($this->getData(['module', $this->getUrl(0), 'config', 'layout']) === true): ?>
 				<!-- Présentation moderne -->
@@ -201,8 +202,6 @@ $lenght = $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght'
 					<?php
 if ($lenght > 0): ?>
 						<?php
-?>
-						<?php
 echo helper::subword($article['content'], 0, $lenght); ?>...
 						<a href="<?php
 echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
@@ -223,6 +222,7 @@ endif; ?>
 		</article>
 	<?php
 endforeach; ?>
+	</div>
 <?php
 echo blog::$pages; ?>
 <?php

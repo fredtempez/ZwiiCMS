@@ -1,10 +1,16 @@
 <?php
-if (slider::$pictures): ?>
-	<div id="wrapper">
+$sliderId = $this->getUrl(0); $pictures = isset(slider::$picturesByInstance[$sliderId]) ? slider::$picturesByInstance[$sliderId] : []; ?>
+<?php
+if ($pictures): ?>
+	<div id="wrapper-<?php
+echo $sliderId; ?>" class="sliderWrapper" data-slider-id="<?php
+echo $sliderId; ?>">
 		<div class="rslides_container">
-			<ul class="rslides" id="sliders">
+			<ul class="rslides" id="sliders-<?php
+echo $sliderId; ?>" data-slider-id="<?php
+echo $sliderId; ?>">
 				<?php
-foreach (slider::$pictures as $picture => $options): ?>
+foreach ($pictures as $picture => $options): ?>
 					<?php
 $normalizedPicturePath = $this->getNormalizedFilePath($picture, $this->getUser('id')); if ($normalizedPicturePath): ?>
 						<?php

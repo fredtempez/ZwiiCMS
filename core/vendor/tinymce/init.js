@@ -333,8 +333,9 @@ tinymce.init({
 	},
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
-	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu hr lists paste searchreplace tabfocus template textcolor textpattern",
+	// Plugins strictement nécessaires à la barre d'outils et au menu contextuel
+	// (pas d'autosave : évite l'alerte de fermeture de page sur un commentaire)
+	plugins: "lists paste searchreplace textcolor textpattern",
 	// Contenu de la barre d'outils
 	toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist",
 	font_formats: getSortedFontFormats(),

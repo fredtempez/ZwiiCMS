@@ -1,3 +1,6 @@
+# Version 6.5
+- Compatibilité php 8.5
+- Ajoute la constante MULTIMODULE pour autoriser la présence de plusiers modules dans une même page.
 # Version 6.4
 - Corrige la génération du flux RSS, nettoyage des liens contenus dans la description.
 # Version 6.3

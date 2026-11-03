@@ -7,9 +7,7 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2026, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @Copyright (C) 2026, Frédéric Tempez
- * @Licensed under the GNU General Public License v3.0 or later.
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
@@ -55,13 +53,8 @@ echo helper::translate('Rejeter le commentaire ?'); ?>";
  */
 $(".blogCommentDeleteAll").on("click", function() {
 	var _this = $(this);
-	if( nombre === "1"){
-		var message = "<?php
-echo helper::translate('Supprimer le commentaire ?'); ?>";
-	} else {
-		var message = "<?php
-echo helper::translate('Supprimer tous les commentairess ?'); ?>";
-	}
+	var message = "<?php
+echo helper::translate('Supprimer tous les commentaires ?'); ?>";
 	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});

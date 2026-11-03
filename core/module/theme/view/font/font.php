@@ -5,7 +5,7 @@ echo Template::button('themeFontBack', [ 'class' => 'buttonGrey', 'href' => Help
 	</div>
 	<div class="col1 offset10">
 		<?php
-echo Template::button('themeFontAdd', [ 'href' => Helper::baseUrl() . $this->getUrl(0) . '/fontAdd', 'value' => Template::ico('plus'), 'class' => 'buttonGreen', 'help' => 'Ajouter une fonte' ]); ?>
+echo Template::button('themeFontAdd', [ 'href' => Helper::baseUrl() . $this->getPageId() . '/fontAdd', 'value' => Template::ico('plus'), 'class' => 'buttonGreen', 'help' => 'Ajouter une fonte' ]); ?>
 	</div>
 </div>
 <?php

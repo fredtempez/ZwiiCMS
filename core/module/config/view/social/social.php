@@ -4,69 +4,20 @@
 			<div class="block">
 				<h4>
 					<?php
-echo Helper::translate('Capture d\'écran Open Graph'); ?>
-				</h4>
-				<div class="row">
-					<div class="col6">
-						<div class="row">
-							<div class="col12">
-								<?php
-echo Template::file('seoOpenGraphImage', [ 'language' => $this->getData(['user', $this->getUser('id'), 'language']), 'label' => 'Image Open Graph', 'value' => $this->getData(['config', 'seo', 'openGraphImage']), 'folder' => $this->getData(['config', 'seo', 'openGraphImage']) ? dirname($this->getData(['config', 'seo', 'openGraphImage'])) : '', 'type' => 1, 'help' => sprintf('%s : JPG - PNG<br />', Helper::translate('Format')) . sprintf('%s : 1200 x 630 pixels<br />', Helper::translate('Dimensions minimales')) . sprintf('%s : 1.91:1<br />', Helper::translate('Ratio')) . sprintf('%s : %s, %s<br />', Helper::translate('Taille maximale du fichier'), Helper::translate('5 Mo pour les images JPEG'), Helper::translate('1 Mo pour les images PNG')) ]); ?>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col10 textAlignCenter">
-								<?php
-if (!empty(config::$imageOpenGraph['type'])): ?>
-									<p>
-										<?php
-echo sprintf('%s : <span id="screenType">%s</span>', Helper::translate('Format'), config::$imageOpenGraph['type']); ?>
-									</p>
-									<p>
-										<?php
-echo sprintf('%s : <span id="screenWide">%s</span> x <span id="screenHeight">%s</span> pixels', Helper::translate('Dimensions minimales'), config::$imageOpenGraph['wide'], config::$imageOpenGraph['height']); ?>
-									</p>
-									<p>
-										<?php
-echo sprintf('%s : <span id="screenRatio">%s</span><span id="screenFract">:1</span>', Helper::translate('Ratio'), round(config::$imageOpenGraph['ratio'], 2)); ?>
-									</p>
-									<p>
-										<?php
-echo sprintf('%s : <span id="screenWeight">%s</span>', Helper::translate('Poids'), config::$imageOpenGraph['size']); ?>
-									</p>
-								<?php
-endif; ?>
-							</div>
-						</div>
-					</div>
-					<div class="col6">
-						<?php
-$openGraphImagePath = $this->getData(['config', 'seo', 'openGraphImage']); $normalizedOpenGraphImagePath = $this->getNormalizedFilePath($openGraphImagePath, $this->getUser('id')); if (!empty($openGraphImagePath) && !empty($normalizedOpenGraphImagePath) && file_exists($normalizedOpenGraphImagePath)): ?>
-							<img
-								src="<?php
-echo $normalizedOpenGraphImagePath; ?>" />
-						<?php
-endif; ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>
-					<?php
 echo Helper::translate('Référencement'); ?>
 				</h4>
 				<div class="row">
-					<div class="col4 offset1">
+					<div class="col4">
 						<?php
-echo Template::button('socialSiteMap', [ 'href' => Helper::baseUrl() . 'config/sitemap', 'value' => 'Générer sitemap.xml et robots.txt' ]); ?>
+echo Template::button('socialSiteMap', [ 'href' => Helper::baseUrl() . 'config/sitemap', 'value' => 'Générer sitemap.xml, robots.txt et llms.txt' ]); ?>
 					</div>
-					<div class="col4 offset1">
+					<div class="col4">
 						<?php
 echo Template::checkbox('seoRobots', true, 'Autoriser les robots à référencer le site', [ 'checked' => $this->getData(['config', 'seo', 'robots']) ]); ?>
+					</div>
+					<div class="col4">
+						<?php
+echo Template::checkbox('seoLlmsTxt', true, 'Autoriser les IA à consulter le site', [ 'checked' => $this->getData(['config', 'seo', 'llms']), 'help' => 'Le fichier llms.txt décrit le site et ses pages aux modèles de langage (IA). Régénéré avec le sitemap et à chaque enregistrement de la configuration. Décoché, le fichier llms.txt est remplacé par une interdiction explicite.' ]); ?>
 					</div>
 				</div>
 			</div>
@@ -130,6 +81,59 @@ echo Template::text('socialTwitchId', [ 'help' => 'Saisissez votre ID Twitch : h
 					<div class="col3">
 						<?php
 echo Template::text('socialSteamId', [ 'help' => 'Saisissez votre ID Viemo : https://steamcommunity.com/id/[ID].', 'label' => Template::ico('steam', ['margin' => 'right']) . 'Steam', 'value' => $this->getData(['config', 'social', 'steamId']) ]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="row">
+		<div class="col12">
+			<div class="block">
+				<h4>
+					<?php
+echo Helper::translate('Capture d\'écran Open Graph'); ?>
+				</h4>
+				<div class="row">
+					<div class="col6">
+						<div class="row">
+							<div class="col12">
+								<?php
+echo Template::file('seoOpenGraphImage', [ 'language' => $this->getData(['user', $this->getUser('id'), 'language']), 'label' => 'Image Open Graph', 'value' => $this->getData(['config', 'seo', 'openGraphImage']), 'folder' => $this->getData(['config', 'seo', 'openGraphImage']) ? dirname($this->getData(['config', 'seo', 'openGraphImage'])) : '', 'type' => 1, 'help' => sprintf('%s : JPG - PNG<br />', Helper::translate('Format')) . sprintf('%s : 1200 x 630 pixels<br />', Helper::translate('Dimensions minimales')) . sprintf('%s : 1.91:1<br />', Helper::translate('Ratio')) . sprintf('%s : %s, %s<br />', Helper::translate('Taille maximale du fichier'), Helper::translate('5 Mo pour les images JPEG'), Helper::translate('1 Mo pour les images PNG')) ]); ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col10 textAlignCenter">
+								<?php
+if (!empty(config::$imageOpenGraph['type'])): ?>
+									<p>
+										<?php
+echo sprintf('%s : <span id="screenType">%s</span>', Helper::translate('Format'), config::$imageOpenGraph['type']); ?>
+									</p>
+									<p>
+										<?php
+echo sprintf('%s : <span id="screenWide">%s</span> x <span id="screenHeight">%s</span> pixels', Helper::translate('Dimensions minimales'), config::$imageOpenGraph['wide'], config::$imageOpenGraph['height']); ?>
+									</p>
+									<p>
+										<?php
+echo sprintf('%s : <span id="screenRatio">%s</span><span id="screenFract">:1</span>', Helper::translate('Ratio'), round(config::$imageOpenGraph['ratio'], 2)); ?>
+									</p>
+									<p>
+										<?php
+echo sprintf('%s : <span id="screenWeight">%s</span>', Helper::translate('Poids'), config::$imageOpenGraph['size']); ?>
+									</p>
+								<?php
+endif; ?>
+							</div>
+						</div>
+					</div>
+					<div class="col6">
+						<?php
+$openGraphImagePath = $this->getData(['config', 'seo', 'openGraphImage']); $normalizedOpenGraphImagePath = $this->getNormalizedFilePath($openGraphImagePath, $this->getUser('id')); if (!empty($openGraphImagePath) && !empty($normalizedOpenGraphImagePath) && file_exists($normalizedOpenGraphImagePath)): ?>
+							<img
+								src="<?php
+echo $normalizedOpenGraphImagePath; ?>" />
+						<?php
+endif; ?>
 					</div>
 				</div>
 			</div>

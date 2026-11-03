@@ -475,6 +475,12 @@
       "css": "sitemap",
       "code": 61672,
       "src": "fontawesome"
+    },
+    {
+      "uid": "7277ded7695b2a307a5f9d50097bb64c",
+      "css": "print",
+      "code": 59443,
+      "src": "fontawesome"
     }
   ]
 }

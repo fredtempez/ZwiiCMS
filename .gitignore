@@ -22,6 +22,7 @@ core/module/config/tool/data.key
 # Fichiers générés automatiquement
 # ============================================
 robots.txt
+llms.txt
 sitemap*.xml
 core/vendor/tinymce/link_list.json
 
@@ -64,3 +65,4 @@ composer.lock
 # ============================================
 .git
 .gitignore
+llms.txt

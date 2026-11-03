@@ -1,0 +1,38 @@
+/**
+ * This file is part of Zwii.
+ * For full copyright and license information, please see the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Rémi Jean <remi.jean@outlook.com>
+ * @copyright Copyright (C) 2008-2018, Rémi Jean
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @copyright Copyright (C) 2018-2026, Frédéric Tempez
+ * @license GNU General Public License, version 3
+ * @link http://zwiicms.fr/
+ */
+
+/**
+ * Layout d'édition (DISPLAY_LAYOUT_EDIT)
+ *
+ * Gabarit minimal de l'éditeur de page : barre d'administration, notifications
+ * et contenu. Pas de bannière, de menu ni de pied de page du thème.
+ */
+
+/* Le site occupe toute la largeur disponible sous la barre d'administration */
+#site.edit {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* La section ne conserve pas la hauteur minimale du layout principal */
+#site.edit section {
+	min-height: 0;
+	padding: 20px;
+}
+
+/* Messages plein cadre de l'éditeur */
+#site.edit section > .message {
+	margin: 0 auto;
+}

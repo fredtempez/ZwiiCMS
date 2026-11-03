@@ -1,3 +1,6 @@
+# Version 4.3
+- Compatibilité php 8.5
+- Ajoute la constante MULTIMODULE pour autoriser la présence de plusiers modules dans une même page.
 # Version 4.2
 - Supprime les double points d'interrogation dans les liens de la page des résultats lorsque les URL intelligentes ne sont pas activées.
 # Version 4.1

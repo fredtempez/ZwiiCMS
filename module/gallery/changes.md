@@ -1,3 +1,17 @@
+# Version 7.4
+- Compatibilité php 8.5
+- Corrige l'affichage « nom de la galerie sans les images » pour une page dupliquée : la duplication copie le dossier de données de l'instance d'origine, dont la feuille de style est limitée à l'ancienne instance. La feuille de style est maintenant vérifiée (présente et limitée à l'instance) à chaque affichage et régénérée si besoin.
+- Le chemin de la feuille de style est déduit de l'identifiant de l'instance et non plus de la valeur enregistrée, qui peut désigner une autre instance après une copie.
+- Génération de la feuille de style : une valeur de thème absente ou vide est remplacée par la valeur par défaut (une variable CSS vide supprimait la hauteur des vignettes) ; theme() transmet directement les réglages saisis.
+# Version 7.3
+- Autorise plusieurs modules Galerie sur une même page : feuille de style du thème limitée au conteneur de l'instance (jeton #scope# dans les modèles CSS, migration des données en 3.2), identifiants HTML et script de la visionneuse propres à chaque instance, index des galeries lisant les données de son instance.
+- sortGalleries() et sortPictures() : permission d'édition requise, vérification de l'existence de la galerie et des images, seules les positions sont écrites (l'option showPageContent n'est plus perdue après un tri), noms de fichiers encodés correctement décodés, suppression du code de test.
+- theme() : fusionne les réglages avec le thème existant et supprime la clé showUniqueGallery sans effet.
+- Miniatures : seul le segment « source » de la racine du gestionnaire de fichiers est remplacé par « thumb », les dossiers dont le nom contient « source » ne sont plus altérés.
+- add() : l'image de couverture est enregistrée avec le nom réel du fichier.
+- La classe des valeurs par défaut est renommée galleryDefaultData (la classe theme existe aussi dans le cœur), versionData initialisé à 3.2.
+# Version 7.2
+- Ajoute la constante MULTIMODULE pour autoriser la présence de plusiers modules dans une même page.
 # Version 7.1
 - Corrige un warning après ajout d'une galerie.
 # Version 7.0
