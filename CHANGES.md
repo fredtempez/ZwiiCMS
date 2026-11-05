@@ -47,6 +47,7 @@ Correction de bugs internes.
 - Editeur de texte réduit (commentaires blog), la fenêtre de confirmation d'un commentaire n'affiche plus la fenêtre d'alerte du navigateur. Nettoyage de l'initialisation de l'éditeur réduit.
 - Mise à jour des modules.
 - Compatibilité CLI : `Helper::checkServerSoftware()` ne produit plus d'avertissement PHP 8.1 lorsque `$_SERVER['SERVER_SOFTWARE']` est absent.
+- Nettoyage des fichiers junks (._*) créés lors de la décompression de l'archive de mise à jour.
 
 ## Version 15.2.00
 ### 🚀 Améliorations

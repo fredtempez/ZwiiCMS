@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--generator-class="Icamys\SitemapGenerator\SitemapGenerator"-->
 <!--generator-version="4.3.1"-->
-<!--generated-on="2026-11-03T13:40:47+01:00"-->
+<!--generated-on="2026-11-05T14:34:25+01:00"-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://localhost/zwiicms-private/accueil</loc>
-  <lastmod>2026-11-03T12:40:47+00:00</lastmod>
+  <lastmod>2026-11-05T13:34:25+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/zwiicms-private/enfant</loc>
-  <lastmod>2026-11-03T12:40:47+00:00</lastmod>
+  <lastmod>2026-11-05T13:34:25+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/zwiicms-private/mise-en-page</loc>
-  <lastmod>2026-11-03T12:40:47+00:00</lastmod>
+  <lastmod>2026-11-05T13:34:25+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/zwiicms-private/menu-lateral</loc>
-  <lastmod>2026-11-03T12:40:47+00:00</lastmod>
+  <lastmod>2026-11-05T13:34:25+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/zwiicms-private/blog</loc>
-  <lastmod>2026-11-03T12:40:47+00:00</lastmod>
+  <lastmod>2026-11-05T13:34:25+00:00</lastmod>
  </url>
  <url>
-  <loc>http://localhost/zwiicms-private/galeries-d-images</loc>
-  <lastmod>2026-11-03T12:40:47+00:00</lastmod>
+  <loc>http://localhost/zwiicms-private/blog/mon-premier-article</loc>
+  <lastmod>2019-01-29T20:41:42+01:00</lastmod>
+ </url>
+ <url>
+  <loc>http://localhost/zwiicms-private/blog/mon-deuxieme-article</loc>
+  <lastmod>2019-02-17T20:41:42+01:00</lastmod>
+ </url>
+ <url>
+  <loc>http://localhost/zwiicms-private/blog/mon-troisieme-article</loc>
+  <lastmod>2019-02-22T20:41:42+01:00</lastmod>
+ </url>
+ <url>
+  <loc>http://localhost/zwiicms-private/galeries</loc>
+  <lastmod>2026-11-05T13:34:25+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/zwiicms-private/site-de-zwii</loc>
-  <lastmod>2026-11-03T12:40:47+00:00</lastmod>
+  <lastmod>2026-11-05T13:34:25+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/zwiicms-private/contact</loc>
-  <lastmod>2026-11-03T12:40:47+00:00</lastmod>
+  <lastmod>2026-11-05T13:34:25+00:00</lastmod>
  </url>
  <url>
   <loc>http://localhost/zwiicms-private/recherche</loc>
-  <lastmod>2026-11-03T12:40:47+00:00</lastmod>
+  <lastmod>2026-11-05T13:34:25+00:00</lastmod>
  </url>
 </urlset>
