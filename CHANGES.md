@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 15.4.00
+### Branchement vers la version 16 de ZwiiCMS.
+
 ## Version 15.2.01
 ### 🛠️ Corrections
 - Module Gallery, corrige un bug après l'ajout d'une galerie (version 7.1).
