@@ -49,6 +49,9 @@ Correction de bugs internes.
 - Compatibilité CLI : `Helper::checkServerSoftware()` ne produit plus d'avertissement PHP 8.1 lorsque `$_SERVER['SERVER_SOFTWARE']` est absent.
 - Nettoyage des fichiers junks (._*) créés lors de la décompression de l'archive de mise à jour.
 
+## Version 15.4.00
+### Branchement vers la version 16 de ZwiiCMS.
+
 ## Version 15.2.00
 ### 🚀 Améliorations
 - Module slider : ajout d'options de dimensions (rapport de dimensions automatique, hauteur fixe ou ratio fixe, avec choix de la hauteur et du mode d'ajustement de l'image).
