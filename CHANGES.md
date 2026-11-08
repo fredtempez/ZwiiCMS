@@ -1,5 +1,10 @@
 # Notes de mises à jour
 
+## Version 16.01.00
+### 🚀 Améliorations
+- Nouvelle option de filtrage et d'autorisation des scripts insérés dans les iframe (conifiguration du site).
+- Toilettage des fichiers de langues.
+
 ## Version 16.0.00
 ### 🐘 Compatibilité PHP
 - Compatibilité **PHP 8.5** : le core et les modules s'exécutent sans avertissement de dépréciation.
@@ -48,9 +53,6 @@ Correction de bugs internes.
 - Mise à jour des modules.
 - Compatibilité CLI : `Helper::checkServerSoftware()` ne produit plus d'avertissement PHP 8.1 lorsque `$_SERVER['SERVER_SOFTWARE']` est absent.
 - Nettoyage des fichiers junks (._*) créés lors de la décompression de l'archive de mise à jour.
-
-## Version 15.4.00
-### Branchement vers la version 16 de ZwiiCMS.
 
 ## Version 15.2.00
 ### 🚀 Améliorations

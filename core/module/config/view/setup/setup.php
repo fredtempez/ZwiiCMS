@@ -3,7 +3,9 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php
-echo Helper::translate('Paramètres'); ?>
+echo Helper::translate('Paramètres du site'); ?>
+				<code><?php
+echo Helper::canonicalBaseUrl();?></code>
 				</h4>
 				<div class="row">
 					<div class="col3">
@@ -24,7 +26,6 @@ echo Template::select('configTimerBar', config::$timerBar, [ 'label' => 'Barre d
 					</div>
 				</div>
 				<div class="row">
-
 					<div class="col4 verticalAlignBottom">
 						<?php
 echo Template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [ 'checked' => $this->getData(['config', 'cookieConsent']), 'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.' ]); ?>
@@ -46,33 +47,28 @@ echo Template::checkbox('configPageEditFullScreen', true, 'Édition des pages en
 			<div class="block">
 				<h4><?php
 echo Helper::translate('Mise à jour automatisée'); ?>
+					&nbsp;|&nbsp;<?php
+echo Helper::translate('ZwiiCMS version'); ?>&nbsp;:&nbsp;<strong><?php
+echo Core::ZWII_VERSION; ?></strong>
+					&nbsp;|&nbsp;
+					<?php
+echo Helper::translate('ZwiiCMS version'); ?>&nbsp;:&nbsp;<strong><?php
+echo Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL); ?></strong>
 				</h4>
 				<div class="row">
-					<div class="col4">
+					<div class="col3 verticalAlignBottom">
 						<?php
 echo Template::checkbox('configAutoUpdate', true, 'Rechercher une mise à jour en ligne', [ 'checked' => $this->getData(['config', 'autoUpdate']), 'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.', 'disabled' => empty(Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL)) ]); ?>
 					</div>
-					<div class="col4">
+					<div class="col3 verticalAlignBottom">
 						<?php
 echo Template::checkbox('configAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [ 'checked' => $this->getData(['config', 'autoUpdateHtaccess']), 'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.', 'disabled' => empty(Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL)) ]); ?>
 					</div>
-					<div class="col4">
-						<?php
-echo Template::text('configCanonicalUrl', [ 'label' => 'URL de base du site', 'value' => Helper::canonicalBaseUrl(), 'disabled' => true, 'noDirty' => true, 'help' => 'Déterminée automatiquement à partir du domaine du site et de l’option URL intelligente. Elle est utilisée pour les liens de réinitialisation de mot de passe.' ]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col3">
+					<div class="col3 verticalAlignBottom">
 						<?php
 echo Template::select('configAutoUpdateDelay', config::$updateDelay, [ 'label' => 'Fréquence de recherche', 'selected' => $this->getData(['config', 'autoUpdateDelay']), ]); ?>
 					</div>
-					<div class="col3 offset1 verticalAlignBottom">
-						<pre>Version installée : <strong><?php
-echo Core::ZWII_VERSION; ?></strong></pre>
-						<pre>Version en ligne  : <strong><?php
-echo Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL); ?></strong></pre>
-					</div>
-					<div class="col3 offset2 verticalAlignBottom">
+					<div class="col3 verticalAlignBottom">
 						<?php
 echo Template::button('configUpdateForced', [ 'ico' => 'download-cloud', 'href' => Helper::baseUrl() . 'install/update', 'value' => config::$updateButtonText, 'class' => 'buttonRed', ]); ?>
 					</div>
@@ -133,6 +129,16 @@ echo Template::button('socialScriptHead', [ 'href' => Helper::baseUrl() . 'confi
 					<div class="col4 offset1 verticalAlignBottom">
 						<?php
 echo Template::button('socialScriptBody', [ 'href' => Helper::baseUrl() . 'config/script/body', 'value' => 'Script dans body', 'ico' => 'pencil' ]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col6">
+						<?php
+echo Template::select('configCspFrames', [ 'all' => 'Autoriser toutes les iframes en https', 'list' => 'Autoriser seulement les sites de la liste', 'none' => 'Aucune iframe externe' ], [ 'label' => 'Iframes de sites externes', 'selected' => $this->getData(['config', 'cspFrames']) ?: 'all', 'help' => 'Cartes, vidéos et autres contenus d\'autres sites intégrés dans vos pages. L\'option la plus stricte est « Aucune iframe externe ».' ]); ?>
+					</div>
+					<div class="col6">
+						<?php
+echo Template::textarea('configCspFrameHosts', [ 'label' => 'Sites autorisés dans les iframes', 'value' => (string) $this->getData(['config', 'cspFrameHosts']), 'help' => 'Un site par ligne, sans https:// (par exemple www.youtube.com). Utilisé seulement avec l\'option « Autoriser seulement les sites de la liste ».' ]); ?>
 					</div>
 				</div>
 			</div>
