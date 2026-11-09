@@ -12,10 +12,24 @@ Thumbs.db
 # ============================================
 # Données sensibles et fichiers temporaires
 # ============================================
-site/data/*
-site/tmp/*
-site/backup/*
-site/file/*
+# Les motifs sont volontairement redondants : une instance peut être
+# installée à la racine (site/file/...) ou dans un sous-dossier
+# (site/site/file/...). Les motifs ancrés type "site/file/*" ne
+# couvraient pas le second cas, ce qui a fait entrer des sauvegardes
+# de plusieurs centaines de Mo dans l'historique Git.
+site/data/**
+site/tmp/**
+site/backup/**
+site/file/**
+site/**/data/**
+site/**/tmp/**
+site/**/backup/**
+site/**/file/**
+# Seule exception : le .htaccess de protection de site/i18n (versionné)
+!site/i18n/.htaccess
+# Archives de sauvegarde : ne doivent jamais être versionnées
+*.zip
+*.ZIP
 core/module/config/tool/data.key
 
 # ============================================
