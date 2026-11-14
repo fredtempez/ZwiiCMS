@@ -22,7 +22,7 @@ echo Helper::translate('Version n°') . plugin::$storeItem['fileVersion']; ?>
     <div class="row">
         <div class="col12 textAlignCenter">
             &nbsp;<?php
-echo Helper::translate('date') . '&nbsp;' . plugin::$storeItem['fileDate']; ?>
+echo Helper::translate('Date') . '&nbsp;' . plugin::$storeItem['fileDate']; ?>
         </div>
     </div>
     <div class="row">

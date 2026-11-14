@@ -1,6 +1,32 @@
 # Notes de mises à jour
 
-## Version 16.01.00
+## Version 16.2.01
+🛠️ Corrections
+- Optimisation des aperçus du thème, petite corrections.
+
+## Version 16.2.00
+### 🚀 Améliorations
+- Paramètre de langue homogène : `lang` est désormais émis dans tous les liens (site, administration, sitemap, `llms.txt`, API), comme dans le gestionnaire de fichiers ; `l` reste accepté en entrée, donc les liens et favoris existants continuent de fonctionner. Le calcul est centralisé dans `Tools::getLanguageQueryParam()`, ce qui supprime sept copies divergentes dans la mise en page.
+### 🔍 API / IA
+- La langue servie par l'API est explicite et déterministe : `?lang=<code>` (alias `?l=` conservé) sélectionne la version linguistique ; sans paramètre, c'est la langue **par défaut du site** qui est renvoyée, jamais celle de la session. La réponse est donc identique avec et sans cookie, et peut être mise en cache (`Content-Language`).
+- `?lang=all` sur `/api/pages` renvoie toutes les langues installées en une seule réponse ; chaque langue expose son étiquette BCP 47 et son URL d'API (`languages`).
+- Les URL renvoyées par l'API sont épinglées sur la langue (`?lang=`) dès que le site en installe plusieurs : une URL désigne toujours la même version linguistique. Une langue inconnue répond en 400 avec la liste des valeurs acceptées.
+### 🛠️ Corrections
+- La route s'arrête désormais au premier « & » : les paramètres de requête (`lang=`, `l=`, `limit=`, `q=`, `editFullScreen=`…) ne sont plus collés au dernier segment. `?accueil&editFullScreen=1` et `?blog&page=2` renvoyaient une 404 ; `?api/search/mot&limit=2` cherchait « mot&limit=2 ». Les paramètres `?q=` et `?limit=` de l'API sont de ce fait fonctionnels.
+- `?lang=` accepte les variantes d'écriture d'un même code : `fr-FR` (tag BCP 47 publié dans `languageTag`), `fr_fr`, `FR` ou `fr` désignent l'identifiant installé `fr_FR`. Un client qui réutilise le tag annoncé ne reçoit plus une erreur 400.
+- **Couverture de l'index** : `/api/pages`, `/api/search` et `llms.txt` interrompaient la descente sur une page parente non exposable (page désactivée ou placée dans une barre latérale) ; ses sous-pages publiques étaient donc absentes de l'index alors qu'elles figuraient au sitemap et répondaient en 200 sur `/api/content/<id>`. Le filtrage décide désormais de l'exposition **page par page**, sans bloquer le parcours des enfants : l'API et `llms.txt` recouvrent exactement les URL du sitemap. Les pages **masquées du menu** (position 0) sont incluses, comme dans le sitemap : elles sont publiques et servies en 200. Le parcours part de `getHierarchy(null, false)` et repêche en fin de course toute page publique jamais atteinte (ascendant absent ou chaîne incomplète) : aucune page ne peut plus être omise silencieusement.
+- Réponses d'API réellement sans état : plus d'en-tête `Set-Cookie` sur une réponse déclarée `public, max-age=300` (un cache partagé pouvait resservir un identifiant de session), et `Content-Type: application/json; charset=utf-8`.
+- Écriture de `llms.txt` : un fichier non inscriptible par PHP (propriétaire ou permissions) laissait l'ancien contenu en place sans que rien ne le signale, le bouton annonçant « carte du site mise à jour ». L'échec est désormais remonté dans la notification.
+- **`llms.txt`, mise en forme** : la forme `?q=` de la recherche est documentée en plus du segment d'URL (ce dernier ne transporte pas les espaces et renvoie 404) ; les gabarits d'URL contenant `<…>` passent en texte simple, une cible de lien ne pouvant pas contenir de chevrons en Markdown ; les fins de ligne Windows présentes dans les métadonnées du site sont normalisées.
+- **Sitemap** : la génération ne parcourait que deux niveaux d'arborescence et s'arrêtait sur une page parente masquée ; les pages orphelines (absentes du menu mais publiques et atteignables par un lien interne) en étaient absentes. Elle s'appuie désormais sur `getHierarchy(null, false)` avec un parcours récursif, le même filtrage page par page et le même repêchage que `llms.txt` : sitemap, `llms.txt` et `/api/pages` listent le même ensemble de pages.
+- Une page sans fichier de contenu renvoie une chaîne vide au lieu du repli francophone « Aucun contenu trouvé. », qui n'a pas sa place dans une réponse d'une autre langue.
+- Ajustement et correction des bases de langues.
+- Application de l'instance d'un module :
+  - Les formulaires déclarent désormais leur instance de module via le champ caché moduleInstanceId.
+  - isPost() ne traite le POST que pour l’instance émettrice, évitant qu’il soit consommé par les autres modules ou instances de la page.
+
+
+## Version 16.1.00
 ### 🚀 Améliorations
 - Nouvelle option de filtrage et d'autorisation des scripts insérés dans les iframe (conifiguration du site).
 - Toilettage des fichiers de langues.

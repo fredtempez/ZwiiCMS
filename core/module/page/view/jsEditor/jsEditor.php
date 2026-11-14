@@ -1,7 +1,7 @@
 <?php
 echo Template::formOpen('pageJsEditorForm'); ?>
 <?php
-$langCount = 0; foreach (self::$languages as $key => $value) { if (is_dir(self::DATA_DIR . $key)) { $langCount++; if ($langCount > 1) { break; } } } $separator = Helper::checkRewrite() ? '?' : '&'; $langParam = ($langCount > 1 && file_exists(self::DATA_DIR . self::$siteContent . '/.default') === false) ? $separator . 'l=' . self::$siteContent : ''; ?>
+$langParam = $this->getSiteContentQueryParam(); ?>
 <input type="hidden" name="returnUrl" value="<?php
 echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : Helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . $langParam; ?>">
 <div class="row">

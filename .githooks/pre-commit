@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# ---------------------------------------------------------------------------
+# ZwiiCMS — garde-fou d'indexation Git
+#
+# Refuse les fichiers qui ne doivent jamais entrer dans l'historique :
+#   - les données d'instance (site/data, site/backup, site/file, site/tmp et
+#     leurs variantes imbriquées site/site/...)
+#   - les archives de sauvegarde (*.zip)
+#   - tout fichier dépassant la limite de taille (5 Mo par défaut)
+#
+# Installation (une fois par clone) :
+#   git config core.hooksPath .githooks
+#
+# Seuil personnalisable :
+#   GIT_MAX_FILE_MB=10 git commit ...
+# ---------------------------------------------------------------------------
+set -u
+
+LIMIT_MB="${GIT_MAX_FILE_MB:-5}"
+LIMIT=$((LIMIT_MB * 1024 * 1024))
+blocked=0
+
+human_size() {
+	awk -v s="$1" 'BEGIN { if (s >= 1048576) printf "%.1f Mo", s / 1048576; else printf "%d Ko", s / 1024 }'
+}
+
+while IFS= read -r -d '' path; do
+	case "$path" in
+		site/data/*|site/tmp/*|site/backup/*|site/file/*|\
+		site/*/data/*|site/*/tmp/*|site/*/backup/*|site/*/file/*)
+			printf '  refusé (données d’instance) : %s\n' "$path"
+			blocked=1
+			continue
+			;;
+		*.zip|*.ZIP)
+			printf '  refusé (archive de sauvegarde) : %s\n' "$path"
+			blocked=1
+			continue
+			;;
+	esac
+
+	size=$(git cat-file -s ":$path" 2>/dev/null || echo 0)
+	if [ "$size" -gt "$LIMIT" ]; then
+		printf '  refusé (trop volumineux, %s > %s Mo) : %s\n' \
+			"$(human_size "$size")" "$LIMIT_MB" "$path"
+		blocked=1
+	fi
+done < <(git diff --cached --name-only --diff-filter=ACMR -z)
+
+if [ "$blocked" -ne 0 ]; then
+	cat >&2 <<'EOF'
+
+Commit annulé par .githooks/pre-commit.
+
+Ces fichiers ne doivent pas être versionnés : ils gonflent l'historique Git de
+façon irréversible (voir doc/maintenance-git.md). Ajoutez-les au .gitignore,
+ou forcez ponctuellement avec : git commit --no-verify
+EOF
+	exit 1
+fi
+
+exit 0

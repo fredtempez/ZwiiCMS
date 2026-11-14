@@ -93,7 +93,7 @@ echo Template::checkbox('profilAddFolderRename', true, 'Renommer', ['class' => '
                             </div>
                             <div class="col2">
                                 <?php
-echo Template::checkbox('profilAddFolderCopycut', true, 'Presse Papier', ['class' => 'filemanager']); ?>
+echo Template::checkbox('profilAddFolderCopycut', true, 'Presse papier', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
                                 <?php

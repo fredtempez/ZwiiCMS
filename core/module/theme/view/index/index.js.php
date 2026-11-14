@@ -10,10 +10,65 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-$("<a>").addClass("themeOverlay").attr({id:"themeOverlayBody",href:"<?php
-echo Helper::baseUrl(); ?>theme/body"}).appendTo("body"),$("<a>").addClass("themeOverlay").attr({id:"themeOverlayHeader",href:"<?php
-echo Helper::baseUrl(); ?>theme/header"}).appendTo("header"),$("<a>").addClass("themeOverlay").attr({id:"themeOverlayMenu",href:"<?php
-echo Helper::baseUrl(); ?>theme/menu"}).appendTo("nav"),$("<a>").addClass("themeOverlay").attr({id:"themeOverlaySite",href:"<?php
-echo Helper::baseUrl(); ?>theme/site"}).appendTo("#site"),$("<a>").addClass("themeOverlay themeOverlayHideBackground").attr({id:"themeOverlaySection",href:"<?php
-echo Helper::baseUrl(); ?>theme/site"}).appendTo("section"),$("<a>").addClass("themeOverlay").attr({id:"themeOverlayFooter",href:"<?php
-echo Helper::baseUrl(); ?>theme/footer"}).appendTo("footer"),$("#themeShowAll").on("click",(function(){$("header.displayNone, nav.displayNone, footer.displayNone").slideToggle()})),$("section").on("mouseover",(function(){$("#themeOverlaySite:not(.themeOverlayTriggerHover)").addClass("themeOverlayTriggerHover")})).on("mouseleave",(function(){$("#themeOverlaySite.themeOverlayTriggerHover").removeClass("themeOverlayTriggerHover")}));
+($("<a>")
+  .addClass("themeOverlay")
+  .attr({
+    id: "themeOverlayBody",
+    href: "<?php
+echo Helper::baseUrl(); ?>theme/body",
+  })
+  .appendTo("body"),
+  $("<a>")
+    .addClass("themeOverlay")
+    .attr({
+      id: "themeOverlayHeader",
+      href: "<?php
+echo Helper::baseUrl(); ?>theme/header",
+    })
+    .appendTo("header"),
+  $("<a>")
+    .addClass("themeOverlay")
+    .attr({
+      id: "themeOverlayMenu",
+      href: "<?php
+echo Helper::baseUrl(); ?>theme/menu",
+    })
+    .appendTo("nav"),
+  $("<a>")
+    .addClass("themeOverlay")
+    .attr({
+      id: "themeOverlaySite",
+      href: "<?php
+echo Helper::baseUrl(); ?>theme/site",
+    })
+    .appendTo("#site"),
+  $("<a>")
+    .addClass("themeOverlay themeOverlayHideBackground")
+    .attr({
+      id: "themeOverlaySection",
+      href: "<?php
+echo Helper::baseUrl(); ?>theme/site",
+    })
+    .appendTo("section"),
+  $("<a>")
+    .addClass("themeOverlay")
+    .attr({
+      id: "themeOverlayFooter",
+      href: "<?php
+echo Helper::baseUrl(); ?>theme/footer",
+    })
+    .appendTo("footer"),
+  $("#themeShowAll").on("click", function () {
+    $("header.displayNone, nav.displayNone, footer.displayNone").slideToggle();
+  }),
+  $("section")
+    .on("mouseover", function () {
+      $("#themeOverlaySite:not(.themeOverlayTriggerHover)").addClass(
+        "themeOverlayTriggerHover",
+      );
+    })
+    .on("mouseleave", function () {
+      $("#themeOverlaySite.themeOverlayTriggerHover").removeClass(
+        "themeOverlayTriggerHover",
+      );
+    }));

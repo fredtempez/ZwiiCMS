@@ -143,7 +143,7 @@ echo Template::textarea('localeCookiesZwiiText', [ 'help' => 'Saisissez le messa
 
                 <div class="col4">
                     <?php
-echo Template::text('localeCookiesLinkMlText', [ 'help' => 'Saisissez le texte du lien vers les mentions légales, la page doit être définie dans la configuration du site.', 'label' => 'Lien page des mentions légales.', 'value' => language::$locales[$this->getUrl(2)]['locale']['cookies']['linkLegalLabel'], 'placeHolder' => 'Consulter  les mentions légales' ]); ?>
+echo Template::text('localeCookiesLinkMlText', [ 'help' => 'Saisissez le texte du lien vers les mentions légales, la page doit être définie dans la configuration du site.', 'label' => 'Lien page des mentions légales.', 'value' => language::$locales[$this->getUrl(2)]['locale']['cookies']['linkLegalLabel'], 'placeHolder' => 'Consulter les mentions légales' ]); ?>
                 </div>
             </div>
         </div>

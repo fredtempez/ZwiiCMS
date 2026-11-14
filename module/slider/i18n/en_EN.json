@@ -1,4 +1,6 @@
 {
+    "Ajustement": "",
+    "Automatisation": "",
     "Boutons latéraux": "",
     "Cette durée doit être inférieure au temps fixe": "",
     "Dossier cible": "Target folder",
@@ -9,6 +11,7 @@
     "Mode d'ajustement de l'image dans le cadre (hauteur fixe ou ratio)": "",
     "Puces horizontales": "",
     "Rapport de dimensions": "",
+    "Transition": "",
     "Tri des images": "Image sorting",
     "Thème du carrousel": "Slider Theme",
     "Effacer le carrousel": "Delete slider"

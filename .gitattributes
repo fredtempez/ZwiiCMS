@@ -6,4 +6,5 @@ doc/** export-ignore
 # Autres exclusions éventuelles
 .git export-ignore
 .gitignore export-ignore
+.githooks/ export-ignore
 node_modules/ export-ignore

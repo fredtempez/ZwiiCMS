@@ -8,7 +8,7 @@ echo Template::button('configAdminBack', [ 'class' => 'buttonGrey', 'href' => He
 	<!--
 		<div class="col2 offset5">
 			<?php
-echo Template::button('configAdminTest', [ 'value' => 'Bouton Standard' ]); ?>
+echo Template::button('configAdminTest', [ 'value' => 'Bouton standard' ]); ?>
 		</div>
 		-->
 	<div class="col1 offset8">

@@ -39,7 +39,7 @@ echo Template::text('fontEditFontName', [ 'autocomplete' => 'off', 'label' => 'N
 			<div class="row">
 				<div class="col12">
 					<?php
-echo Template::text('fontEditFontFamilyName', [ 'autocomplete' => 'off', 'label' => 'Famille', 'value' => stripslashes($this->getData(['font', $this->getUrl(2), $this->getUrl(3), 'font-family'])) ]); ?>
+echo Template::text('fontEditFontFamilyName', [ 'autocomplete' => 'off', 'label' => 'Famille', 'value' => stripslashes($this->getData(['font', $this->getUrl(2), $this->getUrl(3), 'font-family']) ?? '') ]); ?>
 				</div>
 			</div>
 			<div class="row" id="containerfontEditFile">

@@ -1,5 +1,6 @@
 /**
  * This file is part of Zwii.
+ *
  * For full copyright and license information, please see the LICENSE
  * file that was distributed with this source code.
  *
@@ -8,28 +9,39 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-
 $(document).ready(function () {
 
-    $("input[name=fontAddFontImported]").on("click", (function () {
-        $("input[name=fontAddFontImported]").is(":checked") ? $("input[name=fontAddFontFile]").prop("checked", !1) : $("input[name=fontAddFontFile]").prop("checked", !0), $("#containerFontAddFile").hide(), $("#containerFontAddUrl").show()
-    })), $("input[name=fontAddFontFile]").on("click", (function () {
-        $("input[name=fontAddFontFile]").is(":checked") ? $("input[name=fontAddFontImported]").prop("checked", !1) : $("input[name=fontAddFontImported]").prop("checked", !0), $("#containerFontAddFile").show(), $("#containerFontAddUrl").hide()
-    }));
+    $("input[name=fontAddFontImported]").on("click", function () {
+        if ($("input[name=fontAddFontImported]").is(":checked")) {
+            $("input[name=fontAddFontFile]").prop("checked", false);
+        } else {
+            $("input[name=fontAddFontFile]").prop("checked", true);
+        }
+        $("#containerFontAddFile").hide();
+        $("#containerFontAddUrl").show();
+    });
 
+    $("input[name=fontAddFontFile]").on("click", function () {
+        if ($("input[name=fontAddFontFile]").is(":checked")) {
+            $("input[name=fontAddFontImported]").prop("checked", false);
+        } else {
+            $("input[name=fontAddFontImported]").prop("checked", true);
+        }
+        $("#containerFontAddFile").show();
+        $("#containerFontAddUrl").hide();
+    });
 
-    // Exemple d'utilisation : appel de la fonction à chaque saisie dans le champ texte
+    // Appel à chaque saisie dans le champ texte
     $('#fontAddFontId').on('input', function () {
         cleanString();
     });
 
-    // Fonction pour supprimer les espaces et convertir en minuscules
+    // Supprime les espaces et convertit en minuscules
     function cleanString() {
         var champTexte = $('#fontAddFontId');
         var texte = champTexte.val();
-        texte = texte.replace(/\s/g, ''); // Supprimer les espaces
-        texte = texte.toLowerCase(); // Convertir en minuscules
-        champTexte.val(texte); // Mettre à jour le champ texte avec la nouvelle valeur
+        texte = texte.replace(/\s/g, '');
+        texte = texte.toLowerCase();
+        champTexte.val(texte);
     }
-
 });
