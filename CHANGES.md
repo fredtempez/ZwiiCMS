@@ -1,8 +1,13 @@
 # Notes de mises à jour
 
+## Version 16.2.02
+### 🛠️ Corrections
+- Journalisation forcée pour les erreurs critiques (messagerie, données, instances de modules, migration) même si la journalisation est désactivée.
+- Affichage convivial de l'erreur lors de l'étape 2 de la mise à jour (extraction du message JSON au lieu de l'affichage brut).
+
 ## Version 16.2.01
-🛠️ Corrections
-- Optimisation des aperçus du thème, petite corrections.
+### 🛠️ Corrections
+- Optimisation des aperçus du thème, petites corrections.
 
 ## Version 16.2.00
 ### 🚀 Améliorations

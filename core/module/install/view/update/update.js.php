@@ -58,40 +58,37 @@ function showError(step, message, errors) {
     $("#installUpdateEnd").removeClass("disabled");
     $("#installUpdateProgress").hide();
 
-    // Vérifier si l'accolade ouvrante est trouvée et qu'elle n'est pas en première position
-    if (typeof message !== 'object') {
+    var friendly = null;
 
-        // Trouver la position du premier "{" pour repérer le début du tableau
-        const startOfArray = message.indexOf('{');
-
-        if (startOfArray !== -1 && startOfArray > 0) {
-            // Extraire le message du warning jusqu'au début du tableau
-            const warningMessage = message.substring(0, startOfArray).trim();
-
-            // Extraire le tableau JSON entre les accolades
-            const jsonString = message.substring(startOfArray);
-            
-            try {
-                const jsonData = JSON.parse(jsonString);
-
-                // Afficher les résultats si le parsing JSON est réussi
-                if (jsonData) {
-                    $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " +
-                        jsonData.data.replace(/^"(.*)"$/, '$1') +
-                        "<br>" +
-                        warningMessage.replace(/<[^p].*?>/g, ""));
+    // Si le message est déjà un objet
+    if (typeof message === 'object' && message !== null) {
+        friendly = message.data || message.message || null;
+    } else if (typeof message === 'string') {
+        // Tentative de parsing JSON direct
+        try {
+            var parsed = JSON.parse(message.trim());
+            friendly = parsed.data || parsed.message || null;
+        } catch (e) {
+            // Pas du JSON pur : chercher un objet JSON dans le message
+            var startOfArray = message.indexOf('{');
+            if (startOfArray !== -1) {
+                var jsonString = message.substring(startOfArray);
+                try {
+                    var parsed2 = JSON.parse(jsonString);
+                    friendly = parsed2.data || parsed2.message || null;
+                } catch (e2) {
+                    friendly = null;
                 }
-            } catch (e) {
-                // Afficher un message générique en cas d'erreur de parsing
-                console.error("Erreur de parsing JSON : ", e);
-                $("#installUpdateErrorMessage").html("Une erreur inattendue est survenue lors du traitement des détails de l'erreur.");
             }
-        } else {
-            // Si pas de JSON détecté, afficher le message brut
-            $("#installUpdateErrorMessage").html("Message d'erreur : " + message);
         }
+    }
+
+    if (friendly) {
+        // Retirer les guillemets entourant la chaîne si nécessaire
+        friendly = String(friendly).replace(/^"(.*)"$/, '$1');
+        $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " + friendly);
     } else {
-        $("#installUpdateErrorMessage").html(message);
+        $("#installUpdateErrorMessage").html("Message d'erreur : " + message);
     }
 }
 
