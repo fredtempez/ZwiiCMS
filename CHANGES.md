@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 16.2.03
+### 🛠️ Corrections
+- Correction du sélecteur de page parent (référence circulaire).
+
 ## Version 16.2.02
 ### 🛠️ Corrections
 - Journalisation forcée pour les erreurs critiques (messagerie, données, instances de modules, migration) même si la journalisation est désactivée.
@@ -8,6 +12,7 @@
 ## Version 16.2.01
 ### 🛠️ Corrections
 - Optimisation des aperçus du thème, petites corrections.
+- Correction du sélecteur de page parent : la page en cours d'édition n'est plus proposée comme parent (évite une référence circulaire).
 
 ## Version 16.2.00
 ### 🚀 Améliorations
