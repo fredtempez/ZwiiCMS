@@ -1,8 +1,17 @@
-# 🚀 ZwiiCMS 16.2.03
+# 🚀 ZwiiCMS 16.2.04
 # Français 🇫🇷
 
-Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation. Conçu pour la simplicité et la performance, ZwiiCMS offre une solution complète pour la gestion de contenu web moderne.
+Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation. Conçu pour la simplicité et la performance, ZwiiCMS offre une solution complète pour la gestion de contenu web moderne. La version 16 franchit un cap : pages multi-modules pour composer des mises en page riches, sites multilingues pour toucher une audience internationale, API JSON en lecture seule pour alimenter l'intelligence artificielle et les outils d'automatisation, en-têtes de sécurité et politique de contenu configurables, compatibilité PHP 8.1 à 8.5, et expérience mobile soignée. Génération automatique du sitemap et de llms.txt pour un référencement optimal.
 
+## Principales fonctionnalités :
+* **Pages multi-modules** : composez des pages riches en combinant plusieurs modules (blog, galerie, formulaire, etc.) sur une même page.
+* **Sites multilingues** : gérez des contenus localisés par langue pour toucher une audience internationale.
+* **API pour l'intelligence artificielle** : exposez vos contenus via une API JSON en lecture seule, exploitable par les modèles de langage et les outils d'automatisation.
+* **Génération SEO et IA** : sitemap multi-fichiers et llms.txt générés automatiquement pour un référencement optimal.
+* **Sécurité renforcée** : en-têtes HTTP de sécurité et politique de contenu (CSP) configurables, authentification renforcée.
+* **Compatibilité étendue** : fonctionne de PHP 8.1 à 8.5, pour une installation sereine sur tous les hébergeurs modernes.
+* **Expérience mobile** : tableaux et contenus adaptés aux smartphones et tablettes.
+* **Facilité d'installation** : pas besoin de base de données, tout fonctionne avec des fichiers JSON.
 ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remijean.fr/). Il est désormais maintenu par Frédéric Tempez et Michel Tubeouf, qui continuent à faire évoluer le projet avec de nouvelles fonctionnalités et améliorations constantes.
 
 [Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Version initiale](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS) - [Notes de version](CHANGES.md) - [Release Notes](CHANGELOG.md)

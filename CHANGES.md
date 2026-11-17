@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 16.2.04
+### 🛠️ Corrections
+- Correction de l'accès au gestionnaire de fichiers juste après la connexion (lecture du cookie via la session PHP) afin d'éviter le message "Acces Denied" à l'ouverture des fichiers juste après la connexion.
+
 ## Version 16.2.03
 ### 🛠️ Corrections
 - Correction du sélecteur de page parent (référence circulaire).
@@ -13,6 +17,7 @@
 ### 🛠️ Corrections
 - Optimisation des aperçus du thème, petites corrections.
 - Correction du sélecteur de page parent : la page en cours d'édition n'est plus proposée comme parent (évite une référence circulaire).
+- Correction de l'accès au gestionnaire de fichiers juste après la connexion (lecture du cookie via la session PHP).
 
 ## Version 16.2.00
 ### 🚀 Améliorations
