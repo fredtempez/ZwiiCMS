@@ -13,7 +13,7 @@
     "use strict";
 
     var MAX_DEPTH = <?php
-echo Core::MENU_DEPTH; ?>;
+echo Core::getCoreParam('menuDepth', Core::MENU_DEPTH); ?>;
 
     function getUlDepth(ul) {
         var depth = 0;

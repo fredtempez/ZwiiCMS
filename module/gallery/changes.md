@@ -1,3 +1,6 @@
+# Version 7.5
+- Utilisation des constantes Core pour la largeur des vignettes (THUMBS_WIDTH).
+
 # Version 7.4
 - Compatibilité php 8.5
 - Corrige l'affichage « nom de la galerie sans les images » pour une page dupliquée : la duplication copie le dossier de données de l'instance d'origine, dont la feuille de style est limitée à l'ancienne instance. La feuille de style est maintenant vérifiée (présente et limitée à l'instance) à chaque affichage et régénérée si besoin.

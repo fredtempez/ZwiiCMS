@@ -1,5 +1,28 @@
 # Notes de mises à jour
 
+## Version 16.4.00
+### 🚀 Améliorations
+- Système de message de mise à jour : affichage d'un message téléchargé depuis le serveur de mise à jour dans une popup après l'étape 4, et icône d'information dans la configuration.
+
+## Version 16.3.00
+### 🛠️ Corrections
+- Intégration de constantes pour les délais réseau (CURL_TIMEOUT, CURL_CONNECT_TIMEOUT) et les temporisations d'écriture (FILE_WRITE_MAX_ATTEMPTS, FILE_WRITE_RETRY_DELAY, PAGE_LOCK_SLEEP, INSTALL_STEP_SLEEP), avec commentaires et regroupement par usage.
+- Paramètres éditables manuellement dans `core.json` (curlTimeout, curlConnectTimeout, logMaxsize, logMaxarchive, accessTimer, menuDepth, thumbsWidth, maxProfils) avec repli sur la constante.
+
+### Constantes éditables (core.json)
+
+Constante              | Clé core.json        | Valeur par défaut | Usage
+-----------------------|----------------------|-------------------|---------------------------------------------------
+CURL_TIMEOUT           | curlTimeout          | 30 s              | Temps maximal total d'une requête HTTP (getUrlContents)
+CURL_CONNECT_TIMEOUT   | curlConnectTimeout   | 10 s              | Temps maximal pour établir la connexion TCP
+LOG_MAXSIZE            | logMaxsize           | 1 048 576 o (1 Mo)| Taille max du journal avant rotation
+LOG_MAXARCHIVE         | logMaxarchive        | 5                 | Nombre d'archives de journal conservées
+ACCESS_TIMER           | accessTimer          | 1800 s            | Délai d'inactivité avant déconnexion
+MENU_DEPTH             | menuDepth            | 5                 | Profondeur maximale des sous-menus
+THUMBS_WIDTH           | thumbsWidth          | 640 px            | Largeur des miniatures de galerie
+MAX_PROFILS            | maxProfils           | 10                | Nombre maximal de profils utilisateurs
+
+
 ## Version 16.2.04
 ### 🛠️ Corrections
 - Correction de l'accès au gestionnaire de fichiers juste après la connexion (lecture du cookie via la session PHP) afin d'éviter le message "Acces Denied" à l'ouverture des fichiers juste après la connexion.

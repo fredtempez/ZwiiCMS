@@ -1,3 +1,6 @@
+# Version 9.3
+- Utilisation des constantes Core pour la largeur des vignettes (THUMBS_WIDTH).
+
 # Version 9.2
 - Ajoute la constante MULTIMODULE pour autoriser la présence de plusiers modules dans une même page.
 - Correction de bugs.

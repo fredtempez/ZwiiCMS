@@ -121,7 +121,7 @@ if ( $article['picture'] && file_exists($article['picture']) ): ?>
 					<!-- Afficher l'image si elle existe -->
 					<div class="col3">
 						<?php
-$picture = $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']); $thumb = $this->getThumb($picture); if (file_exists($thumb) === false) { $this->makeThumb( $picture, null, self::THUMBS_WIDTH ); } ?>
+$picture = $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']); $thumb = $this->getThumb($picture); if (file_exists($thumb) === false) { $this->makeThumb( $picture, null, self::getCoreParam('thumbsWidth', self::THUMBS_WIDTH) ); } ?>
 						<a href="<?php
 echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>" class="blogPicture">
 							<img src="<?php

@@ -27,8 +27,16 @@ echo Helper::baseUrl(false); ?>?install/steps",
                 if (4 === i) {
                     $("#installUpdateSuccess").show();
                     $("body").css("cursor", "default");
-                    $("#installUpdateEnd").removeClass("disabled");
                     $("#installUpdateProgress").hide();
+                    // Popup post-mise à jour (message téléchargé depuis le serveur)
+                    if (result.updateMessage && String(result.updateMessage).trim() !== '') {
+                        $("#installUpdateMessageBody").html(result.updateMessage);
+                        $("#installUpdateMessage").css("display", "flex");
+                    } else {
+                        $("#installUpdateEnd").removeClass("disabled");
+                    }
+                        $("#installUpdateEnd").removeClass("disabled");
+                    }
                 } else {
                     step(i + 1, result.data);
                 }
@@ -91,6 +99,14 @@ function showError(step, message, errors) {
         $("#installUpdateErrorMessage").html("Message d'erreur : " + message);
     }
 }
+
+$(document).ready(function () {
+    $("#installUpdateMessageClose").on("click", function (e) {
+        e.preventDefault();
+        $("#installUpdateMessage").css("display", "none");
+        $("#installUpdateEnd").removeClass("disabled");
+    });
+});
 
 $(window).on("load", function () {
     step(1, null);

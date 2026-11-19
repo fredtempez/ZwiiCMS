@@ -45,6 +45,8 @@ echo Template::checkbox('configPageEditFullScreen', true, 'Édition des pages en
 	<div class="row">
 		<div class="col12">
 			<div class="block">
+				<?php
+$updateMessage = Helper::getUrlContents(Core::ZWII_UPDATE_URL . Core::ZWII_UPDATE_CHANNEL . '/update-message.txt'); if (is_string($updateMessage) && trim($updateMessage) !== '') { $updateMessage = strip_tags($updateMessage, '<p><br><strong><em><a><ul><ol><li><h3><h4>'); } else { $updateMessage = ''; } ?>
 				<h4><?php
 echo Helper::translate('Mise à jour automatisée'); ?>
 					&nbsp;|&nbsp;<?php
@@ -54,7 +56,28 @@ echo Core::ZWII_VERSION; ?></strong>
 					<?php
 echo Helper::translate('ZwiiCMS version'); ?>&nbsp;:&nbsp;<strong><?php
 echo Helper::getOnlineVersion(Core::ZWII_UPDATE_CHANNEL); ?></strong>
+					<?php
+if ($updateMessage !== '') { ?>
+					&nbsp;|&nbsp;
+					<?php
+echo Template::ico('help', [ 'id' => 'configUpdateMessageIcon', 'href' => '#', 'help' => 'Message de mise à jour', 'attr' => 'style="cursor: pointer;"', ]); ?>
+					<?php
+} ?>
 				</h4>
+				<?php
+if ($updateMessage !== ''): ?>
+					<div id="configUpdateMessageModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+						<div style="background: #fff; padding: 20px; border-radius: 8px; max-width: 600px; max-height: 80vh; overflow: auto; margin: auto; position: relative; top: 10%;">
+							<h4>Message de mise à jour</h4>
+							<div><?php
+echo $updateMessage; ?></div>
+							<div style="text-align: right; margin-top: 15px;">
+								<a href="#" id="configUpdateMessageClose" class="button">Fermer</a>
+							</div>
+						</div>
+					</div>
+				<?php
+endif; ?>
 				<div class="row">
 					<div class="col3 verticalAlignBottom">
 						<?php
@@ -71,6 +94,7 @@ echo Template::select('configAutoUpdateDelay', config::$updateDelay, [ 'label' =
 					<div class="col3 verticalAlignBottom">
 						<?php
 echo Template::button('configUpdateForced', [ 'ico' => 'download-cloud', 'href' => Helper::baseUrl() . 'install/update', 'value' => config::$updateButtonText, 'class' => 'buttonRed', ]); ?>
+
 					</div>
 				</div>
 			</div>

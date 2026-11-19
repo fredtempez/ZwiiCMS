@@ -1,3 +1,6 @@
+# Version 8.11
+- Utilisation des constantes Core pour la largeur des vignettes (THUMBS_WIDTH).
+
 # Version 8.10
 - Compatibilité php 8.5
 - Corrige l'alerte de fermeture de page affichée à tort lors de la rédaction d'un commentaire (retrait du plugin `autosave` de l'éditeur de commentaire).

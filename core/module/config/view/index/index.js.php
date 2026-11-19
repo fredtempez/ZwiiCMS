@@ -16,6 +16,23 @@ $(document).ready(function () {
     /**
      * Confirmation de suppression
      */
+    // Message de mise à jour (icône dans l'onglet Configuration)
+    $(document).ready(function () {
+        $("#configUpdateMessageIcon").on("click", function (e) {
+            e.preventDefault();
+            $("#configUpdateMessageModal").css("display", "flex");
+        });
+        $("#configUpdateMessageClose").on("click", function (e) {
+            e.preventDefault();
+            $("#configUpdateMessageModal").css("display", "none");
+        });
+        $("#configUpdateMessageModal").on("click", function (e) {
+            if (e.target === this) {
+                $(this).css("display", "none");
+            }
+        });
+    });
+
     $("#configBackupDelButton").on("click", function () {
         var _this = $(this);
         var message_warning = "<?php
@@ -67,12 +84,12 @@ echo Helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";
         $("#connectCaptchaStrong").prop("checked", false);
     }
 
-	// Récupérer la valeur du champ caché containerSelected
-	let configLayout = $('input[name="containerSelected"]').val();
+    // Récupérer la valeur du champ caché containerSelected
+    let configLayout = $('input[name="containerSelected"]').val();
     // Si non défini, valeur par défaut
-	if (!configLayout) {
-        configLayout = "setup"; 
-	}
+    if (!configLayout) {
+        configLayout = "setup";
+    }
 
     $("#localeContainer").hide();
     $("#socialContainer").hide();
@@ -259,7 +276,7 @@ echo Helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";
 
     // Contrôle l'image Open Screen Graph
     // Type d'image
-    $("span#screenType").each(function(){
+    $("span#screenType").each(function () {
         var text = $(this).text();
         if (text.includes("jpg") || text.includes("jpeg") || text.includes("png")) {
             $(this).css("color", "green");
@@ -268,7 +285,7 @@ echo Helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";
         }
     });
     // La largeur
-    $("span#screenWide").each(function(){
+    $("span#screenWide").each(function () {
         var screenId = parseInt($(this).text());
         if (screenId >= 1200) {
             $(this).css("color", "green");
@@ -277,7 +294,7 @@ echo Helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";
         }
     });
     // La hauteur
-    $("span#screenHeight").each(function(){
+    $("span#screenHeight").each(function () {
         var screenId = parseInt($(this).text());
         if (screenId >= 630) {
             $(this).css("color", "green");
@@ -286,7 +303,7 @@ echo Helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";
         }
     });
     // Le ratio
-    $('span#screenRatio').each(function(){
+    $('span#screenRatio').each(function () {
         var ratio = parseFloat($(this).text());
         if (ratio >= 1.90 && ratio <= 1.92) {
             $(this).css("color", "green");
@@ -297,17 +314,17 @@ echo Helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";
         }
     });
     // Le poids
-    $('span#screenWeight').each(function(index){
+    $('span#screenWeight').each(function (index) {
         var weight = parseFloat($(this).text());
         var fileType = $('span#screenType').eq(index).text();
         if ((fileType === "jpg" || fileType === "jpeg") && weight < 5000000) {
             $(this).css("color", "green");
         } else {
-           $(this).css("color", "red");
+            $(this).css("color", "red");
         }
     });
 
-    $('span#screenWeight').each(function(index){
+    $('span#screenWeight').each(function (index) {
         var weight = parseFloat($(this).text());
         var fileType = $('span#screenType').eq(index).text();
 

@@ -1,4 +1,4 @@
-# 🚀 ZwiiCMS 16.2.04
+# 🚀 ZwiiCMS 16.4.00
 # Français 🇫🇷
 
 Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation. Conçu pour la simplicité et la performance, ZwiiCMS offre une solution complète pour la gestion de contenu web moderne. La version 16 franchit un cap : pages multi-modules pour composer des mises en page riches, sites multilingues pour toucher une audience internationale, API JSON en lecture seule pour alimenter l'intelligence artificielle et les outils d'automatisation, en-têtes de sécurité et politique de contenu configurables, compatibilité PHP 8.1 à 8.5, et expérience mobile soignée. Génération automatique du sitemap et de llms.txt pour un référencement optimal.
@@ -15,6 +15,21 @@ Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer
 ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remijean.fr/). Il est désormais maintenu par Frédéric Tempez et Michel Tubeouf, qui continuent à faire évoluer le projet avec de nouvelles fonctionnalités et améliorations constantes.
 
 [Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Version initiale](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS) - [Notes de version](CHANGES.md) - [Release Notes](CHANGELOG.md)
+
+## ⚙️ Constantes configurables
+
+Les paramètres suivants sont éditables manuellement dans `site/data/core.json` (section `core`), sans passer par la configuration du site. Ils disposent d'une valeur par défaut dans le code.
+
+| Constante | Clé core.json | Défaut | Plage conseillée | Usage |
+|---|---|---|---|---|
+| CURL_TIMEOUT | curlTimeout | 30 s | 10 – 120 s | Temps maximal total d'une requête HTTP |
+| CURL_CONNECT_TIMEOUT | curlConnectTimeout | 10 s | 3 – 30 s | Temps maximal pour établir la connexion TCP |
+| LOG_MAXSIZE | logMaxsize | 1 Mo | 0,5 – 10 Mo | Taille max du journal avant rotation |
+| LOG_MAXARCHIVE | logMaxarchive | 5 | 1 – 20 | Nombre d'archives de journal conservées |
+| ACCESS_TIMER | accessTimer | 1800 s | 300 – 7200 s | Délai d'inactivité avant déconnexion |
+| MENU_DEPTH | menuDepth | 5 | 2 – 8 | Profondeur maximale des sous-menus |
+| THUMBS_WIDTH | thumbsWidth | 640 px | 320 – 1280 px | Largeur des miniatures de galerie |
+| MAX_PROFILS | maxProfils | 10 | 5 – 50 | Nombre maximal de profils utilisateurs |
 
 ## ⚙️ Configuration recommandée
 
@@ -163,11 +178,26 @@ A l'occasion de l'installation d'une version majeure, il est recommandé de réa
 
 # English 🇺🇸
 
-Zwii is a database-less (flat-file) CMS that allows you to easily create and manage a web site without any programming knowledge. Designed for simplicity and performance, ZwiiCMS offers a complete solution for modern web content management.
+Zwii is a database-less (flat-file) CMS that allows you to easily create and manage a web site without any programming knowledge. Designed for simplicity and performance, ZwiiCMS offers a complete solution for modern web content management. Version 16 takes a major leap: multi-module pages, multilingual sites, a JSON API for artificial intelligence, reinforced security, and PHP 8.1 to 8.5 compatibility. Automatic sitemap and llms.txt generation for optimal SEO.
 
 ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/). It is now maintained by Frédéric Tempez and Michel Tuboeuf, who continue to evolve the project with new features and constant improvements.
 
 [Website](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Initial version](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS) - [Release Notes](CHANGELOG.md) - [Notes de version](CHANGES.md)
+
+## ⚙️ Configurable constants
+
+The following parameters can be edited manually in `site/data/core.json` (section `core`), without going through site configuration. They have a default value in the code.
+
+| Constant | core.json key | Default | Recommended range | Usage |
+|---|---|---|---|---|
+| CURL_TIMEOUT | curlTimeout | 30 s | 10 – 120 s | Maximum total time for an HTTP request |
+| CURL_CONNECT_TIMEOUT | curlConnectTimeout | 10 s | 3 – 30 s | Maximum time to establish the TCP connection |
+| LOG_MAXSIZE | logMaxsize | 1 MB | 0.5 – 10 MB | Maximum log size before rotation |
+| LOG_MAXARCHIVE | logMaxarchive | 5 | 1 – 20 | Number of log archives kept |
+| ACCESS_TIMER | accessTimer | 1800 s | 300 – 7200 s | Inactivity delay before logout |
+| MENU_DEPTH | menuDepth | 5 | 2 – 8 | Maximum submenu depth |
+| THUMBS_WIDTH | thumbsWidth | 640 px | 320 – 1280 px | Gallery thumbnail width |
+| MAX_PROFILS | maxProfils | 10 | 5 – 50 | Maximum number of user profiles |
 
 ## ⚙️ Recommended configuration
 
