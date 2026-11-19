@@ -35,8 +35,6 @@ echo Helper::baseUrl(false); ?>?install/steps",
                     } else {
                         $("#installUpdateEnd").removeClass("disabled");
                     }
-                        $("#installUpdateEnd").removeClass("disabled");
-                    }
                 } else {
                     step(i + 1, result.data);
                 }
