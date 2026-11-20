@@ -1,10 +1,8 @@
 # Notes de mises à jour
 
-## Version 16.4.00
+## Version 16.3.00
 ### 🚀 Améliorations
 - Système de message de mise à jour : affichage d'un message téléchargé depuis le serveur de mise à jour dans une popup après l'étape 4, et icône d'information dans la configuration.
-
-## Version 16.3.00
 ### 🛠️ Corrections
 - Intégration de constantes pour les délais réseau (CURL_TIMEOUT, CURL_CONNECT_TIMEOUT) et les temporisations d'écriture (FILE_WRITE_MAX_ATTEMPTS, FILE_WRITE_RETRY_DELAY, PAGE_LOCK_SLEEP, INSTALL_STEP_SLEEP), avec commentaires et regroupement par usage.
 - Paramètres éditables manuellement dans `core.json` (curlTimeout, curlConnectTimeout, logMaxsize, logMaxarchive, accessTimer, menuDepth, thumbsWidth, maxProfils) avec repli sur la constante.
